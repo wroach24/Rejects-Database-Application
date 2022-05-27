@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32510.428
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RejectsApp2", "RejectsApp2\RejectsApp2.csproj", "{BB7EAB8D-B115-4475-983C-0218CDB8B632}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{FD379FD0-3FC0-423B-9E09-B3985BA39599}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\OneDrive - Yokogawa Electric Corporation\Documents\Resources\R (1).png = ..\..\..\OneDrive - Yokogawa Electric Corporation\Documents\Resources\R (1).png
+		..\..\..\OneDrive - Yokogawa Electric Corporation\Documents\Resources\R.png = ..\..\..\OneDrive - Yokogawa Electric Corporation\Documents\Resources\R.png
+		..\..\..\OneDrive - Yokogawa Electric Corporation\Documents\Resources\yokogawa-logo-png-transparent (1) (1) (1).png = ..\..\..\OneDrive - Yokogawa Electric Corporation\Documents\Resources\yokogawa-logo-png-transparent (1) (1) (1).png
+		..\..\..\OneDrive - Yokogawa Electric Corporation\Documents\Resources\yokogawa-logo-png-transparent (1) (1).png = ..\..\..\OneDrive - Yokogawa Electric Corporation\Documents\Resources\yokogawa-logo-png-transparent (1) (1).png
+		..\..\..\OneDrive - Yokogawa Electric Corporation\Documents\Resources\yokogawa-logo-png-transparent (1).png = ..\..\..\OneDrive - Yokogawa Electric Corporation\Documents\Resources\yokogawa-logo-png-transparent (1).png
+		..\..\..\OneDrive - Yokogawa Electric Corporation\Documents\Resources\yokogawa-logo-png-transparent.png = ..\..\..\OneDrive - Yokogawa Electric Corporation\Documents\Resources\yokogawa-logo-png-transparent.png
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB7EAB8D-B115-4475-983C-0218CDB8B632}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{BB7EAB8D-B115-4475-983C-0218CDB8B632}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{BB7EAB8D-B115-4475-983C-0218CDB8B632}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB7EAB8D-B115-4475-983C-0218CDB8B632}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3E48BA86-1B29-441A-948F-ADF0D7EF2C8A}
+	EndGlobalSection
+EndGlobal
