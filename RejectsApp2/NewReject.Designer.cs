@@ -31,7 +31,6 @@ namespace RejectsApp2
         {
             this.button2 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
             this.RejectTypeDropDown = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label9 = new System.Windows.Forms.Label();
@@ -101,17 +100,6 @@ namespace RejectsApp2
             this.label2.TabIndex = 4;
             this.label2.Text = "Add New Reject Form";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-           
-            // 
-            // button4
-            // 
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button4.Location = new System.Drawing.Point(122, 413);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 7;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
             // 
             // RejectTypeDropDown
             // 
@@ -583,7 +571,6 @@ namespace RejectsApp2
             this.label20.Size = new System.Drawing.Size(95, 19);
             this.label20.TabIndex = 20;
             this.label20.Text = "Qty Inspected";
-       
             // 
             // label21
             // 
@@ -623,7 +610,6 @@ namespace RejectsApp2
             this.Controls.Add(this.UnitCostTextBox);
             this.Controls.Add(this.QtyInspectedTextBox);
             this.Controls.Add(this.QtyReceivedTextBox);
-            this.Controls.Add(this.button4);
             this.Controls.Add(this.SubmitRejectButton);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.DiscrepancyTextBox);
@@ -634,7 +620,7 @@ namespace RejectsApp2
             this.MaximizeBox = false;
             this.Name = "NewReject";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "NewReject";
+            this.Text = "New Reject Form";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.NewReject_Closing);
             this.Load += new System.EventHandler(this.NewReject_Load);
             this.panel1.ResumeLayout(false);
@@ -651,7 +637,6 @@ namespace RejectsApp2
         private System.Windows.Forms.Button button2;
         
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button4;
         public System.Windows.Forms.ComboBox RejectTypeDropDown;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label9;

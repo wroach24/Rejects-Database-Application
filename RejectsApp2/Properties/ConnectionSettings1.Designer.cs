@@ -26,10 +26,28 @@ namespace RejectsApp2.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("data source= \\\\\\\\\\\\\\\\svr300-003\\\\smbd\\\\Rejects DB\\\\SQLTest\\\\Backend\\\\RejectsDB-SQ" +
-            "L.sqlite;datetimeformat=CurrentCulture")]
+            "L.sqlite")]
         public string connString {
             get {
                 return ((string)(this["connString"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\svr300-003\\smbd\\Rejects DB\\SQLTest\\Backend\\RejectReport.xlsx")]
+        public string excelString {
+            get {
+                return ((string)(this["excelString"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\svr300-003\\smbd\\Rejects DB\\SQLTest\\Backend\\")]
+        public string notspecexcelString {
+            get {
+                return ((string)(this["notspecexcelString"]));
             }
         }
     }

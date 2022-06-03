@@ -6,11 +6,13 @@ namespace RejectsApp2
     public partial class InputBox : Form
     {
         public Home prnt;
+        private readonly string type;
 
-        public InputBox(Home home)
+        public InputBox(Home home, string type)
         {
             InitializeComponent();
             prnt = home;
+            this.type = type;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -19,6 +21,11 @@ namespace RejectsApp2
 
         private void InputBox_Load(object sender, EventArgs e)
         {
+            if (type == "delete")
+            {
+                label1.AutoSize = true;
+                label1.Text = "Enter the Reject Number to delete.";
+            }
         }
 
         private void numberTextBox_TextChanged(object sender, EventArgs e)
@@ -33,17 +40,28 @@ namespace RejectsApp2
         private void SubmitID_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
+
             var command = new Commands();
-            var testReject = command.GetRejectByID(numberTextBox.Text);
-            if (!string.IsNullOrEmpty(testReject.Reject_Number))
+            var rejectNumInput = command.GetRejectByID(numberTextBox.Text);
+
+            if (!string.IsNullOrEmpty(rejectNumInput.Reject_Number) && type == "edit")
             {
                 var editReject = new EditReject(prnt);
                 editReject.Show();
-                command.FillOutEditForm(testReject, editReject);
+                command.FillOutEditForm(rejectNumInput, editReject);
+            }
+            else if (!string.IsNullOrEmpty(rejectNumInput.Reject_Number) &&
+                     type == "delete") //add confirmatino for delete
+            {
+                var delReject = command.deleteReject(rejectNumInput);
+            }
+            else if (string.IsNullOrEmpty(rejectNumInput.Reject_Number))
+            {
+                MessageBox.Show("Invalid Reject Number. Make sure you're including the letter.");
             }
             else
             {
-                MessageBox.Show("Invalid Reject Number. Make sure you're including the letter.");
+                MessageBox.Show("Something went wrong submitting ID.");
             }
 
             Close();

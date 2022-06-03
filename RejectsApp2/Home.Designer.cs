@@ -36,6 +36,8 @@ namespace RejectsApp2
             this.Reports = new System.Windows.Forms.Button();
             this.DeleteReject = new System.Windows.Forms.Button();
             this.EditRejectButton = new System.Windows.Forms.Button();
+            this.excelPrintPreview = new System.Windows.Forms.PrintPreviewDialog();
+            this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
             ((System.ComponentModel.ISupportInitialize)(this.YokogawaLogo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -121,6 +123,23 @@ namespace RejectsApp2
             this.EditRejectButton.UseVisualStyleBackColor = false;
             this.EditRejectButton.Click += new System.EventHandler(this.EditRejectButton_Click);
             // 
+            // excelPrintPreview
+            // 
+            this.excelPrintPreview.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.excelPrintPreview.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.excelPrintPreview.ClientSize = new System.Drawing.Size(400, 300);
+            this.excelPrintPreview.Enabled = true;
+            this.excelPrintPreview.Icon = ((System.Drawing.Icon)(resources.GetObject("excelPrintPreview.Icon")));
+            this.excelPrintPreview.Name = "excelPrintPreview";
+            this.excelPrintPreview.Visible = false;
+            // 
+            // reportViewer1
+            // 
+            this.reportViewer1.Location = new System.Drawing.Point(0, 0);
+            this.reportViewer1.Name = "ReportViewer";
+            this.reportViewer1.Size = new System.Drawing.Size(396, 246);
+            this.reportViewer1.TabIndex = 0;
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -140,7 +159,6 @@ namespace RejectsApp2
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Yokogawa Rejects";
             this.Load += new System.EventHandler(this.Home_Load);
-           
             ((System.ComponentModel.ISupportInitialize)(this.YokogawaLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -158,6 +176,8 @@ namespace RejectsApp2
         private System.Windows.Forms.Button Reports;
         private System.Windows.Forms.Button DeleteReject;
         private System.Windows.Forms.Button EditRejectButton;
+        private System.Windows.Forms.PrintPreviewDialog excelPrintPreview;
+        public Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
     }
 }
 

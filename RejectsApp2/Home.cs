@@ -23,7 +23,6 @@ namespace RejectsApp2
         public void NewReject_Click(object sender, EventArgs e)
         {
             rejectPage = new NewReject(this);
-            rejectPage.Location = Location;
             rejectPage.ShowDialog();
         }
 
@@ -33,15 +32,23 @@ namespace RejectsApp2
 
         private void DeleteReject_Click(object sender, EventArgs e)
         {
+            var delRejectInput = new InputBox(this, "delete");
+            delRejectInput.BringToFront();
+            delRejectInput.ShowDialog();
         }
 
         private void Reports_Click(object sender, EventArgs e)
         {
+            //var xd = new ExcelCreation("hhe");
+            //xd.SrapDoc();
+            var genForm = new DisplayReport(this);
+            genForm.StartPosition = StartPosition;
+            genForm.Show();
         }
 
         private void EditRejectButton_Click(object sender, EventArgs e)
         {
-            var editRejectInput = new InputBox(this);
+            var editRejectInput = new InputBox(this, "edit");
 
             editRejectInput.BringToFront();
             editRejectInput.ShowDialog();

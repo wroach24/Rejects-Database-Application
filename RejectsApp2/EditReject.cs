@@ -5,8 +5,8 @@ namespace RejectsApp2
 {
     public partial class EditReject : Form
     {
-        private bool editFlag;
         private readonly Home home;
+        private bool editFlag;
 
         public EditReject(Home home)
         {

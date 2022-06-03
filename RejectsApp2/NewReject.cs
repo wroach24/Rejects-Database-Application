@@ -67,14 +67,21 @@ namespace RejectsApp2
         private void SubmitRejectButton_Click(object sender, EventArgs e) //make it so u cannot submit
         {
             var res = false;
-
+            var rejNum = RejectNumberTextBox.Text;
+            var cmd = new Commands();
             if (checkRejectSelection() == false) return;
             res = MessageBox.Show("Are you sure you want to submit?",
                 "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
             if (res) return;
 
-            var newRej = new Commands();
-            newRej.NewRejectOperation(this);
+            if (!cmd.finalRejectNumCheck(rejNum)) //make sure that another user has not taken the ID
+            {
+                rejNum = cmd.GenerateRejectNumber(RejectTypeDropDown.SelectedItem.ToString());
+                MessageBox.Show("Reject_Number switched to: " + rejNum);
+                RejectNumberTextBox.Text = rejNum;
+            }
+
+            cmd.NewRejectOperation(this);
             submitFlag =
                 true; //an edit was performed, signal to Edit_Reject_Closing to only check for confirmation of submission, not closing.
             Close();
@@ -106,6 +113,10 @@ namespace RejectsApp2
         private void UnitCostTextBox_Click(object sender, EventArgs e)
         {
             checkRejectSelection();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
         }
 
         #region checkSelection
