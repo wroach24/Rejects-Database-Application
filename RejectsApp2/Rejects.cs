@@ -9,7 +9,7 @@ namespace RejectsApp2
             string Lot_Number, string PO_Number, int? QTY_Received, int? QTY_Inspected, int? QTY_Rejected,
             string Discrepancy, string Responsible, string Product_Line, string Rejected_By, string VendorID,
             string Vendor_Name,
-            string RMA_Number, string Disposition, DateTime Disposition_Date, string Unit_Cost)
+            string RMA_Number, string Disposition, DateTime? Disposition_Date, string Unit_Cost)
         {
             this.Reject_Number = Reject_Number;
             this.Date_Rejected = Date_Rejected;
@@ -38,7 +38,7 @@ namespace RejectsApp2
         public DateTime Date_Rejected;
         public string Discrepancy;
         public string Disposition;
-        public DateTime Disposition_Date;
+        public DateTime? Disposition_Date;
         public string Lot_Number;
         public string Part_Description;
         public string Part_Number;

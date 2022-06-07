@@ -6,6 +6,7 @@ namespace RejectsApp2
     public partial class NewReject : Form
     {
         private readonly Home home;
+        private string[] requiredFields;
         private bool submitFlag;
 
         public NewReject(Home home)
@@ -32,14 +33,15 @@ namespace RejectsApp2
             command.FillOutDropMenu(dispositionCodes, DispositionDropDown, 'x');
             command.FillOutDropMenu(vendors, VendorNameDropDown);
             dateDispositionDropDown.Value = DateTime.Now;
+            dateDispositionDropDown.CustomFormat = " ";
+            dateDispositionDropDown.Format = DateTimePickerFormat.Custom;
             DateRejectedDropDown.Value = DateTime.Now;
             BringToFront();
             home.Hide();
         }
 
-        private void
-            NewReject_Closing(object sender,
-                FormClosingEventArgs e) //on close of the new reject form verifies that the user wanted to quit and then returns the home page to showing.
+        //on close of the new reject form verifies that the user wanted to quit and then returns the home page to showing.
+        private void NewReject_Closing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing && submitFlag == false)
             {
@@ -66,6 +68,19 @@ namespace RejectsApp2
 
         private void SubmitRejectButton_Click(object sender, EventArgs e) //make it so u cannot submit
         {
+            requiredFields = new[]
+            {
+                RejectedByDropDown.Text, PartNumberTextBox.Text, DiscrepancyTextBox.Text, PartDescriptionTextBox.Text
+            };
+            foreach (var field in requiredFields)
+                if (string.IsNullOrEmpty(field))
+                {
+                    MessageBox.Show(
+                        "One of the following required forms is empty: Rejected By, Part Number, Part Description, Discrepancy." +
+                        field);
+                    return;
+                }
+
             var res = false;
             var rejNum = RejectNumberTextBox.Text;
             var cmd = new Commands();
@@ -116,6 +131,20 @@ namespace RejectsApp2
         }
 
         private void button4_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void DispositionDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            dateDispositionDropDown.Enabled = true;
+            dateDispositionDropDown.Format = DateTimePickerFormat.Short;
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void RejectNumberTextBox_TextChanged(object sender, EventArgs e)
         {
         }
 

@@ -23,16 +23,20 @@ namespace RejectsApp2
             var productLines = command.GetValuesForForm("SELECT * FROM Product_Lines");
             var responsible = command.GetValuesForForm("SELECT * FROM Responsible");
             var vendors = command.GetValuesForForm("SELECT * FROM Vendors");
-            var technician = command.GetValuesForForm("SELECT * FROM Technician");
             var dispositionCodes = command.GetValuesForForm("SELECT * FROM Disposition_Codes ");
             command.FillOutDropMenu(rejectTypes, RejectTypeDropDown);
             command.FillOutDropMenu(productLines, ProductLineDropDown);
             command.FillOutDropMenu(responsible, ResponsibleDropDown);
-            command.FillOutDropMenu(technician, RejectedByDropDown);
             command.FillOutDropMenu(dispositionCodes, DispositionDropDown, 'x');
             command.FillOutDropMenu(vendors, VendorNameDropDown);
             BringToFront();
             home.Hide();
+            if (string.IsNullOrEmpty(DispositionDropDown.Text))
+            {
+                dateDispositionDropDown.Enabled = false;
+                dateDispositionDropDown.CustomFormat = " ";
+                dateDispositionDropDown.Format = DateTimePickerFormat.Custom;
+            }
         }
 
         private void
@@ -77,6 +81,16 @@ namespace RejectsApp2
 
         private void UnitCostTextBox_Click(object sender, EventArgs e)
         {
+        }
+
+        private void dateDispositionDropDown_ValueChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void DispositionDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            dateDispositionDropDown.Enabled = true;
+            dateDispositionDropDown.Format = DateTimePickerFormat.Short;
         }
     }
 }

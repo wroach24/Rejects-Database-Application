@@ -5,8 +5,8 @@ namespace RejectsApp2
 {
     public partial class InputBox : Form
     {
-        public Home prnt;
         private readonly string type;
+        public Home prnt;
 
         public InputBox(Home home, string type)
         {

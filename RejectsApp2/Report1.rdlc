@@ -770,7 +770,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=FormatDateTime(Fields!Date_of_Disposition.Value)</Value>
+                              <Value>=IIf(IsDate(Fields!Date_of_Disposition.Value),FormatDateTime(Fields!Date_of_Disposition.Value),Nothing)</Value>
                               <Style>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#333333</Color>
@@ -795,6 +795,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -1173,7 +1174,7 @@
         <Top>0.91319in</Top>
         <Left>0.07264in</Left>
         <Height>0.75in</Height>
-        <Width>12.09375in</Width>
+        <Width>12.09377in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1249,7 +1250,7 @@
     <Height>7.25in</Height>
     <Style />
   </Body>
-  <Width>12.16639in</Width>
+  <Width>12.16641in</Width>
   <Page>
     <PageFooter>
       <Height>0.39931in</Height>

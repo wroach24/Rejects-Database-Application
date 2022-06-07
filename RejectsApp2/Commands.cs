@@ -7,15 +7,15 @@ using RejectsApp2.Properties;
 
 namespace RejectsApp2
 {
-    public class
-        Commands //seperate into different classes, command class too general(?) //contains (mostly) general SQL commands used to interface with the database
+    public class Commands
     {
+        //PRE: reject object // POST: updated database from reject object values, new row.
         public int AddReject(Rejects reject)
         {
             const string query =
                 "INSERT INTO Rejects (Reject_Number, Part_Number, Vendor_ID, Vendor_Name, RMA_Number, Date_of_Disposition, Qty_Received, Qty_Inspected, Qty_Rejected, Unit_cost, Lot_Number, Responsible, Product_Line,Disposition,PO_Number,Discrepancy,Date_Rejected,Part_Description,Serial_Number,Rejected_By) " +
                 "VALUES (@RejectNum,@PartNum,@VendorID,@VendorName,@RMAnum,@Date_of_Disposition,@QtyReceived,@QtyInspected,@QtyRejected,@UnitCost,@LotNum,@Responsible,@Product_Line,@Disposition,@PONum,@Discrepancy,@DateRejected,@PartDescription,@SerialNum,@RejectedBy)";
-            //only parameter necessary is RejectNum
+
             var args = new Dictionary<string, dynamic>
             {
                 { "@RejectNum", reject.Reject_Number },
@@ -43,9 +43,8 @@ namespace RejectsApp2
             return ExecuteWrite(query, args);
         }
 
-        public int
-            deleteReject(
-                Rejects reject) //PRE: reject object // POST: updated database based upon the reject object which is derived from user input in NewReject.cs
+        //PRE: reject object // POST: updated database, deleted row.
+        public int deleteReject(Rejects reject)
         {
             var query =
                 "DELETE FROM rejects WHERE Reject_Number = @RejectNum";
@@ -79,8 +78,8 @@ namespace RejectsApp2
             return ExecuteWrite(query, args);
         }
 
-        public int
-            EditReject(Rejects reject) //PRE: reject object // POST: updated database based upon the reject object which is derived from user input in NewReject.cs
+        //PRE: reject object // POST: updated database based upon the reject object which is derived from user input in the edit reject form
+        public int EditReject(Rejects reject)
         {
             const string query =
                 "UPDATE rejects SET Unit_cost = @UnitCost, Vendor_ID = @VendorID, Vendor_Name = @VendorName, RMA_Number = @RMAnum, Date_of_Disposition = @Date_of_Disposition, Responsible = @Responsible, Product_Line = @Product_Line, Rejected_By = @RejectedBy, Disposition = @Disposition, Qty_Received = @QtyReceived, Qty_Inspected = @QtyInspected, Qty_Rejected = @QtyRejected, Lot_Number = @LotNum, PO_Number = @PONum, Discrepancy = @Discrepancy,  Part_Number = @PartNum, Serial_Number = @SerialNum, Date_Rejected = @DateRejected, Part_Description = @PartDescription  WHERE  Reject_Number = @RejectNum";
@@ -114,6 +113,7 @@ namespace RejectsApp2
             return ExecuteWrite(query, args);
         }
 
+        //Performs the edit reject operation, ensuring the values are correct, nulls are assigned to non-nullable types and then creates Rejects object.
         public Rejects EditRejectOperation(EditReject editRejectForm)
         {
             var command = new Commands();
@@ -121,6 +121,7 @@ namespace RejectsApp2
             int? qtyInspNull = null;
             int? qtyRejNull = null;
             int? qtyRecNull = null;
+            DateTime? dispDate = null;
             var disp = "";
             if (int.TryParse(editRejectForm.QtyInspectedTextBox.Text, out var qtyInsp))
                 qtyInspNull = qtyInsp;
@@ -128,14 +129,17 @@ namespace RejectsApp2
                 qtyRecNull = qtyRec;
             if (int.TryParse(editRejectForm.QtyRejectedTextBox.Text, out var qtyRej))
                 qtyRejNull = qtyRej;
-            if (editRejectForm.DispositionDropDown.Text.Length > 1)
-                disp = editRejectForm.DispositionDropDown.Text.Substring(0, 2);
+            if (!string.IsNullOrEmpty(editRejectForm.DispositionDropDown.Text))
+                disp = editRejectForm.DispositionDropDown.Text.Substring(4);
+            if (editRejectForm.dateDispositionDropDown
+                .Enabled) //if disposition has not been selected, as such submit date as null
+                dispDate = editRejectForm.dateDispositionDropDown.Value.Date;
 
             var reject = new Rejects(editRejectForm.RejectNumberTextBox.Text,
                 editRejectForm.DateRejectedDropDown.Value.Date,
                 editRejectForm.PartNumberTextBox.Text, editRejectForm.PartDescriptionTextBox.Text,
                 editRejectForm.SerialNumberTextBox.Text, editRejectForm.LotNumberTextBox.Text,
-                editRejectForm.PONumberTextBox.Text, qtyRecNull, qtyRecNull, qtyRejNull,
+                editRejectForm.PONumberTextBox.Text, qtyRecNull, qtyInspNull, qtyRejNull,
                 editRejectForm.DiscrepancyTextBox.Text, editRejectForm.ResponsibleDropDown.Text,
                 editRejectForm.ProductLineDropDown.Text, editRejectForm.RejectedByDropDown.Text,
                 editRejectForm.VendorIDTextbox.Text, editRejectForm.VendorNameDropDown.Text,
@@ -148,6 +152,9 @@ namespace RejectsApp2
             return reject;
         }
 
+        //checks if the reject number being input from the newreject form is already taken, meant to (hopefully) prevent any errors where two writes are performed at the
+        //same time and input the same reject num for different rejects
+        //PRE: Reject_Number value, POST: bool corresponding TRUE to reject number is not present and FALSE to the reject number is present.
         public bool finalRejectNumCheck(string val)
         {
             var query = "SELECT Reject_Number FROM Rejects WHERE Reject_Number = '" + val + "'";
@@ -180,7 +187,7 @@ namespace RejectsApp2
         {
             var query = "";
             var val = "";
-            long result;
+
             var recType = ' ';
 
             if (type == "Line")
@@ -189,11 +196,9 @@ namespace RejectsApp2
                     "SELECT * FROM Rejects WHERE (SUBSTRING(Reject_Number, 1,1) = 'L') ORDER BY CAST(SUBSTRING(Reject_Number, 2, LENGTH(Reject_Number) - 1) AS INT) DESC LIMIT 1";
                 recType = 'L';
             }
-            else if
-                (type == "Receiving") //previous program generation is messed up, figure out how to fix/copy their generation in order to avoid repeats.
+            else if // user input for receiving number required
+                (type == "Receiving")
             {
-                query =
-                    "SELECT * FROM Rejects WHERE (SUBSTRING(TRIM(Reject_Number), 1,1) = 'R') ORDER BY CAST(SUBSTRING(Reject_Number, 2, LENGTH(Reject_Number) - 1) AS INT) DESC LIMIT 1";
                 recType = 'R';
             }
             else
@@ -208,19 +213,27 @@ namespace RejectsApp2
                     connection.Open();
                     var command = new SQLiteCommand(query, connection);
                     var reader = command.ExecuteReader();
-
-                    while (reader.Read()) val = reader["Reject_Number"].ToString().Trim();
-
+                    if (recType == 'L')
+                        while (reader.Read())
+                            val = reader["Reject_Number"].ToString().Trim();
                     connection.Close();
                 }
 
-                val = val.Substring(1, val.Length - 1);
-                var val2 = val.Replace("-", "");
-                result = long.Parse(val2);
-                result++;
-                val = recType + "" + result;
+                if (recType == 'L')
+                {
+                    val = val.Substring(1, val.Length - 1);
+                    var result = long.Parse(val);
+                    result++;
+                    val = recType + "" + result;
+                    return val;
+                }
 
-                return val;
+                if (recType == 'R') //no need to increment, some specific user input procedure is applied here
+                {
+                    return recType.ToString();
+                }
+
+                return "error";
             }
             catch
             {
@@ -229,9 +242,8 @@ namespace RejectsApp2
             }
         }
 
-        public Rejects
-            GetRejectByID(
-                string id) //pre: string corresponding to a database Reject_Number post: Rejects object composed of the column values associated with the corresponding row to the parameter id.
+        //pre: string corresponding to a database Reject_Number post: Rejects object composed of the column values associated with the corresponding row to the Reject_Number id.
+        public Rejects GetRejectByID(string id)
         {
             #region variableDeclaration
 
@@ -309,8 +321,8 @@ namespace RejectsApp2
             return newReject;
         }
 
-        public DataTable
-            GetValuesForForm(string q) //pre:Reject_Num string post:retuns //need to fix the initilization of reject
+        //pre:query post: returns the values from the database that will fill out specific fields such as the differing vendors, etc.
+        public DataTable GetValuesForForm(string q)
         {
             var query = q;
             var val = "";
@@ -325,13 +337,11 @@ namespace RejectsApp2
 
             if (dt == null || dt.Rows.Count == 0) return null;
 
-            //var reject = new Rejects(dt.Rows[0][0], dt.Rows[0][1], dt.Rows[0][2], dt.Rows[0][3], dt.Rows[0][4], dt.Rows[0][5], dt.Rows[0][6], Convert.ToInt32(dt.Rows[0][7)], Convert.ToInt32(dt.Rows[0][8)], dt.Rows[0][9], dt.Rows[0][10], dt.Rows[0][11], dt.Rows[0][12], dt.Rows[0][14], dt.Rows[0][15], dt.Rows[0][16], Convert.ToInt32(dt.Rows[0][17)], Convert.ToInt32(dt.Rows[0][18)], dt.Rows[0].Field<DateTime>(19], dt.Rows[0].Field<float>(20], dt.Rows[0][21));
-
             return dt;
         }
 
-        public DataTable
-            GetValuesForReport(string q) //pre:Reject_Num string post:retuns //need to fix the initilization of reject
+        //pre:query string post:datatable returning query results
+        public DataTable GetValuesForReport(string q)
         {
             var query = q;
             var rejNum = "";
@@ -352,7 +362,7 @@ namespace RejectsApp2
             var Vendor_Name = "";
             var RMA_Number = "";
             var Disposition = "";
-            var DateOfDisp = DateTime.Parse("01/10/1000");
+            DateTime? DateOfDisp = DateTime.Parse("01/10/1000");
             var UnitCost = "";
             var args = new Dictionary<string, object>
             {
@@ -382,8 +392,6 @@ namespace RejectsApp2
 
             if (dt == null || dt.Rows.Count == 0) return null;
 
-            //var reject = new Rejects(dt.Rows[0][0], dt.Rows[0][1], dt.Rows[0][2], dt.Rows[0][3], dt.Rows[0][4], dt.Rows[0][5], dt.Rows[0][6], Convert.ToInt32(dt.Rows[0][7)], Convert.ToInt32(dt.Rows[0][8)], dt.Rows[0][9], dt.Rows[0][10], dt.Rows[0][11], dt.Rows[0][12], dt.Rows[0][14], dt.Rows[0][15], dt.Rows[0][16], Convert.ToInt32(dt.Rows[0][17)], Convert.ToInt32(dt.Rows[0][18)], dt.Rows[0].Field<DateTime>(19], dt.Rows[0].Field<float>(20], dt.Rows[0][21));
-
             return dt;
         }
 
@@ -394,16 +402,20 @@ namespace RejectsApp2
             int? qtyInspNull = null;
             int? qtyRejNull = null;
             int? qtyRecNull = null;
-            var disp = "";
+            DateTime? dispDate = null;
+            string disp = null;
             if (int.TryParse(newRejectForm.QtyInspectedTextBox.Text, out var qtyInsp))
                 qtyInspNull = qtyInsp;
             if (int.TryParse(newRejectForm.QtyReceivedTextBox.Text, out var qtyRec))
                 qtyRecNull = qtyRec;
             if (int.TryParse(newRejectForm.QtyRejectedTextBox.Text, out var qtyRej))
                 qtyRejNull = qtyRej;
-            if (newRejectForm.DispositionDropDown.Text.Length > 1)
-                disp = newRejectForm.DispositionDropDown.Text.Substring(0, 2);
+            if (!string.IsNullOrEmpty(newRejectForm.DispositionDropDown.Text))
+                disp = newRejectForm.DispositionDropDown.Text.Substring(4);
 
+            //if disposition has not been selected, as such date is null (necessary for not assigning date until disposition is assigned)
+            if (newRejectForm.dateDispositionDropDown.Enabled)
+                dispDate = newRejectForm.dateDispositionDropDown.Value.Date;
             var reject = new Rejects(newRejectForm.RejectNumberTextBox.Text,
                 newRejectForm.DateRejectedDropDown.Value.Date,
                 newRejectForm.PartNumberTextBox.Text, newRejectForm.PartDescriptionTextBox.Text,
@@ -412,7 +424,7 @@ namespace RejectsApp2
                 newRejectForm.DiscrepancyTextBox.Text, newRejectForm.ResponsibleDropDown.Text,
                 newRejectForm.ProductLineDropDown.Text, newRejectForm.RejectedByDropDown.Text,
                 newRejectForm.VendorIDTextbox.Text, newRejectForm.VendorNameDropDown.Text,
-                newRejectForm.RMANumberTextBox.Text, disp, newRejectForm.dateDispositionDropDown.Value.Date,
+                newRejectForm.RMANumberTextBox.Text, disp, dispDate,
                 newRejectForm.UnitCostTextBox.Text);
 
             command.AddReject(reject);
@@ -496,6 +508,7 @@ namespace RejectsApp2
         }
 
 
+        //fills out normal drop menus from the databsae, utilizes a datatable filled from a query previously.
         public void FillOutDropMenu(DataTable dt, ComboBox DropDown)
         {
             foreach (DataRow dataRow in dt.Rows)
@@ -504,9 +517,8 @@ namespace RejectsApp2
             DropDown.SelectedItem = null;
         }
 
-        public void
-            FillOutDropMenu(DataTable dt, ComboBox DropDown,
-                char dispositionFlag) //modified fillout for disposition dropdown
+        //fills out the disposition drop menu from the databsae, utilizes a datatable filled from a query previously.
+        public void FillOutDropMenu(DataTable dt, ComboBox DropDown, char dispositionFlag)
         {
             foreach (DataRow dataRow in dt.Rows)
                 for (var i = 0; i < dataRow.ItemArray.Length; i += 2)
@@ -514,6 +526,8 @@ namespace RejectsApp2
             DropDown.SelectedItem = null;
         }
 
+
+        //Fills out the edit form, utilizes if statements to assign null to traditional non-nullable types, text is just assigned directly.
         public void FillOutEditForm(Rejects reject, EditReject editReject)
         {
             if (reject.Reject_Number.Substring(0, 1) == "L")
@@ -523,7 +537,7 @@ namespace RejectsApp2
                     editReject.RejectTypeDropDown.FindStringExact("Receiving");
 
             foreach (var x in editReject.DispositionDropDown.Items)
-                if (reject.Disposition.Trim() == x.ToString().Substring(0, 1).Trim())
+                if (reject.Disposition == x.ToString().Substring(4).Trim())
                 {
                     editReject.DispositionDropDown.SelectedIndex =
                         editReject.DispositionDropDown.FindStringExact(x.ToString());
@@ -550,12 +564,11 @@ namespace RejectsApp2
                 editReject.ProductLineDropDown.FindStringExact(reject.Product_Line);
             editReject.VendorNameDropDown.SelectedIndex =
                 editReject.VendorNameDropDown.FindStringExact(reject.Vendor_Name);
-            editReject.RejectedByDropDown.SelectedIndex =
-                editReject.RejectedByDropDown.FindStringExact(reject.Rejected_By);
+            editReject.RejectedByDropDown.Text = reject.Rejected_By;
             editReject.RMANumberTextBox.Text = reject.RMA_Number;
             editReject.UnitCostTextBox.Text = reject.Unit_Cost;
             if (reject.Disposition_Date > editReject.dateDispositionDropDown.MinDate)
-                editReject.dateDispositionDropDown.Value = reject.Disposition_Date;
+                editReject.dateDispositionDropDown.Value = reject.Disposition_Date.Value.Date;
         }
     }
 }

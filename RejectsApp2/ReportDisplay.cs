@@ -19,32 +19,27 @@ namespace RejectsApp2
         {
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e) //ADD VARIANCE DEPENDING ON THE TYPE OF FORM INPUT REQUESTED
         {
             var conString = ConnectionSettings.Default.connString;
             var query =
-                "SELECT * FROM rejects ORDER BY Date_Rejected DESC LIMIT 1000"; //ALTER
+                "SELECT * FROM rejects WHERE Date_of_Disposition >= '2022-03-10' ORDER BY Date_of_Disposition "; //ALTER
             var path = ConnectionSettings.Default.excelString;
             var cmd = new Commands();
             var dt = cmd.GetValuesForReport(query);
-            //var oledbConn = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path +
-            //                                    ";Extended Properties='Excel 12.0;HDR=YES;IMEX=1;';");
-
-            //oledbConn.Open();
-
             var ds = new DataSet1();
+            var rds = new ReportDataSource();
+
             ds.Tables.Add(dt);
 
-            var rds = new ReportDataSource();
+            //changing report to the report path, need to relative path before publishing.
             reportViewer1.LocalReport.ReportPath =
                 @"C:\Users\30053901\source\repos\RejectsApp2\RejectsApp2\Report1.rdlc";
+
             var names = reportViewer1.LocalReport.GetDataSourceNames();
             rds.Name = names[0];
-            rds.Value = ds.Tables[1];
-            //foreach (DataColumn column in ds.Tables)
-            //{
-            //    MessageBox.Show(column.ToString());
-            //}
+            rds.Value = ds.Tables[1]; //assigning the report datasource to the datatable obtained from query
+
             reportViewer1.LocalReport.DataSources.Clear();
             reportViewer1.LocalReport.DataSources.Add(rds);
             reportViewer1.PrinterSettings.DefaultPageSettings.Margins.Bottom = 0;
@@ -54,21 +49,6 @@ namespace RejectsApp2
             reportViewer1.SetDisplayMode(DisplayMode.PrintLayout);
             reportViewer1.ZoomMode = ZoomMode.PageWidth;
             reportViewer1.RefreshReport();
-
-
-            //var ds = new DataSet();
-
-            //var cmd = new OleDbCommand();
-            //cmd.Connection = oledbConn;
-            //cmd.CommandType = CommandType.Text;
-
-            //cmd.CommandText = "SELECT Reject_Number FROM [Sheet1$]";
-
-
-            //var oleda = new OleDbDataAdapter();
-            //oleda = new OleDbDataAdapter(cmd);
-            //oleda.Fill(ds);
-            //ds.Tables[0].TableName = "DataTable1";
         }
 
         private void button1_Click(object sender, EventArgs e)

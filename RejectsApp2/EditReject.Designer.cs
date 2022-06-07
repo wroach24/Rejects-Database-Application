@@ -309,7 +309,8 @@ namespace RejectsApp2
             // 
             // VendorNameDropDown
             // 
-            this.VendorNameDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.VendorNameDropDown.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.VendorNameDropDown.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.VendorNameDropDown.FormattingEnabled = true;
             this.VendorNameDropDown.IntegralHeight = false;
             this.VendorNameDropDown.Location = new System.Drawing.Point(171, 70);
@@ -326,10 +327,11 @@ namespace RejectsApp2
             this.DispositionDropDown.Name = "DispositionDropDown";
             this.DispositionDropDown.Size = new System.Drawing.Size(273, 21);
             this.DispositionDropDown.TabIndex = 16;
+            this.DispositionDropDown.SelectedIndexChanged += new System.EventHandler(this.DispositionDropDown_SelectedIndexChanged);
             // 
             // RejectedByDropDown
             // 
-            this.RejectedByDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.RejectedByDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
             this.RejectedByDropDown.FormattingEnabled = true;
             this.RejectedByDropDown.Location = new System.Drawing.Point(335, 22);
             this.RejectedByDropDown.Name = "RejectedByDropDown";
@@ -383,11 +385,13 @@ namespace RejectsApp2
             // dateDispositionDropDown
             // 
             this.dateDispositionDropDown.CustomFormat = "";
+            this.dateDispositionDropDown.Enabled = false;
             this.dateDispositionDropDown.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dateDispositionDropDown.Location = new System.Drawing.Point(633, 70);
             this.dateDispositionDropDown.Name = "dateDispositionDropDown";
             this.dateDispositionDropDown.Size = new System.Drawing.Size(126, 20);
             this.dateDispositionDropDown.TabIndex = 20;
+            this.dateDispositionDropDown.ValueChanged += new System.EventHandler(this.dateDispositionDropDown_ValueChanged);
             // 
             // label13
             // 

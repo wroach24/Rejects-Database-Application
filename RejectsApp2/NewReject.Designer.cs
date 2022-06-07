@@ -100,6 +100,7 @@ namespace RejectsApp2
             this.label2.TabIndex = 4;
             this.label2.Text = "Add New Reject Form";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // RejectTypeDropDown
             // 
@@ -285,9 +286,9 @@ namespace RejectsApp2
             this.RejectNumberTextBox.Location = new System.Drawing.Point(147, 22);
             this.RejectNumberTextBox.MaxLength = 30;
             this.RejectNumberTextBox.Name = "RejectNumberTextBox";
-            this.RejectNumberTextBox.ReadOnly = true;
             this.RejectNumberTextBox.Size = new System.Drawing.Size(113, 20);
             this.RejectNumberTextBox.TabIndex = 2;
+            this.RejectNumberTextBox.TextChanged += new System.EventHandler(this.RejectNumberTextBox_TextChanged);
             // 
             // panel2
             // 
@@ -315,7 +316,8 @@ namespace RejectsApp2
             // 
             // VendorNameDropDown
             // 
-            this.VendorNameDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.VendorNameDropDown.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.VendorNameDropDown.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.VendorNameDropDown.FormattingEnabled = true;
             this.VendorNameDropDown.Location = new System.Drawing.Point(171, 70);
             this.VendorNameDropDown.Name = "VendorNameDropDown";
@@ -332,11 +334,12 @@ namespace RejectsApp2
             this.DispositionDropDown.Name = "DispositionDropDown";
             this.DispositionDropDown.Size = new System.Drawing.Size(273, 21);
             this.DispositionDropDown.TabIndex = 17;
+            this.DispositionDropDown.SelectedIndexChanged += new System.EventHandler(this.DispositionDropDown_SelectedIndexChanged);
             this.DispositionDropDown.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DispositionDropDown_MouseClick);
             // 
             // RejectedByDropDown
             // 
-            this.RejectedByDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.RejectedByDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
             this.RejectedByDropDown.FormattingEnabled = true;
             this.RejectedByDropDown.Location = new System.Drawing.Point(335, 22);
             this.RejectedByDropDown.Name = "RejectedByDropDown";
@@ -391,7 +394,9 @@ namespace RejectsApp2
             // 
             // dateDispositionDropDown
             // 
+            this.dateDispositionDropDown.CalendarMonthBackground = System.Drawing.Color.White;
             this.dateDispositionDropDown.CustomFormat = "";
+            this.dateDispositionDropDown.Enabled = false;
             this.dateDispositionDropDown.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dateDispositionDropDown.Location = new System.Drawing.Point(633, 70);
             this.dateDispositionDropDown.Name = "dateDispositionDropDown";

@@ -11,6 +11,7 @@ using DataTable = System.Data.DataTable;
 
 namespace RejectsApp2
 {
+    //UNNECESSARY, DISREGARD
     public class ExcelCreation
     {
         private string excelType;
