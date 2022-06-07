@@ -29,6 +29,7 @@ namespace RejectsApp2
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditReject));
             this.button2 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.RejectTypeDropDown = new System.Windows.Forms.ComboBox();
@@ -76,8 +77,12 @@ namespace RejectsApp2
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // button2
@@ -94,7 +99,7 @@ namespace RejectsApp2
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.label2.Location = new System.Drawing.Point(0, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(799, 55);
+            this.label2.Size = new System.Drawing.Size(689, 55);
             this.label2.TabIndex = 4;
             this.label2.Text = "Edit Reject Form";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -132,7 +137,7 @@ namespace RejectsApp2
             this.panel1.Controls.Add(this.RejectTypeDropDown);
             this.panel1.Location = new System.Drawing.Point(0, 58);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(799, 129);
+            this.panel1.Size = new System.Drawing.Size(689, 129);
             this.panel1.TabIndex = 9;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
@@ -141,7 +146,7 @@ namespace RejectsApp2
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label9.Location = new System.Drawing.Point(682, 57);
+            this.label9.Location = new System.Drawing.Point(586, 57);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(82, 19);
             this.label9.TabIndex = 20;
@@ -152,11 +157,11 @@ namespace RejectsApp2
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label8.Location = new System.Drawing.Point(593, 57);
+            this.label8.Location = new System.Drawing.Point(518, 57);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(83, 19);
+            this.label8.Size = new System.Drawing.Size(63, 19);
             this.label8.TabIndex = 19;
-            this.label8.Text = "Lot Number";
+            this.label8.Text = "Lot Num";
             // 
             // label7
             // 
@@ -195,7 +200,7 @@ namespace RejectsApp2
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label5.Location = new System.Drawing.Point(592, 0);
+            this.label5.Location = new System.Drawing.Point(522, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(95, 19);
             this.label5.TabIndex = 12;
@@ -236,18 +241,18 @@ namespace RejectsApp2
             // 
             // PONumberTextBox
             // 
-            this.PONumberTextBox.Location = new System.Drawing.Point(682, 79);
+            this.PONumberTextBox.Location = new System.Drawing.Point(586, 79);
             this.PONumberTextBox.MaxLength = 20;
             this.PONumberTextBox.Name = "PONumberTextBox";
-            this.PONumberTextBox.Size = new System.Drawing.Size(107, 20);
+            this.PONumberTextBox.Size = new System.Drawing.Size(103, 20);
             this.PONumberTextBox.TabIndex = 7;
             // 
             // LotNumberTextBox
             // 
-            this.LotNumberTextBox.Location = new System.Drawing.Point(593, 79);
+            this.LotNumberTextBox.Location = new System.Drawing.Point(522, 79);
             this.LotNumberTextBox.MaxLength = 10;
             this.LotNumberTextBox.Name = "LotNumberTextBox";
-            this.LotNumberTextBox.Size = new System.Drawing.Size(83, 20);
+            this.LotNumberTextBox.Size = new System.Drawing.Size(58, 20);
             this.LotNumberTextBox.TabIndex = 6;
             // 
             // PartDescriptionTextBox
@@ -255,15 +260,15 @@ namespace RejectsApp2
             this.PartDescriptionTextBox.Location = new System.Drawing.Point(272, 79);
             this.PartDescriptionTextBox.MaxLength = 60;
             this.PartDescriptionTextBox.Name = "PartDescriptionTextBox";
-            this.PartDescriptionTextBox.Size = new System.Drawing.Size(308, 20);
+            this.PartDescriptionTextBox.Size = new System.Drawing.Size(244, 20);
             this.PartDescriptionTextBox.TabIndex = 5;
             // 
             // SerialNumberTextBox
             // 
-            this.SerialNumberTextBox.Location = new System.Drawing.Point(592, 22);
+            this.SerialNumberTextBox.Location = new System.Drawing.Point(522, 22);
             this.SerialNumberTextBox.MaxLength = 60;
             this.SerialNumberTextBox.Name = "SerialNumberTextBox";
-            this.SerialNumberTextBox.Size = new System.Drawing.Size(197, 20);
+            this.SerialNumberTextBox.Size = new System.Drawing.Size(167, 20);
             this.SerialNumberTextBox.TabIndex = 3;
             // 
             // PartNumberTextBox
@@ -271,7 +276,7 @@ namespace RejectsApp2
             this.PartNumberTextBox.Location = new System.Drawing.Point(272, 22);
             this.PartNumberTextBox.MaxLength = 100;
             this.PartNumberTextBox.Name = "PartNumberTextBox";
-            this.PartNumberTextBox.Size = new System.Drawing.Size(308, 20);
+            this.PartNumberTextBox.Size = new System.Drawing.Size(244, 20);
             this.PartNumberTextBox.TabIndex = 2;
             // 
             // RejectNumberTextBox
@@ -304,7 +309,7 @@ namespace RejectsApp2
             this.panel2.Controls.Add(this.ResponsibleDropDown);
             this.panel2.Location = new System.Drawing.Point(0, 284);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(799, 112);
+            this.panel2.Size = new System.Drawing.Size(689, 112);
             this.panel2.TabIndex = 10;
             // 
             // VendorNameDropDown
@@ -315,7 +320,7 @@ namespace RejectsApp2
             this.VendorNameDropDown.IntegralHeight = false;
             this.VendorNameDropDown.Location = new System.Drawing.Point(171, 70);
             this.VendorNameDropDown.Name = "VendorNameDropDown";
-            this.VendorNameDropDown.Size = new System.Drawing.Size(303, 21);
+            this.VendorNameDropDown.Size = new System.Drawing.Size(243, 21);
             this.VendorNameDropDown.Sorted = true;
             this.VendorNameDropDown.TabIndex = 18;
             // 
@@ -325,7 +330,7 @@ namespace RejectsApp2
             this.DispositionDropDown.FormattingEnabled = true;
             this.DispositionDropDown.Location = new System.Drawing.Point(499, 22);
             this.DispositionDropDown.Name = "DispositionDropDown";
-            this.DispositionDropDown.Size = new System.Drawing.Size(273, 21);
+            this.DispositionDropDown.Size = new System.Drawing.Size(190, 21);
             this.DispositionDropDown.TabIndex = 16;
             this.DispositionDropDown.SelectedIndexChanged += new System.EventHandler(this.DispositionDropDown_SelectedIndexChanged);
             // 
@@ -354,7 +359,7 @@ namespace RejectsApp2
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label10.Location = new System.Drawing.Point(633, 48);
+            this.label10.Location = new System.Drawing.Point(563, 48);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(126, 19);
             this.label10.TabIndex = 20;
@@ -365,7 +370,7 @@ namespace RejectsApp2
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label11.Location = new System.Drawing.Point(499, 48);
+            this.label11.Location = new System.Drawing.Point(430, 48);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(93, 19);
             this.label11.TabIndex = 19;
@@ -387,7 +392,7 @@ namespace RejectsApp2
             this.dateDispositionDropDown.CustomFormat = "";
             this.dateDispositionDropDown.Enabled = false;
             this.dateDispositionDropDown.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateDispositionDropDown.Location = new System.Drawing.Point(633, 70);
+            this.dateDispositionDropDown.Location = new System.Drawing.Point(563, 70);
             this.dateDispositionDropDown.Name = "dateDispositionDropDown";
             this.dateDispositionDropDown.Size = new System.Drawing.Size(126, 20);
             this.dateDispositionDropDown.TabIndex = 20;
@@ -450,7 +455,7 @@ namespace RejectsApp2
             // 
             // RMANumberTextBox
             // 
-            this.RMANumberTextBox.Location = new System.Drawing.Point(499, 70);
+            this.RMANumberTextBox.Location = new System.Drawing.Point(434, 70);
             this.RMANumberTextBox.MaxLength = 20;
             this.RMANumberTextBox.Name = "RMANumberTextBox";
             this.RMANumberTextBox.Size = new System.Drawing.Size(118, 20);
@@ -479,7 +484,7 @@ namespace RejectsApp2
             this.DiscrepancyTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.DiscrepancyTextBox.Location = new System.Drawing.Point(7, 210);
             this.DiscrepancyTextBox.Name = "DiscrepancyTextBox";
-            this.DiscrepancyTextBox.Size = new System.Drawing.Size(573, 68);
+            this.DiscrepancyTextBox.Size = new System.Drawing.Size(509, 68);
             this.DiscrepancyTextBox.TabIndex = 8;
             this.DiscrepancyTextBox.Text = "";
             // 
@@ -499,7 +504,7 @@ namespace RejectsApp2
             this.SubmitRejectButton.BackColor = System.Drawing.Color.Gray;
             this.SubmitRejectButton.Font = new System.Drawing.Font("Tahoma", 15F, System.Drawing.FontStyle.Bold);
             this.SubmitRejectButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.SubmitRejectButton.Location = new System.Drawing.Point(557, 400);
+            this.SubmitRejectButton.Location = new System.Drawing.Point(447, 402);
             this.SubmitRejectButton.Name = "SubmitRejectButton";
             this.SubmitRejectButton.Size = new System.Drawing.Size(242, 42);
             this.SubmitRejectButton.TabIndex = 13;
@@ -509,56 +514,56 @@ namespace RejectsApp2
             // 
             // QtyReceivedTextBox
             // 
-            this.QtyReceivedTextBox.Location = new System.Drawing.Point(593, 211);
+            this.QtyReceivedTextBox.Location = new System.Drawing.Point(522, 210);
             this.QtyReceivedTextBox.MaxLength = 15;
             this.QtyReceivedTextBox.Name = "QtyReceivedTextBox";
-            this.QtyReceivedTextBox.Size = new System.Drawing.Size(95, 20);
+            this.QtyReceivedTextBox.Size = new System.Drawing.Size(85, 20);
             this.QtyReceivedTextBox.TabIndex = 9;
             // 
             // QtyInspectedTextBox
             // 
-            this.QtyInspectedTextBox.Location = new System.Drawing.Point(694, 211);
+            this.QtyInspectedTextBox.Location = new System.Drawing.Point(613, 210);
             this.QtyInspectedTextBox.MaxLength = 15;
             this.QtyInspectedTextBox.Name = "QtyInspectedTextBox";
-            this.QtyInspectedTextBox.Size = new System.Drawing.Size(95, 20);
+            this.QtyInspectedTextBox.Size = new System.Drawing.Size(76, 20);
             this.QtyInspectedTextBox.TabIndex = 10;
             // 
             // UnitCostTextBox
             // 
-            this.UnitCostTextBox.Location = new System.Drawing.Point(694, 255);
+            this.UnitCostTextBox.Location = new System.Drawing.Point(613, 255);
             this.UnitCostTextBox.MaxLength = 15;
             this.UnitCostTextBox.Name = "UnitCostTextBox";
-            this.UnitCostTextBox.Size = new System.Drawing.Size(95, 20);
+            this.UnitCostTextBox.Size = new System.Drawing.Size(76, 20);
             this.UnitCostTextBox.TabIndex = 12;
             this.UnitCostTextBox.Click += new System.EventHandler(this.UnitCostTextBox_Click);
             // 
             // QtyRejectedTextBox
             // 
-            this.QtyRejectedTextBox.Location = new System.Drawing.Point(593, 256);
+            this.QtyRejectedTextBox.Location = new System.Drawing.Point(522, 255);
             this.QtyRejectedTextBox.MaxLength = 15;
             this.QtyRejectedTextBox.Name = "QtyRejectedTextBox";
-            this.QtyRejectedTextBox.Size = new System.Drawing.Size(95, 20);
+            this.QtyRejectedTextBox.Size = new System.Drawing.Size(85, 20);
             this.QtyRejectedTextBox.TabIndex = 11;
             // 
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label19.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.label19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label19.Location = new System.Drawing.Point(593, 188);
+            this.label19.Location = new System.Drawing.Point(518, 188);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(89, 19);
+            this.label19.Size = new System.Drawing.Size(84, 17);
             this.label19.TabIndex = 19;
             this.label19.Text = "Qty Received";
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label20.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.label20.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label20.Location = new System.Drawing.Point(694, 188);
+            this.label20.Location = new System.Drawing.Point(609, 188);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(95, 19);
+            this.label20.Size = new System.Drawing.Size(88, 17);
             this.label20.TabIndex = 20;
             this.label20.Text = "Qty Inspected";
             // 
@@ -567,7 +572,7 @@ namespace RejectsApp2
             this.label21.AutoSize = true;
             this.label21.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.label21.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label21.Location = new System.Drawing.Point(694, 236);
+            this.label21.Location = new System.Drawing.Point(611, 236);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(67, 19);
             this.label21.TabIndex = 22;
@@ -578,11 +583,37 @@ namespace RejectsApp2
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.label22.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label22.Location = new System.Drawing.Point(592, 236);
+            this.label22.Location = new System.Drawing.Point(518, 236);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(87, 19);
             this.label22.TabIndex = 21;
             this.label22.Text = "Qty Rejected";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::RejectsApp2.Properties.Resources._6659021;
+            this.pictureBox1.Location = new System.Drawing.Point(616, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(73, 55);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 24;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
+            // printPreviewDialog1
+            // 
+            this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
+            this.printPreviewDialog1.Enabled = true;
+            this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
+            this.printPreviewDialog1.Name = "printPreviewDialog1";
+            this.printPreviewDialog1.Visible = false;
+            this.printPreviewDialog1.Load += new System.EventHandler(this.printPreviewDialog1_Load);
+            // 
+            // printDocument1
+            // 
+            this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
             // 
             // EditReject
             // 
@@ -591,7 +622,8 @@ namespace RejectsApp2
             this.AutoScroll = true;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(75)))), ((int)(((byte)(109)))));
-            this.ClientSize = new System.Drawing.Size(800, 445);
+            this.ClientSize = new System.Drawing.Size(698, 445);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.label22);
             this.Controls.Add(this.label20);
@@ -611,13 +643,13 @@ namespace RejectsApp2
             this.Name = "EditReject";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NewReject";
-            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditReject_Closing);
             this.Load += new System.EventHandler(this.EditReject_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -674,5 +706,8 @@ namespace RejectsApp2
         public System.Windows.Forms.TextBox UnitCostTextBox;
         public System.Windows.Forms.TextBox QtyRejectedTextBox;
         public System.Windows.Forms.DateTimePicker dateDispositionDropDown;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
+        private System.Drawing.Printing.PrintDocument printDocument1;
     }
 }

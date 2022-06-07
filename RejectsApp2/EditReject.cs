@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Printing;
 using System.Windows.Forms;
+using static RejectsApp2.Commands;
 
 namespace RejectsApp2
 {
@@ -7,30 +11,24 @@ namespace RejectsApp2
     {
         private readonly Home home;
         private bool editFlag;
+        private Bitmap reportBitmap;
+        private Bitmap resizeBitmap;
 
         public EditReject(Home home)
         {
             InitializeComponent();
-            TopLevel = true;
+
             this.home = home;
         }
 
         private void EditReject_Load(object sender, EventArgs e) //hides main form on load
         {
-            //filling out DropDown menus which are populated from the certain tables in the database
-            var command = new Commands();
-            var rejectTypes = command.GetValuesForForm("SELECT * FROM Reject_Type");
-            var productLines = command.GetValuesForForm("SELECT * FROM Product_Lines");
-            var responsible = command.GetValuesForForm("SELECT * FROM Responsible");
-            var vendors = command.GetValuesForForm("SELECT * FROM Vendors");
-            var dispositionCodes = command.GetValuesForForm("SELECT * FROM Disposition_Codes ");
-            command.FillOutDropMenu(rejectTypes, RejectTypeDropDown);
-            command.FillOutDropMenu(productLines, ProductLineDropDown);
-            command.FillOutDropMenu(responsible, ResponsibleDropDown);
-            command.FillOutDropMenu(dispositionCodes, DispositionDropDown, 'x');
-            command.FillOutDropMenu(vendors, VendorNameDropDown);
-            BringToFront();
+            //initializes a field instance which fills out the form, given the dropdowns
+            var fieldInstance = new FieldItems();
+            fieldInstance.FillMenus(RejectTypeDropDown, ProductLineDropDown, ResponsibleDropDown, VendorNameDropDown);
+            fieldInstance.FillDispositionMenu(DispositionDropDown);
             home.Hide();
+            //check if the disposition is filled out yet
             if (string.IsNullOrEmpty(DispositionDropDown.Text))
             {
                 dateDispositionDropDown.Enabled = false;
@@ -39,9 +37,9 @@ namespace RejectsApp2
             }
         }
 
-        private void
-            EditReject_Closing(object sender,
-                FormClosingEventArgs e) //on close of the new reject form verifies that the user wanted to quit and then returns the home page to showing.
+        //on close of the new reject form verifies that the user wanted to quit and then returns the home page to showing.
+        private void EditReject_Closing(object sender,
+            FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing && editFlag == false)
             {
@@ -64,9 +62,7 @@ namespace RejectsApp2
             var res = MessageBox.Show("Are you sure you want to submit?",
                 "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
             if (res) return;
-
-            var edit = new Commands();
-            edit.EditRejectOperation(this);
+            EditRejectOperation(this);
             editFlag = true; //an edit was performed, signal to Edit_Reject_Closing to only check for confirmation of submission, not closing.
             Close();
         }
@@ -91,6 +87,38 @@ namespace RejectsApp2
         {
             dateDispositionDropDown.Enabled = true;
             dateDispositionDropDown.Format = DateTimePickerFormat.Short;
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            var rejectReport = CreateGraphics();
+            var s = Size;
+            reportBitmap = new Bitmap(s.Width - 20, s.Height - 35, rejectReport);
+            var memoryGraphics = Graphics.FromImage(reportBitmap);
+            memoryGraphics.CopyFromScreen(Location.X + 10, Location.Y + 37, 0, 0, s);
+
+            resizeBitmap = new Bitmap(1059, 841);
+            var resizeforPrint = Graphics.FromImage(resizeBitmap);
+            resizeforPrint.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            resizeforPrint.DrawImage(reportBitmap, 0, 0, 1059, 841);
+
+            printPreviewDialog1.Document = printDocument1;
+            printDocument1.DefaultPageSettings.Landscape = true;
+            MessageBox.Show(printPreviewDialog1.Document.DefaultPageSettings.PaperSize.ToString());
+            MessageBox.Show(printDocument1.DefaultPageSettings.PaperSize.ToString());
+            printPreviewDialog1.ShowDialog();
+        }
+
+        private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            e.Graphics.DrawImage(resizeBitmap, 0, 0);
+        }
+
+        private void printPreviewDialog1_Load(object sender, EventArgs e)
+        {
+            printPreviewDialog1.Location = home.Location;
+            printPreviewDialog1.Size = Size;
+            printPreviewDialog1.BringToFront();
         }
     }
 }

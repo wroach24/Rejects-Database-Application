@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Reporting.WinForms;
 using RejectsApp2.Properties;
+using static RejectsApp2.Commands;
 
 namespace RejectsApp2
 {
@@ -15,26 +17,19 @@ namespace RejectsApp2
             this.home = home;
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-        }
 
-        private void Form1_Load(object sender, EventArgs e) //ADD VARIANCE DEPENDING ON THE TYPE OF FORM INPUT REQUESTED
+        private  void reportViewer1_LoadAsync(object sender, EventArgs e)
         {
-            var conString = ConnectionSettings.Default.connString;
             var query =
                 "SELECT * FROM rejects WHERE Date_of_Disposition >= '2022-03-10' ORDER BY Date_of_Disposition "; //ALTER
-            var path = ConnectionSettings.Default.excelString;
-            var cmd = new Commands();
-            var dt = cmd.GetValuesForReport(query);
+            var dt =  GetValuesForReport(query);
             var ds = new DataSet1();
             var rds = new ReportDataSource();
 
             ds.Tables.Add(dt);
 
             //changing report to the report path, need to relative path before publishing.
-            reportViewer1.LocalReport.ReportPath =
-                @"C:\Users\30053901\source\repos\RejectsApp2\RejectsApp2\Report1.rdlc";
+            reportViewer1.LocalReport.ReportPath = ConnectionSettings.Default.testReportFile;
 
             var names = reportViewer1.LocalReport.GetDataSourceNames();
             rds.Name = names[0];
@@ -51,21 +46,6 @@ namespace RejectsApp2
             reportViewer1.RefreshReport();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void reportViewer1_Load(object sender, EventArgs e)
-        {
-        }
-
-        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
-        {
-        }
-
-        private void dataGridView1_CellContentClick_2(object sender, DataGridViewCellEventArgs e)
-        {
-        }
 
         private void DisplayReport_FormClosing(object sender, FormClosingEventArgs e)
         {

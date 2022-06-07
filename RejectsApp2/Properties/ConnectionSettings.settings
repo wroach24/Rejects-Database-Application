@@ -11,5 +11,8 @@
     <Setting Name="notspecexcelString" Type="System.String" Scope="Application">
       <Value Profile="(Default)">\\svr300-003\smbd\Rejects DB\SQLTest\Backend\</Value>
     </Setting>
+    <Setting Name="testReportFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\svr300-003\smbd\Rejects DB\SQLTest\Backend\ReportTemplates\Report1.rdlc</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

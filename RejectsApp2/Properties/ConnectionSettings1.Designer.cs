@@ -50,5 +50,14 @@ namespace RejectsApp2.Properties {
                 return ((string)(this["notspecexcelString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\svr300-003\\smbd\\Rejects DB\\SQLTest\\Backend\\ReportTemplates\\Report1.rdlc")]
+        public string testReportFile {
+            get {
+                return ((string)(this["testReportFile"]));
+            }
+        }
     }
 }

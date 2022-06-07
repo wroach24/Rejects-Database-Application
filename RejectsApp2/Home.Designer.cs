@@ -31,13 +31,13 @@ namespace RejectsApp2
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             this.NewReject = new System.Windows.Forms.Button();
-            this.YokogawaLogo = new System.Windows.Forms.PictureBox();
             this.title = new System.Windows.Forms.TextBox();
             this.Reports = new System.Windows.Forms.Button();
             this.DeleteReject = new System.Windows.Forms.Button();
             this.EditRejectButton = new System.Windows.Forms.Button();
             this.excelPrintPreview = new System.Windows.Forms.PrintPreviewDialog();
             this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.YokogawaLogo = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.YokogawaLogo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,7 +48,7 @@ namespace RejectsApp2
             this.NewReject.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkBlue;
             this.NewReject.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lavender;
             this.NewReject.Font = new System.Drawing.Font("SansSerif", 9.749999F);
-            this.NewReject.Location = new System.Drawing.Point(347, 161);
+            this.NewReject.Location = new System.Drawing.Point(318, 169);
             this.NewReject.Name = "NewReject";
             this.NewReject.Size = new System.Drawing.Size(94, 30);
             this.NewReject.TabIndex = 0;
@@ -56,21 +56,12 @@ namespace RejectsApp2
             this.NewReject.UseVisualStyleBackColor = false;
             this.NewReject.Click += new System.EventHandler(this.NewReject_Click);
             // 
-            // YokogawaLogo
-            // 
-            this.YokogawaLogo.Image = ((System.Drawing.Image)(resources.GetObject("YokogawaLogo.Image")));
-            this.YokogawaLogo.Location = new System.Drawing.Point(195, 30);
-            this.YokogawaLogo.Name = "YokogawaLogo";
-            this.YokogawaLogo.Size = new System.Drawing.Size(401, 77);
-            this.YokogawaLogo.TabIndex = 6;
-            this.YokogawaLogo.TabStop = false;
-            // 
             // title
             // 
             this.title.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(75)))), ((int)(((byte)(109)))));
             this.title.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.title.Font = new System.Drawing.Font("SansSerif", 20F, System.Drawing.FontStyle.Bold);
-            this.title.Location = new System.Drawing.Point(195, 113);
+            this.title.Location = new System.Drawing.Point(170, 132);
             this.title.Name = "title";
             this.title.ReadOnly = true;
             this.title.Size = new System.Drawing.Size(397, 31);
@@ -85,7 +76,7 @@ namespace RejectsApp2
             this.Reports.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkBlue;
             this.Reports.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lavender;
             this.Reports.Font = new System.Drawing.Font("SansSerif", 9.749999F);
-            this.Reports.Location = new System.Drawing.Point(347, 308);
+            this.Reports.Location = new System.Drawing.Point(318, 277);
             this.Reports.Name = "Reports";
             this.Reports.Size = new System.Drawing.Size(94, 30);
             this.Reports.TabIndex = 3;
@@ -100,7 +91,7 @@ namespace RejectsApp2
             this.DeleteReject.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkBlue;
             this.DeleteReject.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lavender;
             this.DeleteReject.Font = new System.Drawing.Font("SansSerif", 9.749999F);
-            this.DeleteReject.Location = new System.Drawing.Point(347, 259);
+            this.DeleteReject.Location = new System.Drawing.Point(318, 241);
             this.DeleteReject.Name = "DeleteReject";
             this.DeleteReject.Size = new System.Drawing.Size(94, 30);
             this.DeleteReject.TabIndex = 4;
@@ -115,7 +106,7 @@ namespace RejectsApp2
             this.EditRejectButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkBlue;
             this.EditRejectButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lavender;
             this.EditRejectButton.Font = new System.Drawing.Font("SansSerif", 9.749999F);
-            this.EditRejectButton.Location = new System.Drawing.Point(347, 210);
+            this.EditRejectButton.Location = new System.Drawing.Point(318, 205);
             this.EditRejectButton.Name = "EditRejectButton";
             this.EditRejectButton.Size = new System.Drawing.Size(94, 30);
             this.EditRejectButton.TabIndex = 5;
@@ -136,9 +127,20 @@ namespace RejectsApp2
             // reportViewer1
             // 
             this.reportViewer1.Location = new System.Drawing.Point(0, 0);
-            this.reportViewer1.Name = "ReportViewer";
+            this.reportViewer1.Name = "reportViewer1";
+            this.reportViewer1.ServerReport.BearerToken = null;
             this.reportViewer1.Size = new System.Drawing.Size(396, 246);
             this.reportViewer1.TabIndex = 0;
+            // 
+            // YokogawaLogo
+            // 
+            this.YokogawaLogo.Image = ((System.Drawing.Image)(resources.GetObject("YokogawaLogo.Image")));
+            this.YokogawaLogo.Location = new System.Drawing.Point(170, 49);
+            this.YokogawaLogo.Name = "YokogawaLogo";
+            this.YokogawaLogo.Size = new System.Drawing.Size(401, 77);
+            this.YokogawaLogo.TabIndex = 6;
+            this.YokogawaLogo.TabStop = false;
+            this.YokogawaLogo.Click += new System.EventHandler(this.YokogawaLogo_Click);
             // 
             // Home
             // 
@@ -146,7 +148,7 @@ namespace RejectsApp2
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(75)))), ((int)(((byte)(109)))));
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(704, 450);
             this.Controls.Add(this.EditRejectButton);
             this.Controls.Add(this.DeleteReject);
             this.Controls.Add(this.Reports);

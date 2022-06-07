@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using static RejectsApp2.Commands;
 
 namespace RejectsApp2
 {
@@ -41,19 +42,18 @@ namespace RejectsApp2
         {
             Cursor.Current = Cursors.WaitCursor;
 
-            var command = new Commands();
-            var rejectNumInput = command.GetRejectByID(numberTextBox.Text);
+            var rejectNumInput = GetRejectByID(numberTextBox.Text);
 
             if (!string.IsNullOrEmpty(rejectNumInput.Reject_Number) && type == "edit")
             {
                 var editReject = new EditReject(prnt);
                 editReject.Show();
-                command.FillOutEditForm(rejectNumInput, editReject);
+                FillOutEditForm(rejectNumInput, editReject);
             }
             else if (!string.IsNullOrEmpty(rejectNumInput.Reject_Number) &&
                      type == "delete") //add confirmatino for delete
             {
-                var delReject = command.deleteReject(rejectNumInput);
+                var delReject = deleteReject(rejectNumInput);
             }
             else if (string.IsNullOrEmpty(rejectNumInput.Reject_Number))
             {

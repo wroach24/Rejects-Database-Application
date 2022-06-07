@@ -1,12 +1,18 @@
 ﻿using System;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Printing;
 using System.Windows.Forms;
+using static RejectsApp2.Commands;
 
 namespace RejectsApp2
 {
     public partial class NewReject : Form
     {
         private readonly Home home;
+        private Bitmap reportBitmap;
         private string[] requiredFields;
+        private Bitmap resizeBitmap;
         private bool submitFlag;
 
         public NewReject(Home home)
@@ -18,25 +24,19 @@ namespace RejectsApp2
 
         private void NewReject_Load(object sender, EventArgs e) //hides main form on load
         {
-            //filling out DropDown menus which are populated from the certain tables in the database
-            var command = new Commands();
-            var rejectTypes = command.GetValuesForForm("SELECT * FROM Reject_Type");
-            var productLines = command.GetValuesForForm("SELECT * FROM Product_Lines");
-            var responsible = command.GetValuesForForm("SELECT * FROM Responsible");
-            var vendors = command.GetValuesForForm("SELECT * FROM Vendors");
-            var technician = command.GetValuesForForm("SELECT * FROM Technician");
-            var dispositionCodes = command.GetValuesForForm("SELECT * FROM Disposition_Codes ");
-            command.FillOutDropMenu(rejectTypes, RejectTypeDropDown);
-            command.FillOutDropMenu(productLines, ProductLineDropDown);
-            command.FillOutDropMenu(responsible, ResponsibleDropDown);
-            command.FillOutDropMenu(technician, RejectedByDropDown);
-            command.FillOutDropMenu(dispositionCodes, DispositionDropDown, 'x');
-            command.FillOutDropMenu(vendors, VendorNameDropDown);
+            //initializes a field instance which fills out the form, given the dropdowns
+            var fieldInstance = new FieldItems();
+            fieldInstance.FillMenus(RejectTypeDropDown, ProductLineDropDown, ResponsibleDropDown, VendorNameDropDown);
+            fieldInstance.FillDispositionMenu(DispositionDropDown);
+            //setting the dateDisposition to empty to start as well as setting the date value if enabled
             dateDispositionDropDown.Value = DateTime.Now;
             dateDispositionDropDown.CustomFormat = " ";
             dateDispositionDropDown.Format = DateTimePickerFormat.Custom;
+            //setting the dateRejected time
             DateRejectedDropDown.Value = DateTime.Now;
+            //bringing to front
             BringToFront();
+            //hiding initial form
             home.Hide();
         }
 
@@ -58,10 +58,9 @@ namespace RejectsApp2
 
         private void RejectTypeDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var cmd = new Commands();
             var type = RejectTypeDropDown.SelectedItem.ToString();
             Cursor.Current = Cursors.WaitCursor;
-            var newRejectNum = cmd.GenerateRejectNumber(type);
+            var newRejectNum = GenerateRejectNumber(type);
             RejectNumberTextBox.Text = newRejectNum;
             Cursor.Current = Cursors.Default;
         }
@@ -83,20 +82,19 @@ namespace RejectsApp2
 
             var res = false;
             var rejNum = RejectNumberTextBox.Text;
-            var cmd = new Commands();
             if (checkRejectSelection() == false) return;
             res = MessageBox.Show("Are you sure you want to submit?",
                 "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
             if (res) return;
 
-            if (!cmd.finalRejectNumCheck(rejNum)) //make sure that another user has not taken the ID
+            if (!finalRejectNumCheck(rejNum)) //make sure that another user has not taken the ID
             {
-                rejNum = cmd.GenerateRejectNumber(RejectTypeDropDown.SelectedItem.ToString());
+                rejNum = GenerateRejectNumber(RejectTypeDropDown.SelectedItem.ToString());
                 MessageBox.Show("Reject_Number switched to: " + rejNum);
                 RejectNumberTextBox.Text = rejNum;
             }
 
-            cmd.NewRejectOperation(this);
+            NewRejectOperation(this);
             submitFlag =
                 true; //an edit was performed, signal to Edit_Reject_Closing to only check for confirmation of submission, not closing.
             Close();
@@ -130,10 +128,6 @@ namespace RejectsApp2
             checkRejectSelection();
         }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-        }
-
         private void DispositionDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
             dateDispositionDropDown.Enabled = true;
@@ -145,6 +139,49 @@ namespace RejectsApp2
         }
 
         private void RejectNumberTextBox_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            var rejectReport = CreateGraphics();
+            var s = pictureBox2.Size;
+            reportBitmap = new Bitmap(s.Width, s.Height - 35, rejectReport);
+            var memoryGraphics = Graphics.FromImage(reportBitmap);
+            memoryGraphics.CopyFromScreen(Location.X + 10, Location.Y + 37, 0, 0, s);
+
+            resizeBitmap = new Bitmap(1059, 841);
+            var resizeforPrint = Graphics.FromImage(resizeBitmap);
+            resizeforPrint.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            resizeforPrint.DrawImage(reportBitmap, 0, 0, 1059, 841);
+
+            printPreviewDialog1.Document = printDocument1;
+            printDocument1.DefaultPageSettings.Landscape = true;
+            MessageBox.Show(printPreviewDialog1.Document.DefaultPageSettings.PaperSize.ToString());
+            MessageBox.Show(printDocument1.DefaultPageSettings.PaperSize.ToString());
+            printPreviewDialog1.ShowDialog();
+        }
+
+        private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            e.Graphics.DrawImage(resizeBitmap, 0, 0);
+        }
+
+        private void printPreviewDialog1_Load(object sender, EventArgs e)
+        {
+            printPreviewDialog1.Location = Location;
+            printPreviewDialog1.Size = Size;
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void label19_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void label20_Click(object sender, EventArgs e)
         {
         }
 

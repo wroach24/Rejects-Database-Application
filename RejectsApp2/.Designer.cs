@@ -41,7 +41,6 @@ namespace RejectsApp2
             this.button1.TabIndex = 0;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // reportViewer1
             // 
@@ -62,7 +61,7 @@ namespace RejectsApp2
             this.reportViewer1.Size = new System.Drawing.Size(978, 630);
             this.reportViewer1.TabIndex = 1;
             this.reportViewer1.ZoomMode = Microsoft.Reporting.WinForms.ZoomMode.FullPage;
-            this.reportViewer1.Load += new System.EventHandler(this.reportViewer1_Load);
+            this.reportViewer1.Load += new System.EventHandler(this.reportViewer1_LoadAsync);
             // 
             // DisplayReport
             // 
@@ -75,7 +74,7 @@ namespace RejectsApp2
             this.Name = "DisplayReport";
             this.Text = "Report Display";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DisplayReport_FormClosing);
-            this.Load += new System.EventHandler(this.Form1_Load);
+            //this.Load += new System.EventHandler();
             this.ResumeLayout(false);
             this.PerformLayout();
 

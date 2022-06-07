@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using static RejectsApp2.Commands;
 
 namespace RejectsApp2
 {
@@ -10,9 +11,8 @@ namespace RejectsApp2
         public Home()
         {
             InitializeComponent();
-            var command = new Commands();
             Cursor.Current = Cursors.AppStarting;
-            command.GetRejectByID("");
+            GetRejectByID("");
             Cursor.Current = Cursors.Default;
         }
 
@@ -52,6 +52,10 @@ namespace RejectsApp2
 
             editRejectInput.BringToFront();
             editRejectInput.ShowDialog();
+        }
+
+        private void YokogawaLogo_Click(object sender, EventArgs e)
+        {
         }
     }
 }

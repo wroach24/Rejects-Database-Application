@@ -21,7 +21,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>15</ApplicationRevision>
+    <ApplicationRevision>16</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -214,6 +214,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FieldItems.cs" />
     <Compile Include="Commands.cs" />
     <Compile Include="DataSet1.cs">
       <DependentUpon>DataSet1.xsd</DependentUpon>
@@ -223,12 +224,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Compile>
-    <Compile Include="ExcelCreation.cs" />
-    <Compile Include="ReportDisplay.cs">
+    <Compile Include="DisplayReport.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include=".Designer.cs">
-      <DependentUpon>ReportDisplay.cs</DependentUpon>
+      <DependentUpon>DisplayReport.cs</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Rejects.cs" />
@@ -258,8 +258,8 @@
       <DependentUpon>NewReject.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ReportDisplay.resx">
-      <DependentUpon>ReportDisplay.cs</DependentUpon>
+    <EmbeddedResource Include="DisplayReport.resx">
+      <DependentUpon>DisplayReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
@@ -318,6 +318,7 @@
     <Content Include="Properties\yokogawa-logo-png-transparent %281%29 %281%29.png" />
     <Content Include="Properties\yokogawa-logo-png-transparent %281%29.png" />
     <Content Include="Properties\yokogawa-logo-png-transparent.png" />
+    <None Include="Resources\6659021.png" />
     <None Include="Resources\OIP.png" />
   </ItemGroup>
   <ItemGroup>
