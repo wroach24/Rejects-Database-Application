@@ -51,8 +51,12 @@ namespace RejectsApp2
                 FillOutEditForm(rejectNumInput, editReject);
             }
             else if (!string.IsNullOrEmpty(rejectNumInput.Reject_Number) &&
-                     type == "delete") //add confirmatino for delete
+                     type == "delete")
             {
+                Name = "Delete Reject";
+                var res = MessageBox.Show("Are you sure you want to DELETE? This action is irreversible.",
+                    "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
+                if (res) return;
                 var delReject = deleteReject(rejectNumInput);
             }
             else if (string.IsNullOrEmpty(rejectNumInput.Reject_Number))

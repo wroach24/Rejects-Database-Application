@@ -536,6 +536,8 @@ namespace RejectsApp2
             this.UnitCostTextBox.Size = new System.Drawing.Size(76, 20);
             this.UnitCostTextBox.TabIndex = 12;
             this.UnitCostTextBox.Click += new System.EventHandler(this.UnitCostTextBox_Click);
+            this.UnitCostTextBox.TextChanged += new System.EventHandler(this.UnitCostTextBox_TextChanged);
+            this.UnitCostTextBox.VisibleChanged += new System.EventHandler(this.UnitCostTextBox_VisibleChanged);
             // 
             // QtyRejectedTextBox
             // 

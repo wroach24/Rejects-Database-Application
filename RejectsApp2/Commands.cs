@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using RejectsApp2.Properties;
 
@@ -10,13 +9,9 @@ namespace RejectsApp2
 {
     public static class Commands
     {
-        //PRE: reject object // POST: updated database from reject object values, new row.
-        public static int AddReject(Rejects reject)
+        //generates dictionary for reading/writing to database
+        public static Dictionary<string,object> generateArgument(Rejects reject)
         {
-            const string query =
-                "INSERT INTO Rejects (Reject_Number, Part_Number, Vendor_ID, Vendor_Name, RMA_Number, Date_of_Disposition, Qty_Received, Qty_Inspected, Qty_Rejected, Unit_cost, Lot_Number, Responsible, Product_Line,Disposition,PO_Number,Discrepancy,Date_Rejected,Part_Description,Serial_Number,Rejected_By) " +
-                "VALUES (@RejectNum,@PartNum,@VendorID,@VendorName,@RMAnum,@Date_of_Disposition,@QtyReceived,@QtyInspected,@QtyRejected,@UnitCost,@LotNum,@Responsible,@Product_Line,@Disposition,@PONum,@Discrepancy,@DateRejected,@PartDescription,@SerialNum,@RejectedBy)";
-
             var args = new Dictionary<string, dynamic>
             {
                 { "@RejectNum", reject.Reject_Number },
@@ -40,8 +35,66 @@ namespace RejectsApp2
                 { "@PartDescription", reject.Part_Description },
                 { "@SerialNum", reject.Serial_Number }
             };
+            return args;
+        }
+        //generates dictionary for reading to specific variables for loading report
+        public static Dictionary<string, object> generateArgument()
+        {
+            var rejNum = "";
+            var rejected = DateTime.Parse("01/10/1000");
+            var PartNum = "";
+            var PartDesc = "";
+            var SerialNum = "";
+            var LotNum = "";
+            var PONum = "";
+            var QtyRec = 0;
+            var QtyIns = 0;
+            var QtyRej = 0;
+            var Disrepancy = "";
+            var Responsible = "";
+            var Product_Line = "";
+            var Rejected_By = "";
+            var VendorID = "";
+            var Vendor_Name = "";
+            var RMA_Number = "";
+            var Disposition = "";
+            DateTime? DateOfDisp = DateTime.Parse("01/10/1000");
+            var UnitCost = "";
+            var args = new Dictionary<string, object>
+            {
+                { "@Reject_Number", rejNum },
+                { "@PartNum", PartNum },
+                { "@Vendor_ID", VendorID },
+                { "@Vendor_Name", Vendor_Name },
+                { "@RMA_Number", RMA_Number },
+                { "@Date_of_Disposition", DateOfDisp },
+                { "@QtyReceived", QtyRec },
+                { "@QtyInspected", QtyIns },
+                { "@QtyRejected", QtyRej },
+                { "@UnitCost", UnitCost },
+                { "@LotNum", LotNum },
+                { "@Responsible", Responsible },
+                { "@Product_Line", Product_Line },
+                { "@RejectedBy", Rejected_By },
+                { "@Disposition", Disposition },
+                { "@PO_Number", PONum },
+                { "@Discrepancy", Disrepancy },
+                { "@DateRejected", rejected },
+                { "@PartDescription", PartDesc },
+                { "@SerialNum", SerialNum }
+            };
+            return args;
+        }
+        //PRE: reject object // POST: updated database from reject object values, new row.
+        public static int AddReject(Rejects reject)
+        {
+            const string query =
+                "INSERT INTO Rejects (Reject_Number, Part_Number, Vendor_ID, Vendor_Name, RMA_Number, Date_of_Disposition, Qty_Received, Qty_Inspected, Qty_Rejected, Unit_cost, Lot_Number, Responsible, Product_Line,Disposition,PO_Number,Discrepancy,Date_Rejected,Part_Description,Serial_Number,Rejected_By) " +
+                "VALUES (@RejectNum,@PartNum,@VendorID,@VendorName,@RMAnum,@Date_of_Disposition,@QtyReceived,@QtyInspected,@QtyRejected,@UnitCost,@LotNum,@Responsible,@Product_Line,@Disposition,@PONum,@Discrepancy,@DateRejected,@PartDescription,@SerialNum,@RejectedBy)";
 
-            return ExecuteWrite(query, args);
+           
+
+            return ExecuteWrite(query, generateArgument(reject));
         }
 
         //PRE: reject object // POST: updated database, deleted row.
@@ -49,34 +102,7 @@ namespace RejectsApp2
         {
             var query =
                 "DELETE FROM rejects WHERE Reject_Number = @RejectNum";
-
-            //here we are setting the parameter values that will be actually
-            //replaced in the query in Execute method
-            var args = new Dictionary<string, object>
-            {
-                { "@RejectNum", reject.Reject_Number },
-                { "@PartNum", reject.Part_Number },
-                { "@VendorID", reject.VendorID },
-                { "@VendorName", reject.Vendor_Name },
-                { "@RMAnum", reject.RMA_Number },
-                { "@Date_of_Disposition", reject.Disposition_Date },
-                { "@QtyReceived", reject.QTY_Received },
-                { "@QtyInspected", reject.QTY_Inspected },
-                { "@QtyRejected", reject.QTY_Rejected },
-                { "@UnitCost", reject.Unit_Cost },
-                { "@LotNum", reject.Lot_Number },
-                { "@Responsible", reject.Responsible },
-                { "@Product_Line", reject.Product_Line },
-                { "@RejectedBy", reject.Rejected_By },
-                { "@Disposition", reject.Disposition },
-                { "@PONum", reject.PO_Number },
-                { "@Discrepancy", reject.Discrepancy },
-                { "@DateRejected", reject.Date_Rejected.Date },
-                { "@PartDescription", reject.Part_Description },
-                { "@SerialNum", reject.Serial_Number }
-            };
-
-            return ExecuteWrite(query, args);
+            return ExecuteWrite(query, generateArgument(reject));
         }
 
         //PRE: reject object // POST: updated database based upon the reject object which is derived from user input in the edit reject form
@@ -85,52 +111,27 @@ namespace RejectsApp2
             const string query =
                 "UPDATE rejects SET Unit_cost = @UnitCost, Vendor_ID = @VendorID, Vendor_Name = @VendorName, RMA_Number = @RMAnum, Date_of_Disposition = @Date_of_Disposition, Responsible = @Responsible, Product_Line = @Product_Line, Rejected_By = @RejectedBy, Disposition = @Disposition, Qty_Received = @QtyReceived, Qty_Inspected = @QtyInspected, Qty_Rejected = @QtyRejected, Lot_Number = @LotNum, PO_Number = @PONum, Discrepancy = @Discrepancy,  Part_Number = @PartNum, Serial_Number = @SerialNum, Date_Rejected = @DateRejected, Part_Description = @PartDescription  WHERE  Reject_Number = @RejectNum";
 
-            //here we are setting the parameter values that will be actually
-            //replaced in the query in Execute method
-            var args = new Dictionary<string, object>
-            {
-                { "@RejectNum", reject.Reject_Number },
-                { "@PartNum", reject.Part_Number },
-                { "@VendorID", reject.VendorID },
-                { "@VendorName", reject.Vendor_Name },
-                { "@RMAnum", reject.RMA_Number },
-                { "@Date_of_Disposition", reject.Disposition_Date },
-                { "@QtyReceived", reject.QTY_Received },
-                { "@QtyInspected", reject.QTY_Inspected },
-                { "@QtyRejected", reject.QTY_Rejected },
-                { "@UnitCost", reject.Unit_Cost },
-                { "@LotNum", reject.Lot_Number },
-                { "@Responsible", reject.Responsible },
-                { "@Product_Line", reject.Product_Line },
-                { "@RejectedBy", reject.Rejected_By },
-                { "@Disposition", reject.Disposition },
-                { "@PONum", reject.PO_Number },
-                { "@Discrepancy", reject.Discrepancy },
-                { "@DateRejected", reject.Date_Rejected.Date },
-                { "@PartDescription", reject.Part_Description },
-                { "@SerialNum", reject.Serial_Number }
-            };
-
-            return ExecuteWrite(query, args);
+            return ExecuteWrite(query, generateArgument(reject));
         }
 
+        //checks if the text is an integer, else returns null
         public static int? checkIntText(string input)
         {
-            int result = 0;
+            var result = 0;
             int.TryParse(input, out result);
             if (result == 0)
                 return null;
-            else
-                return result;
+            return result;
         }
+
         //Performs the edit reject operation, ensuring the values are correct, nulls are assigned to non-nullable types and then creates Rejects object.
         public static Rejects EditRejectOperation(EditReject editRejectForm)
         {
             Cursor.Current = Cursors.WaitCursor;
-            int? qtyInspNull = checkIntText(editRejectForm.QtyInspectedTextBox.Text);
-            int? qtyRejNull = checkIntText(editRejectForm.QtyRejectedTextBox.Text);
-            int? qtyRecNull = checkIntText(editRejectForm.QtyReceivedTextBox.Text);
-            
+            var qtyInspNull = checkIntText(editRejectForm.QtyInspectedTextBox.Text);
+            var qtyRejNull = checkIntText(editRejectForm.QtyRejectedTextBox.Text);
+            var qtyRecNull = checkIntText(editRejectForm.QtyReceivedTextBox.Text);
+
             DateTime? dispDate = null;
             var disp = "";
             if (!string.IsNullOrEmpty(editRejectForm.DispositionDropDown.Text))
@@ -206,6 +207,7 @@ namespace RejectsApp2
                             val = reader["Reject_Number"].ToString().Trim();
                         connection.Close();
                     }
+
                     val = val.Substring(1, val.Length - 1);
                     var result = long.Parse(val);
                     result++;
@@ -213,8 +215,7 @@ namespace RejectsApp2
                     return val;
                 }
 
-                else //no need to increment, some specific user input procedure is applied here
-                    return type.Trim().Substring(0, 1);
+                return type.Trim().Substring(0, 1);
             }
             catch
             {
@@ -226,13 +227,10 @@ namespace RejectsApp2
         //pre: string corresponding to a database Reject_Number post: Rejects object composed of the column values associated with the corresponding row to the Reject_Number id.
         public static Rejects GetRejectByID(string id)
         {
-            #region variableDeclaration
 
             var path = ConnectionSettings.Default.connString;
             var query = "SELECT * FROM rejects WHERE Reject_Number = '" + id + "' LIMIT 1";
             var newReject = new Rejects();
-
-            #endregion variableDeclaration
 
             try
             {
@@ -259,12 +257,13 @@ namespace RejectsApp2
                         var RMA_Number = rejReader["RMA_Number"].ToString();
                         var Disposition = rejReader["Disposition"].ToString();
                         var UnitCost = rejReader["Unit_cost"].ToString();
-
                         int.TryParse(rejReader["Qty_Received"].ToString(), out var QtyRec);
                         int.TryParse(rejReader["Qty_Inspected"].ToString(), out var QtyIns);
                         int.TryParse(rejReader["QTY_Rejected"].ToString(), out var QtyRej);
                         DateTime.TryParse(rejReader["Date_Of_Disposition"].ToString(), out var DateOfDisp);
                         DateTime.TryParse(rejReader["Date_Rejected"].ToString(), out var rejected);
+
+                        //instantiate new rejects object
                         newReject = new Rejects(rejNum, rejected, PartNum, PartDesc, SerialNum, LotNum, PONum, QtyRec,
                             QtyIns,
                             QtyRej, Disrepancy, Responsible, Product_Line, Rejected_By, VendorID, Vendor_Name,
@@ -277,7 +276,7 @@ namespace RejectsApp2
             }
             catch
             {
-                MessageBox.Show("Something went wrong with obtaining RejectNumber");
+                MessageBox.Show("Something went wrong with obtaining the details of the specified reject number.");
                 throw;
             }
 
@@ -304,56 +303,12 @@ namespace RejectsApp2
             return dt;
         }
 
-  
+
         //pre:query string post:datatable returning query results
         public static DataTable GetValuesForReport(string q)
         {
             var query = q;
-            var rejNum = "";
-            var rejected = DateTime.Parse("01/10/1000");
-            var PartNum = "";
-            var PartDesc = "";
-            var SerialNum = "";
-            var LotNum = "";
-            var PONum = "";
-            var QtyRec = 0;
-            var QtyIns = 0;
-            var QtyRej = 0;
-            var Disrepancy = "";
-            var Responsible = "";
-            var Product_Line = "";
-            var Rejected_By = "";
-            var VendorID = "";
-            var Vendor_Name = "";
-            var RMA_Number = "";
-            var Disposition = "";
-            DateTime? DateOfDisp = DateTime.Parse("01/10/1000");
-            var UnitCost = "";
-            var args = new Dictionary<string, object>
-            {
-                { "@Reject_Number", rejNum },
-                { "@PartNum", PartNum },
-                { "@Vendor_ID", VendorID },
-                { "@Vendor_Name", Vendor_Name },
-                { "@RMA_Number", RMA_Number },
-                { "@Date_of_Disposition", DateOfDisp },
-                { "@QtyReceived", QtyRec },
-                { "@QtyInspected", QtyIns },
-                { "@QtyRejected", QtyRej },
-                { "@UnitCost", UnitCost },
-                { "@LotNum", LotNum },
-                { "@Responsible", Responsible },
-                { "@Product_Line", Product_Line },
-                { "@RejectedBy", Rejected_By },
-                { "@Disposition", Disposition },
-                { "@PO_Number", PONum },
-                { "@Discrepancy", Disrepancy },
-                { "@DateRejected", rejected },
-                { "@PartDescription", PartDesc },
-                { "@SerialNum", SerialNum }
-            };
-
-            var dt = ExecuteRead(query, args);
+            var dt = ExecuteRead(query, generateArgument());
 
             if (dt == null || dt.Rows.Count == 0) return null;
 
@@ -362,12 +317,11 @@ namespace RejectsApp2
 
         public static Rejects NewRejectOperation(NewReject newRejectForm)
         {
-
             DateTime? dispDate = null;
             string disp = null;
-            int? qtyInspNull = checkIntText(newRejectForm.QtyInspectedTextBox.Text);
-            int? qtyRejNull = checkIntText(newRejectForm.QtyRejectedTextBox.Text);
-            int? qtyRecNull = checkIntText(newRejectForm.QtyReceivedTextBox.Text);
+            var qtyInspNull = checkIntText(newRejectForm.QtyInspectedTextBox.Text);
+            var qtyRejNull = checkIntText(newRejectForm.QtyRejectedTextBox.Text);
+            var qtyRecNull = checkIntText(newRejectForm.QtyReceivedTextBox.Text);
             //if disposition has not been selected, as such date is null (necessary for not assigning date until disposition is assigned)
             if (newRejectForm.dateDispositionDropDown.Enabled)
                 dispDate = newRejectForm.dateDispositionDropDown.Value.Date;
@@ -424,7 +378,7 @@ namespace RejectsApp2
         }
 
         //PRE: valid query, args supplied by other method POST:returns datatable filled with the results read from the query
-        private static DataTable ExecuteRead(string query, Dictionary<string, object> args) 
+        private static DataTable ExecuteRead(string query, Dictionary<string, object> args)
         {
             if (string.IsNullOrEmpty(query.Trim()))
                 return null;

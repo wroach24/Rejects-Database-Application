@@ -79,5 +79,35 @@ namespace RejectsApp2.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap yokogawa_logo_png_transparent__1___1_ {
+            get {
+                object obj = ResourceManager.GetObject("yokogawa-logo-png-transparent (1) (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap yokogawa_logo_png_transparent__1___1___1_ {
+            get {
+                object obj = ResourceManager.GetObject("yokogawa-logo-png-transparent (1) (1) (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap yokogawa_logo_png_transparent__2_ {
+            get {
+                object obj = ResourceManager.GetObject("yokogawa-logo-png-transparent (2)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

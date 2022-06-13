@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using static RejectsApp2.Commands;
 
@@ -41,10 +42,14 @@ namespace RejectsApp2
         {
             //var xd = new ExcelCreation("hhe");
             //xd.SrapDoc();
-            var genForm = new DisplayReport(this);
-            genForm.StartPosition = StartPosition;
-            genForm.Show();
+            //var genForm = new DisplayReport(this);
+            //genForm.StartPosition = StartPosition;
+            //genForm.Show();
+            var genform2 = new FormGenerator();
+            genform2.Show();
+            genform2.Location = new Point(Location.X + 20, Location.Y + 20);
         }
+
 
         private void EditRejectButton_Click(object sender, EventArgs e)
         {

@@ -35,28 +35,47 @@ namespace RejectsApp2.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\svr300-003\\smbd\\Rejects DB\\SQLTest\\Backend\\RejectReport.xlsx")]
-        public string excelString {
-            get {
-                return ((string)(this["excelString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\svr300-003\\smbd\\Rejects DB\\SQLTest\\Backend\\")]
-        public string notspecexcelString {
-            get {
-                return ((string)(this["notspecexcelString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("\\\\svr300-003\\smbd\\Rejects DB\\SQLTest\\Backend\\ReportTemplates\\Report1.rdlc")]
         public string testReportFile {
             get {
                 return ((string)(this["testReportFile"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\30053901\\source\\repos\\RejectsApp2\\RejectsApp2\\Report4.rdlc")]
+        public string scrapRepFile {
+            get {
+                return ((string)(this["scrapRepFile"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\30053901\\source\\repos\\RejectsApp2\\RejectsApp2\\ReceivingMRB.rdlc")]
+        public string recRepFile {
+            get {
+                return ((string)(this["recRepFile"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\30053901\\source\\repos\\RejectsApp2\\RejectsApp2\\OpenItems.rdlc")]
+        public string openRepFile {
+            get {
+                return ((string)(this["openRepFile"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\30053901\\source\\repos\\RejectsApp2\\RejectsApp2\\ProductLineNon-Conformance" +
+            ".rdlc")]
+        public string productRepFile {
+            get {
+                return ((string)(this["productRepFile"]));
             }
         }
     }

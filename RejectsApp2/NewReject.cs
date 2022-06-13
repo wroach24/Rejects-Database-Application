@@ -185,6 +185,49 @@ namespace RejectsApp2
         {
         }
 
+        private void UnitCostTextBox_TextChanged(object sender, EventArgs e)
+        {
+            var periodCount = 0;
+            var index = 0;
+
+            foreach (var num in UnitCostTextBox.Text)
+            {
+                if (char.IsDigit(num) && periodCount <= 1)
+                {
+                }
+                else if (num == '.')
+                {
+                    periodCount++;
+                }
+                else if (num == '$')
+                {
+                    MessageBox.Show("Do not enter the dollar sign.");
+                    UnitCostTextBox.Text = UnitCostTextBox.Text.Remove(index);
+                }
+                else
+                {
+                    MessageBox.Show("Only numbers and decimals allowed.");
+                    UnitCostTextBox.Text = UnitCostTextBox.Text.Remove(index);
+                }
+
+                if (periodCount > 1)
+                {
+                    MessageBox.Show("There are too many decimals.");
+                    UnitCostTextBox.Text = UnitCostTextBox.Text.Remove(index);
+                }
+
+                index++;
+            }
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+        }
+
         #region checkSelection
 
         private void PartNumberTextBox_MouseClick(object sender, MouseEventArgs e)

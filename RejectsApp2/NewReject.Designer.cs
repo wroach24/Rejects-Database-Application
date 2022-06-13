@@ -311,6 +311,7 @@ namespace RejectsApp2
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(699, 112);
             this.panel2.TabIndex = 10;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // VendorNameDropDown
             // 
@@ -544,6 +545,7 @@ namespace RejectsApp2
             this.UnitCostTextBox.Size = new System.Drawing.Size(84, 20);
             this.UnitCostTextBox.TabIndex = 13;
             this.UnitCostTextBox.Click += new System.EventHandler(this.UnitCostTextBox_Click);
+            this.UnitCostTextBox.TextChanged += new System.EventHandler(this.UnitCostTextBox_TextChanged);
             // 
             // QtyRejectedTextBox
             // 
@@ -632,6 +634,7 @@ namespace RejectsApp2
             this.pictureBox2.Size = new System.Drawing.Size(699, 442);
             this.pictureBox2.TabIndex = 24;
             this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // NewReject
             // 
