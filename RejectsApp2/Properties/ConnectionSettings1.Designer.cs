@@ -35,16 +35,7 @@ namespace RejectsApp2.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\svr300-003\\smbd\\Rejects DB\\SQLTest\\Backend\\ReportTemplates\\Report1.rdlc")]
-        public string testReportFile {
-            get {
-                return ((string)(this["testReportFile"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\30053901\\source\\repos\\RejectsApp2\\RejectsApp2\\Report4.rdlc")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\svr300-003\\smbd\\Rejects DB\\SQLTest\\Backend\\ReportTemplates\\ScrapReport.rdlc")]
         public string scrapRepFile {
             get {
                 return ((string)(this["scrapRepFile"]));
@@ -53,7 +44,7 @@ namespace RejectsApp2.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\30053901\\source\\repos\\RejectsApp2\\RejectsApp2\\ReceivingMRB.rdlc")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\svr300-003\\smbd\\Rejects DB\\SQLTest\\Backend\\ReportTemplates\\ReceivingMRB.rdlc")]
         public string recRepFile {
             get {
                 return ((string)(this["recRepFile"]));
@@ -62,7 +53,7 @@ namespace RejectsApp2.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\30053901\\source\\repos\\RejectsApp2\\RejectsApp2\\OpenItems.rdlc")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\svr300-003\\smbd\\Rejects DB\\SQLTest\\Backend\\ReportTemplates\\OpenItems.rdlc")]
         public string openRepFile {
             get {
                 return ((string)(this["openRepFile"]));
@@ -71,11 +62,41 @@ namespace RejectsApp2.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\30053901\\source\\repos\\RejectsApp2\\RejectsApp2\\ProductLineNon-Conformance" +
-            ".rdlc")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\svr300-003\\smbd\\Rejects DB\\SQLTest\\Backend\\ReportTemplates\\ProductLineNon-Confo" +
+            "rmance.rdlc")]
         public string productRepFile {
             get {
                 return ((string)(this["productRepFile"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\svr300-003\\smbd\\Rejects DB\\SQLTest\\Backend\\ReportTemplates\\PartHistoryReport.rd" +
+            "lc")]
+        public string partNumRepFile {
+            get {
+                return ((string)(this["partNumRepFile"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("data source= \\\\\\\\\\\\\\\\svr300-003\\smbd\\Rejects DB\\SQLTest\\Backend\\Backups\\EndofMont" +
+            "hBackup\\EMBackupRejectsDB-SQL.sqlite")]
+        public string endOfMonthBackup {
+            get {
+                return ((string)(this["endOfMonthBackup"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("data source= \\\\\\\\\\\\\\\\svr300-003\\smbd\\Rejects DB\\SQLTest\\Backend\\Backups\\FridayBac" +
+            "kup\\FBackupRejectsDB-SQL.sqlite")]
+        public string fridayBackup {
+            get {
+                return ((string)(this["fridayBackup"]));
             }
         }
     }

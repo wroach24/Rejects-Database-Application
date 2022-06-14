@@ -73,16 +73,6 @@ namespace RejectsApp2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap OIP {
-            get {
-                object obj = ResourceManager.GetObject("OIP", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap yokogawa_logo_png_transparent__1___1_ {
             get {
                 object obj = ResourceManager.GetObject("yokogawa-logo-png-transparent (1) (1)", resourceCulture);

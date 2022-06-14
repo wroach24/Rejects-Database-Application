@@ -5,20 +5,26 @@
     <Setting Name="connString" Type="System.String" Scope="Application">
       <Value Profile="(Default)">data source= \\\\\\\\svr300-003\\smbd\\Rejects DB\\SQLTest\\Backend\\RejectsDB-SQL.sqlite</Value>
     </Setting>
-    <Setting Name="testReportFile" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">\\svr300-003\smbd\Rejects DB\SQLTest\Backend\ReportTemplates\Report1.rdlc</Value>
-    </Setting>
     <Setting Name="scrapRepFile" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">C:\Users\30053901\source\repos\RejectsApp2\RejectsApp2\Report4.rdlc</Value>
+      <Value Profile="(Default)">\\svr300-003\smbd\Rejects DB\SQLTest\Backend\ReportTemplates\ScrapReport.rdlc</Value>
     </Setting>
     <Setting Name="recRepFile" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">C:\Users\30053901\source\repos\RejectsApp2\RejectsApp2\ReceivingMRB.rdlc</Value>
+      <Value Profile="(Default)">\\svr300-003\smbd\Rejects DB\SQLTest\Backend\ReportTemplates\ReceivingMRB.rdlc</Value>
     </Setting>
     <Setting Name="openRepFile" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">C:\Users\30053901\source\repos\RejectsApp2\RejectsApp2\OpenItems.rdlc</Value>
+      <Value Profile="(Default)">\\svr300-003\smbd\Rejects DB\SQLTest\Backend\ReportTemplates\OpenItems.rdlc</Value>
     </Setting>
     <Setting Name="productRepFile" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">C:\Users\30053901\source\repos\RejectsApp2\RejectsApp2\ProductLineNon-Conformance.rdlc</Value>
+      <Value Profile="(Default)">\\svr300-003\smbd\Rejects DB\SQLTest\Backend\ReportTemplates\ProductLineNon-Conformance.rdlc</Value>
+    </Setting>
+    <Setting Name="partNumRepFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\svr300-003\smbd\Rejects DB\SQLTest\Backend\ReportTemplates\PartHistoryReport.rdlc</Value>
+    </Setting>
+    <Setting Name="endOfMonthBackup" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">data source= \\\\\\\\svr300-003\smbd\Rejects DB\SQLTest\Backend\Backups\EndofMonthBackup\EMBackupRejectsDB-SQL.sqlite</Value>
+    </Setting>
+    <Setting Name="fridayBackup" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">data source= \\\\\\\\svr300-003\smbd\Rejects DB\SQLTest\Backend\Backups\FridayBackup\FBackupRejectsDB-SQL.sqlite</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -21,7 +21,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>16</ApplicationRevision>
+    <ApplicationRevision>18</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -72,6 +72,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>imageedit_10_9283800874.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -227,75 +230,68 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FieldItems.cs" />
-    <Compile Include="Commands.cs" />
-    <Compile Include="DataSet1.cs">
-      <DependentUpon>DataSet1.xsd</DependentUpon>
+    <Compile Include="Classes\Backup.cs" />
+    <Compile Include="Classes\EditRejectCommands.cs" />
+    <Compile Include="Classes\NewRejectCommands.cs" />
+    <Compile Include="Classes\FieldItems.cs" />
+    <Compile Include="Classes\Commands.cs" />
+    <Compile Include=".cs">
+      <DependentUpon>RejectReportDataset.xsd</DependentUpon>
     </Compile>
-    <Compile Include="DataSet1.Designer.cs">
+    <Compile Include="RejectReportDataset.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DataSet1.xsd</DependentUpon>
+      <DependentUpon>RejectReportDataset.xsd</DependentUpon>
     </Compile>
-    <Compile Include="DisplayReport.cs">
+    <Compile Include="Forms\FormGenerator.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include=".Designer.cs">
-      <DependentUpon>DisplayReport.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormGenerator.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormGenerator.Designer.cs">
+    <Compile Include="Forms\FormGenerator.Designer.cs">
       <DependentUpon>FormGenerator.cs</DependentUpon>
     </Compile>
-    <Compile Include="Rejects.cs" />
+    <Compile Include="Forms\Rejects.cs" />
     <Compile Include="Driver.cs" />
-    <Compile Include="InputBox.cs">
+    <Compile Include="Forms\InputBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InputBox.Designer.cs">
+    <Compile Include="Forms\InputBox.Designer.cs">
       <DependentUpon>InputBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Home.cs">
+    <Compile Include="Forms\Home.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Home.Designer.cs">
+    <Compile Include="Forms\Home.Designer.cs">
       <DependentUpon>Home.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditReject.cs">
+    <Compile Include="Forms\EditReject.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditReject.Designer.cs">
+    <Compile Include="Forms\EditReject.Designer.cs">
       <DependentUpon>EditReject.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewReject.cs">
+    <Compile Include="Forms\NewReject.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewReject.Designer.cs">
+    <Compile Include="Forms\NewReject.Designer.cs">
       <DependentUpon>NewReject.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="DisplayReport.resx">
-      <DependentUpon>DisplayReport.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormGenerator.resx">
+    <EmbeddedResource Include="Forms\FormGenerator.resx">
       <DependentUpon>FormGenerator.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Home.resx">
+    <EmbeddedResource Include="Forms\Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="InputBox.resx">
+    <EmbeddedResource Include="Forms\InputBox.resx">
       <DependentUpon>InputBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditReject.resx">
+    <EmbeddedResource Include="Forms\EditReject.resx">
       <DependentUpon>EditReject.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewReject.resx">
+    <EmbeddedResource Include="Forms\NewReject.resx">
       <DependentUpon>NewReject.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OpenItems.rdlc" />
+    <EmbeddedResource Include="ReportTemplates\OpenItems.rdlc" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -311,21 +307,25 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="ProductLineNon-Conformance.rdlc" />
-    <EmbeddedResource Include="Report1.rdlc" />
-    <EmbeddedResource Include="Report2.rdlc" />
-    <EmbeddedResource Include="ReceivingMRB.rdlc" />
-    <EmbeddedResource Include="Report4.rdlc" />
-    <None Include="DataSet1.xsc">
-      <DependentUpon>DataSet1.xsd</DependentUpon>
+    <EmbeddedResource Include="ReportTemplates\ProductLineNon-Conformance.rdlc" />
+    <EmbeddedResource Include="ReportTemplates\Report1.rdlc" />
+    <EmbeddedResource Include="ReportTemplates\Report2.rdlc" />
+    <EmbeddedResource Include="ReportTemplates\ReceivingMRB.rdlc" />
+    <EmbeddedResource Include="ReportTemplates\PartHistoryReport.rdlc" />
+    <EmbeddedResource Include="ReportTemplates\ScrapReport.rdlc" />
+    <None Include=".xsc">
+      <DependentUpon>RejectReportDataset.xsd</DependentUpon>
     </None>
-    <None Include="DataSet1.xsd">
+    <None Include="RejectReportDataset.xsc">
+      <DependentUpon>RejectReportDataset.xsd</DependentUpon>
+    </None>
+    <None Include="RejectReportDataset.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
+      <LastGenOutput>RejectReportDataset.Designer.cs</LastGenOutput>
     </None>
-    <None Include="DataSet1.xss">
-      <DependentUpon>DataSet1.xsd</DependentUpon>
+    <None Include=".xss">
+      <DependentUpon>RejectReportDataset.xsd</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\ConnectionSettings.settings">
@@ -333,12 +333,16 @@
       <LastGenOutput>ConnectionSettings1.Designer.cs</LastGenOutput>
     </None>
     <None Include="Properties\DataSources\DataSet1.datasource" />
+    <None Include="RejectReportDataset.xss">
+      <DependentUpon>RejectReportDataset.xsd</DependentUpon>
+    </None>
     <None Include="RejectsApp2_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="imageedit_10_9283800874.ico" />
     <Content Include="Properties\R %281%29.png" />
     <Content Include="Properties\R.png" />
     <Content Include="Properties\yokogawa-logo-png-transparent %281%29 %281%29 %281%29.png" />
@@ -364,6 +368,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
