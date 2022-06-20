@@ -29,7 +29,6 @@ namespace RejectsApp2
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditReject));
             this.button2 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.RejectTypeDropDown = new System.Windows.Forms.ComboBox();
@@ -78,8 +77,6 @@ namespace RejectsApp2
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -101,9 +98,8 @@ namespace RejectsApp2
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(697, 55);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Edit Reject Form";
+            this.label2.Text = "Non-conforming Material Record";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // RejectTypeDropDown
             // 
@@ -139,7 +135,6 @@ namespace RejectsApp2
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(689, 129);
             this.panel1.TabIndex = 9;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // label9
             // 
@@ -396,7 +391,6 @@ namespace RejectsApp2
             this.dateDispositionDropDown.Name = "dateDispositionDropDown";
             this.dateDispositionDropDown.Size = new System.Drawing.Size(126, 20);
             this.dateDispositionDropDown.TabIndex = 20;
-            this.dateDispositionDropDown.ValueChanged += new System.EventHandler(this.dateDispositionDropDown_ValueChanged);
             // 
             // label13
             // 
@@ -508,7 +502,7 @@ namespace RejectsApp2
             this.SubmitRejectButton.Name = "SubmitRejectButton";
             this.SubmitRejectButton.Size = new System.Drawing.Size(242, 42);
             this.SubmitRejectButton.TabIndex = 13;
-            this.SubmitRejectButton.Text = "Edit Reject";
+            this.SubmitRejectButton.Text = "Submit Edit";
             this.SubmitRejectButton.UseVisualStyleBackColor = false;
             this.SubmitRejectButton.Click += new System.EventHandler(this.SubmitRejectButton_Click);
             // 
@@ -535,9 +529,7 @@ namespace RejectsApp2
             this.UnitCostTextBox.Name = "UnitCostTextBox";
             this.UnitCostTextBox.Size = new System.Drawing.Size(76, 20);
             this.UnitCostTextBox.TabIndex = 12;
-            this.UnitCostTextBox.Click += new System.EventHandler(this.UnitCostTextBox_Click);
             this.UnitCostTextBox.TextChanged += new System.EventHandler(this.UnitCostTextBox_TextChanged);
-            this.UnitCostTextBox.VisibleChanged += new System.EventHandler(this.UnitCostTextBox_VisibleChanged);
             // 
             // QtyRejectedTextBox
             // 
@@ -601,21 +593,6 @@ namespace RejectsApp2
             this.pictureBox1.TabIndex = 24;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
-            // 
-            // printPreviewDialog1
-            // 
-            this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
-            this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
-            this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
-            this.printPreviewDialog1.Enabled = true;
-            this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
-            this.printPreviewDialog1.Name = "printPreviewDialog1";
-            this.printPreviewDialog1.Visible = false;
-            this.printPreviewDialog1.Load += new System.EventHandler(this.printPreviewDialog1_Load);
-            // 
-            // printDocument1
-            // 
-            this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
             // 
             // EditReject
             // 
@@ -709,7 +686,5 @@ namespace RejectsApp2
         public System.Windows.Forms.TextBox QtyRejectedTextBox;
         public System.Windows.Forms.DateTimePicker dateDispositionDropDown;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
-        private System.Drawing.Printing.PrintDocument printDocument1;
     }
 }

@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using RejectsApp2.Properties;
 using static RejectsApp2.Commands;
+
 namespace RejectsApp2
 {
-    static class NewRejectCommands
+    internal static class NewRejectCommands
     {
         //PRE: reject object // POST: updated database from reject object values, new row.
         public static int AddReject(Rejects reject)
@@ -19,9 +16,9 @@ namespace RejectsApp2
                 "VALUES (@RejectNum,@PartNum,@VendorID,@VendorName,@RMAnum,@Date_of_Disposition,@QtyReceived,@QtyInspected,@QtyRejected,@UnitCost,@LotNum,@Responsible,@Product_Line,@Disposition,@PONum,@Discrepancy,@DateRejected,@PartDescription,@SerialNum,@RejectedBy)";
 
 
-
             return ExecuteWrite(query, generateArgument(reject));
         }
+
         public static string GenerateRejectNumber(string type)
         {
             var query =
@@ -57,6 +54,7 @@ namespace RejectsApp2
                 throw;
             }
         }
+
         //checks if the reject number being input from the newreject form is already taken, meant to (hopefully) prevent any errors where two writes are performed at the
         //same time and input the same reject num for different rejects
         //PRE: Reject_Number value, POST: bool corresponding TRUE to reject number is not present and FALSE to the reject number is present.
@@ -87,6 +85,7 @@ namespace RejectsApp2
                 throw;
             }
         }
+
         public static Rejects NewRejectOperation(NewReject newRejectForm)
         {
             DateTime? dispDate = null;
@@ -94,13 +93,11 @@ namespace RejectsApp2
             var qtyInspNull = checkIntText(newRejectForm.QtyInspectedTextBox.Text);
             var qtyRejNull = checkIntText(newRejectForm.QtyRejectedTextBox.Text);
             var qtyRecNull = checkIntText(newRejectForm.QtyReceivedTextBox.Text);
-            //if disposition has not been selected, as such date is null (necessary for not assigning date until disposition is assigned)
+            //if disposition has been selected, then set date value
             if (newRejectForm.dateDispositionDropDown.Enabled)
                 dispDate = newRejectForm.dateDispositionDropDown.Value.Date;
             if (!string.IsNullOrEmpty(newRejectForm.DispositionDropDown.Text))
-            {
                 disp = newRejectForm.DispositionDropDown.Text.Substring(4);
-            }
             var reject = new Rejects(newRejectForm.RejectNumberTextBox.Text,
                 newRejectForm.DateRejectedDropDown.Value.Date,
                 newRejectForm.PartNumberTextBox.Text, newRejectForm.PartDescriptionTextBox.Text,

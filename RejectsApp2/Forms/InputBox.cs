@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using static RejectsApp2.Commands;
+using static RejectsApp2.EditRejectCommands;
 
 namespace RejectsApp2
 {
@@ -45,7 +46,7 @@ namespace RejectsApp2
             var rejectNumInput = GetRejectByID(numberTextBox.Text);
 
             //if type is edit and the input is not empty, perform the edit functions
-            if (!string.IsNullOrEmpty(rejectNumInput.Reject_Number) && type == "edit") 
+            if (!string.IsNullOrEmpty(rejectNumInput.Reject_Number) && type == "edit")
             {
                 var editReject = new EditReject(prnt);
                 editReject.Show();

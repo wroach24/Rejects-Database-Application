@@ -29,7 +29,6 @@ namespace RejectsApp2
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewReject));
             this.label2 = new System.Windows.Forms.Label();
             this.RejectTypeDropDown = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -77,9 +76,8 @@ namespace RejectsApp2
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
-            this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.ReportPrintViewer = new Microsoft.Reporting.WinForms.ReportViewer();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -95,7 +93,7 @@ namespace RejectsApp2
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(692, 55);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Add New Reject Form";
+            this.label2.Text = "Non-conforming Material Record";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // RejectTypeDropDown
@@ -278,6 +276,7 @@ namespace RejectsApp2
             // 
             // RejectNumberTextBox
             // 
+            this.RejectNumberTextBox.Enabled = false;
             this.RejectNumberTextBox.Location = new System.Drawing.Point(147, 22);
             this.RejectNumberTextBox.MaxLength = 30;
             this.RejectNumberTextBox.Name = "RejectNumberTextBox";
@@ -604,21 +603,6 @@ namespace RejectsApp2
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // printDocument1
-            // 
-            this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
-            // 
-            // printPreviewDialog1
-            // 
-            this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
-            this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
-            this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
-            this.printPreviewDialog1.Enabled = true;
-            this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
-            this.printPreviewDialog1.Name = "printPreviewDialog1";
-            this.printPreviewDialog1.Visible = false;
-            this.printPreviewDialog1.Load += new System.EventHandler(this.printPreviewDialog1_Load);
-            // 
             // pictureBox2
             // 
             this.pictureBox2.Location = new System.Drawing.Point(0, 0);
@@ -626,6 +610,14 @@ namespace RejectsApp2
             this.pictureBox2.Size = new System.Drawing.Size(699, 442);
             this.pictureBox2.TabIndex = 24;
             this.pictureBox2.TabStop = false;
+            // 
+            // ReportPrintViewer
+            // 
+            this.ReportPrintViewer.Location = new System.Drawing.Point(0, 0);
+            this.ReportPrintViewer.Name = "ReportPrintViewer";
+            this.ReportPrintViewer.ServerReport.BearerToken = null;
+            this.ReportPrintViewer.Size = new System.Drawing.Size(396, 246);
+            this.ReportPrintViewer.TabIndex = 0;
             // 
             // NewReject
             // 
@@ -651,6 +643,7 @@ namespace RejectsApp2
             this.Controls.Add(this.label2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.ReportPrintViewer);
             this.MaximizeBox = false;
             this.Name = "NewReject";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -717,8 +710,8 @@ namespace RejectsApp2
         public System.Windows.Forms.TextBox UnitCostTextBox;
         public System.Windows.Forms.TextBox QtyRejectedTextBox;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Drawing.Printing.PrintDocument printDocument1;
-        private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Windows.Forms.PictureBox pictureBox2;
+        
+        private Microsoft.Reporting.WinForms.ReportViewer ReportPrintViewer;
     }
 }

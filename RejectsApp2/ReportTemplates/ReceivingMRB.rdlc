@@ -33,7 +33,7 @@
               <Width>0.48959in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.75579in</Width>
+              <Width>1.57871in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.78125in</Width>
@@ -1019,7 +1019,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=FormatDateTime(Fields!Date_of_Disposition.Value,DateFormat.ShortDate)</Value>
+                              <Value>=IIf(FormatDateTime(Fields!Date_of_Disposition.Value,DateFormat.ShortDate) &lt;&gt; "1/1/0001",FormatDateTime(Fields!Date_of_Disposition.Value,DateFormat.ShortDate),nothing)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
@@ -1086,7 +1086,7 @@
         <Top>0.70042in</Top>
         <Left>0.11458in</Left>
         <Height>0.58334in</Height>
-        <Width>10.64584in</Width>
+        <Width>10.46876in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1097,7 +1097,7 @@
         <Top>0.58931in</Top>
         <Left>0.11458in</Left>
         <Height>0in</Height>
-        <Width>10.64584in</Width>
+        <Width>10.46876in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -1129,7 +1129,7 @@
         <Top>0.12181in</Top>
         <Left>0.12847in</Left>
         <Height>0.39806in</Height>
-        <Width>10.63195in</Width>
+        <Width>10.45487in</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -1160,7 +1160,7 @@
     <Height>8.01042in</Height>
     <Style />
   </Body>
-  <Width>10.80209in</Width>
+  <Width>10.625in</Width>
   <Page>
     <PageHeight>8.5in</PageHeight>
     <PageWidth>11in</PageWidth>

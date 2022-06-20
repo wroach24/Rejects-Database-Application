@@ -1,33 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SQLite;
-using System.IO;
-using System.IO.Pipes;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using RejectsApp2.Properties;
 
 namespace RejectsApp2
 {
-    class Backup
+    internal class Backup
     {
-        private DateTime today;
-        private DateTime endOfMonth;
         private Thread backupThread;
+        private DateTime endOfMonth;
+        private DateTime today;
+
         public Backup()
         {
             today = DateTime.Now.Date;
-            endOfMonth = new DateTime(today.Year, today.Month, DateTime.DaysInMonth(today.Year,today.Month));
+            endOfMonth = new DateTime(today.Year, today.Month, DateTime.DaysInMonth(today.Year, today.Month));
         }
 
         public void StartBackup()
         {
             try
             {
-                backupThread = new Thread(new ThreadStart(Run_InitiateBackup));
+                backupThread = new Thread(Run_InitiateBackup);
                 backupThread.IsBackground = true;
                 backupThread.Start();
             }
@@ -36,14 +31,12 @@ namespace RejectsApp2
                 MessageBox.Show("An error has occured backing up the database.");
                 throw;
             }
-
-
-
         }
+
         private void Run_InitiateBackup()
         {
             var sourcePath = ConnectionSettings.Default.connString;
-            string destinationPath ="";
+            var destinationPath = "";
             if (today.DayOfWeek == DayOfWeek.Friday)
                 destinationPath = ConnectionSettings.Default.fridayBackup;
 
@@ -60,9 +53,6 @@ namespace RejectsApp2
                 destination.Open();
                 source.BackupDatabase(destination, "main", "main", -1, null, 0);
             }
-
-
-
         }
     }
 }

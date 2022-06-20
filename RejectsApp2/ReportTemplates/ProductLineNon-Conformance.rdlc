@@ -575,7 +575,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -701,7 +700,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=FormatDateTime(Fields!Date_of_Disposition.Value,DateFormat.ShortDate)</Value>
+                              <Value>=IIf(FormatDateTime(Fields!Date_of_Disposition.Value,DateFormat.ShortDate) &lt;&gt; "1/1/0001",FormatDateTime(Fields!Date_of_Disposition.Value,DateFormat.ShortDate),nothing)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
@@ -728,6 +727,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>

@@ -99,5 +99,33 @@ namespace RejectsApp2.Properties {
                 return ((string)(this["fridayBackup"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\svr300-003\\smbd\\Rejects DB\\SQLTest\\Backend\\ReportTemplates\\CustomReport.rdlc")]
+        public string customReportFile {
+            get {
+                return ((string)(this["customReportFile"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\svr300-003\\smbd\\Rejects DB\\SQLTest\\Backend\\ReportTemplates\\GeneratedCustomRepor" +
+            "t.rdlc")]
+        public string generatedCustomReport {
+            get {
+                return ((string)(this["generatedCustomReport"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\svr300-003\\smbd\\Rejects DB\\SQLTest\\Backend\\ReportTemplates\\PrintReport.rdlc")]
+        public string PrintReport {
+            get {
+                return ((string)(this["PrintReport"]));
+            }
+        }
     }
 }

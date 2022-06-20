@@ -6,10 +6,10 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.25605in</Width>
+              <Width>1.4123in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.17272in</Width>
+              <Width>1.24564in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.82292in</Width>
@@ -21,13 +21,13 @@
               <Width>1.48522in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.1633in</Width>
+              <Width>2.4237in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>1.11458in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.85417in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -507,7 +507,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=FormatCurrency(Fields!Unit_cost.Value)</Value>
+                              <Value>=IIf(Fields!Unit_cost.Value = nothing,"0",FormatCurrency(Fields!Unit_cost.Value))</Value>
                               <Style>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#333333</Color>
@@ -533,6 +533,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -619,7 +620,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=FormatDateTime(Fields!Date_of_Disposition.Value,DateFormat.ShortDate)</Value>
+                              <Value>=IIf(FormatDateTime(Fields!Date_of_Disposition.Value,DateFormat.ShortDate) &lt;&gt; "1/1/0001",FormatDateTime(Fields!Date_of_Disposition.Value,DateFormat.ShortDate),nothing)</Value>
                               <Style>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#333333</Color>
@@ -680,7 +681,7 @@
         <Top>0.53375in</Top>
         <Left>0.11458in</Left>
         <Height>0.75696in</Height>
-        <Width>10.19792in</Width>
+        <Width>10.65625in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -691,7 +692,7 @@
         <Top>0.58931in</Top>
         <Left>0.11458in</Left>
         <Height>0in</Height>
-        <Width>10.45833in</Width>
+        <Width>10.65625in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -738,7 +739,7 @@
         <Top>0.10792in</Top>
         <Left>0.54745in</Left>
         <Height>0.48139in</Height>
-        <Width>10.36921in</Width>
+        <Width>10.02546in</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -754,7 +755,7 @@
     <Height>8.01042in</Height>
     <Style />
   </Body>
-  <Width>11.46874in</Width>
+  <Width>10.77083in</Width>
   <Page>
     <PageHeight>8.5in</PageHeight>
     <PageWidth>11in</PageWidth>

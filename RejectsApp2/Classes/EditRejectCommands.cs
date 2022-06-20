@@ -1,14 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using static RejectsApp2.Commands;
-namespace RejectsApp2.Classes
+
+namespace RejectsApp2
 {
-    static class EditRejectCommands
+    internal static class EditRejectCommands
     {
+        //Performs the edit reject operation, ensuring the values are correct, nulls are assigned to non-nullable types and then creates Rejects object.
+        public static Rejects EditRejectOperation(EditReject editRejectForm)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            var qtyInspNull = checkIntText(editRejectForm.QtyInspectedTextBox.Text);
+            var qtyRejNull = checkIntText(editRejectForm.QtyRejectedTextBox.Text);
+            var qtyRecNull = checkIntText(editRejectForm.QtyReceivedTextBox.Text);
+
+            DateTime? dispDate = null;
+            string disp = null;
+            if (!string.IsNullOrEmpty(editRejectForm.DispositionDropDown.Text))
+                disp = editRejectForm.DispositionDropDown.Text.Substring(4);
+            //if disposition has been selected, submit date value
+            if (editRejectForm.dateDispositionDropDown.Enabled)
+                dispDate = editRejectForm.dateDispositionDropDown.Value.Date;
+
+            var reject = new Rejects(editRejectForm.RejectNumberTextBox.Text,
+                editRejectForm.DateRejectedDropDown.Value.Date,
+                editRejectForm.PartNumberTextBox.Text, editRejectForm.PartDescriptionTextBox.Text,
+                editRejectForm.SerialNumberTextBox.Text, editRejectForm.LotNumberTextBox.Text,
+                editRejectForm.PONumberTextBox.Text, qtyRecNull, qtyInspNull, qtyRejNull,
+                editRejectForm.DiscrepancyTextBox.Text, editRejectForm.ResponsibleDropDown.Text,
+                editRejectForm.ProductLineDropDown.Text, editRejectForm.RejectedByDropDown.Text,
+                editRejectForm.VendorIDTextbox.Text, editRejectForm.VendorNameDropDown.Text,
+                editRejectForm.RMANumberTextBox.Text, disp, dispDate,
+                editRejectForm.UnitCostTextBox.Text);
+
+            EditReject(reject);
+            Cursor.Current = Cursors.Default;
+
+            return reject;
+        }
+
+        //PRE: reject object // POST: updated database based upon the reject object which is derived from user input in the edit reject form
+        public static int EditReject(Rejects reject)
+        {
+            const string query =
+                "UPDATE rejects SET Unit_cost = @UnitCost, Vendor_ID = @VendorID, Vendor_Name = @VendorName, RMA_Number = @RMAnum, Date_of_Disposition = @Date_of_Disposition, Responsible = @Responsible, Product_Line = @Product_Line, Rejected_By = @RejectedBy, Disposition = @Disposition, Qty_Received = @QtyReceived, Qty_Inspected = @QtyInspected, Qty_Rejected = @QtyRejected, Lot_Number = @LotNum, PO_Number = @PONum, Discrepancy = @Discrepancy,  Part_Number = @PartNum, Serial_Number = @SerialNum, Date_Rejected = @DateRejected, Part_Description = @PartDescription  WHERE  Reject_Number = @RejectNum";
+
+            return ExecuteWrite(query, generateArgument(reject));
+        }
+
+        //Fills out the edit form, utilizes if statements to assign null to traditional non-nullable types, text is just assigned directly.
         public static void FillOutEditForm(Rejects reject, EditReject editReject)
         {
             if (reject.Reject_Number.Substring(0, 1) == "L")
@@ -50,44 +90,5 @@ namespace RejectsApp2.Classes
                 editReject.dateDispositionDropDown.Value = reject.Disposition_Date.Value.Date;
             editReject.DateRejectedDropDown.Value = reject.Date_Rejected.Date;
         }
-        public static Rejects EditRejectOperation(EditReject editRejectForm)
-        {
-            Cursor.Current = Cursors.WaitCursor;
-            var qtyInspNull = checkIntText(editRejectForm.QtyInspectedTextBox.Text);
-            var qtyRejNull = checkIntText(editRejectForm.QtyRejectedTextBox.Text);
-            var qtyRecNull = checkIntText(editRejectForm.QtyReceivedTextBox.Text);
-
-            DateTime? dispDate = null;
-            string disp = null;
-            if (!string.IsNullOrEmpty(editRejectForm.DispositionDropDown.Text))
-                disp = editRejectForm.DispositionDropDown.Text.Substring(4);
-            //if disposition has been selected, submit date value
-            if (editRejectForm.dateDispositionDropDown.Enabled)
-                dispDate = editRejectForm.dateDispositionDropDown.Value.Date;
-
-            var reject = new Rejects(editRejectForm.RejectNumberTextBox.Text,
-                editRejectForm.DateRejectedDropDown.Value.Date,
-                editRejectForm.PartNumberTextBox.Text, editRejectForm.PartDescriptionTextBox.Text,
-                editRejectForm.SerialNumberTextBox.Text, editRejectForm.LotNumberTextBox.Text,
-                editRejectForm.PONumberTextBox.Text, qtyRecNull, qtyInspNull, qtyRejNull,
-                editRejectForm.DiscrepancyTextBox.Text, editRejectForm.ResponsibleDropDown.Text,
-                editRejectForm.ProductLineDropDown.Text, editRejectForm.RejectedByDropDown.Text,
-                editRejectForm.VendorIDTextbox.Text, editRejectForm.VendorNameDropDown.Text,
-                editRejectForm.RMANumberTextBox.Text, disp, dispDate,
-                editRejectForm.UnitCostTextBox.Text);
-
-            EditReject(reject);
-            Cursor.Current = Cursors.Default;
-
-            return reject;
-        }
-        public static int EditReject(Rejects reject)
-        {
-            const string query =
-                "UPDATE rejects SET Unit_cost = @UnitCost, Vendor_ID = @VendorID, Vendor_Name = @VendorName, RMA_Number = @RMAnum, Date_of_Disposition = @Date_of_Disposition, Responsible = @Responsible, Product_Line = @Product_Line, Rejected_By = @RejectedBy, Disposition = @Disposition, Qty_Received = @QtyReceived, Qty_Inspected = @QtyInspected, Qty_Rejected = @QtyRejected, Lot_Number = @LotNum, PO_Number = @PONum, Discrepancy = @Discrepancy,  Part_Number = @PartNum, Serial_Number = @SerialNum, Date_Rejected = @DateRejected, Part_Description = @PartDescription  WHERE  Reject_Number = @RejectNum";
-
-            return ExecuteWrite(query, generateArgument(reject));
-        }
-
     }
 }

@@ -101,6 +101,7 @@ namespace RejectsApp2
             this.tabPage1.Size = new System.Drawing.Size(997, 664);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Generic Reports";
+            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // reportLayoutGroupBox
             // 
@@ -183,7 +184,8 @@ namespace RejectsApp2
             this.reportViewer2.ServerReport.BearerToken = null;
             this.reportViewer2.Size = new System.Drawing.Size(997, 538);
             this.reportViewer2.TabIndex = 2;
-            this.DateTooltip.SetToolTip(this.reportViewer2, "Large reports may take a minute to load. ");
+            this.DateTooltip.SetToolTip(this.reportViewer2, "Select one of the report types above to generate a report.");
+            this.reportViewer2.WaitControlDisplayAfter = 200;
             this.reportViewer2.Load += new System.EventHandler(this.reportViewer2_Load);
             // 
             // selectionCriteriaGroupBox
@@ -326,7 +328,7 @@ namespace RejectsApp2
             // 
             this.dateTimePicker2.Checked = false;
             this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker2.Location = new System.Drawing.Point(23, 69);
+            this.dateTimePicker2.Location = new System.Drawing.Point(23, 73);
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.ShowCheckBox = true;
             this.dateTimePicker2.Size = new System.Drawing.Size(122, 21);
@@ -402,7 +404,7 @@ namespace RejectsApp2
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(129, 31);
             this.button1.TabIndex = 4;
-            this.button1.Text = "button1";
+            this.button1.Text = "Generate";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -486,7 +488,6 @@ namespace RejectsApp2
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox comboBox4;
         private System.Windows.Forms.ComboBox comboBox3;
-        private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
         private System.Windows.Forms.GroupBox reportLayoutGroupBox;
         private System.Windows.Forms.Button PartHistoryButton;
         private System.Windows.Forms.Button OpenItemsButton;
@@ -507,5 +508,6 @@ namespace RejectsApp2
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label7;
         public System.Windows.Forms.TextBox PartNumTextBox;
+        private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
     }
 }

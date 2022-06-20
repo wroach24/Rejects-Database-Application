@@ -3,7 +3,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Printing;
 using System.Windows.Forms;
-using static RejectsApp2.Commands;
+using RejectsApp2.Forms;
+using static RejectsApp2.EditRejectCommands;
 
 namespace RejectsApp2
 {
@@ -11,8 +12,7 @@ namespace RejectsApp2
     {
         private readonly Home home;
         private bool editFlag;
-        private Bitmap reportBitmap;
-        private Bitmap resizeBitmap;
+   
 
         public EditReject(Home home)
         {
@@ -35,6 +35,7 @@ namespace RejectsApp2
                 dateDispositionDropDown.CustomFormat = " ";
                 dateDispositionDropDown.Format = DateTimePickerFormat.Custom;
             }
+           
         }
 
         //on close of the new reject form verifies that the user wanted to quit and then returns the home page to showing.
@@ -67,83 +68,39 @@ namespace RejectsApp2
             Close();
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
-        private void UnitCostTextBox_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void dateDispositionDropDown_ValueChanged(object sender, EventArgs e)
-        {
-        }
-
         private void DispositionDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
             dateDispositionDropDown.Enabled = true;
             dateDispositionDropDown.Format = DateTimePickerFormat.Short;
         }
 
+        //printing, clean up once receiving confirmation from Gary
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            var rejectReport = CreateGraphics();
-            var s = Size;
-            reportBitmap = new Bitmap(s.Width - 20, s.Height - 35, rejectReport);
-            var memoryGraphics = Graphics.FromImage(reportBitmap);
-            memoryGraphics.CopyFromScreen(Location.X + 10, Location.Y + 37, 0, 0, s);
-
-            resizeBitmap = new Bitmap(1059, 841);
-            var resizeforPrint = Graphics.FromImage(resizeBitmap);
-            resizeforPrint.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            resizeforPrint.DrawImage(reportBitmap, 0, 0, 1059, 841);
-
-            printPreviewDialog1.Document = printDocument1;
-            printDocument1.DefaultPageSettings.Landscape = true;
-            MessageBox.Show(printPreviewDialog1.Document.DefaultPageSettings.PaperSize.ToString());
-            MessageBox.Show(printDocument1.DefaultPageSettings.PaperSize.ToString());
-            printPreviewDialog1.ShowDialog();
-        }
-
-        private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
-        {
-            e.Graphics.DrawImage(resizeBitmap, 0, 0);
-        }
-
-        private void printPreviewDialog1_Load(object sender, EventArgs e)
-        {
-            printPreviewDialog1.Location = home.Location;
-            printPreviewDialog1.Size = Size;
-            printPreviewDialog1.BringToFront();
-        }
-
-        private void UnitCostTextBox_VisibleChanged(object sender, EventArgs e)
-        {
+            PrintDisplay temDisplay = new PrintDisplay(this);
+            temDisplay.Show();
         }
 
         private void UnitCostTextBox_TextChanged(object sender, EventArgs e)
         {
             //determines whether the user is inputing the text or the code itself- helps avoid collisions between old unsupported format entries in the database and newer ones
-            if (!UnitCostTextBox.Focused)
-            {
-                return;
-            }
+            if (!UnitCostTextBox.Focused) return;
             var periodCount = 0;
             var index = 0;
 
+            //prevent invalid inputs for the unit cost text box.
             foreach (var num in UnitCostTextBox.Text)
             {
+                //if the char is a num and the period count is under 0, continue
                 if (char.IsDigit(num) && periodCount <= 1)
                 {
                 }
+                //if the digit is not a num, but is a period instead, increase the period count
                 else if (num == '.')
                 {
                     periodCount++;
                 }
+                //alert the user they don't need to input the dollar sign
                 else if (num == '$')
                 {
                     MessageBox.Show("Do not enter the dollar sign.");

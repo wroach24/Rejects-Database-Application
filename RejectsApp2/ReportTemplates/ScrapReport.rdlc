@@ -591,7 +591,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Unit_cost.Value</Value>
+                              <Value>= FormatCurrency(Replace(Fields!Unit_cost.Value,"","$0.00"))</Value>
                               <Style>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#333333</Color>
@@ -743,7 +743,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=FormatDateTime(Fields!Date_of_Disposition.Value,DateFormat.ShortDate)</Value>
+                              <Value>=IIf(FormatDateTime(Fields!Date_of_Disposition.Value,DateFormat.ShortDate) &lt;&gt; "1/1/0001",FormatDateTime(Fields!Date_of_Disposition.Value,DateFormat.ShortDate),nothing)</Value>
                               <Style>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#333333</Color>

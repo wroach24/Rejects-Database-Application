@@ -14,18 +14,17 @@ namespace RejectsApp2
             InitializeComponent();
             Cursor.Current = Cursors.AppStarting;
             GetRejectByID("");
-            
+
             Cursor.Current = Cursors.Default;
         }
 
         private void Home_Load(object sender, EventArgs e)
         {
-           
         }
 
         public void NewReject_Click(object sender, EventArgs e)
         {
-            rejectPage = new NewReject(this);
+            rejectPage = new NewReject();
             rejectPage.ShowDialog();
         }
 
@@ -42,11 +41,6 @@ namespace RejectsApp2
 
         private void Reports_Click(object sender, EventArgs e)
         {
-            //var xd = new ExcelCreation("hhe");
-            //xd.SrapDoc();
-            //var genForm = new DisplayReport(this);
-            //genForm.StartPosition = StartPosition;
-            //genForm.Show();
             var genform2 = new FormGenerator();
             genform2.Show();
             genform2.Location = new Point(Location.X + 20, Location.Y + 20);

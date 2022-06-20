@@ -1,25 +1,26 @@
 ﻿using System;
+using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Printing;
 using System.Windows.Forms;
+using Microsoft.Reporting.WinForms;
+using RejectsApp2.Forms;
+using static RejectsApp2.NewRejectCommands;
 using static RejectsApp2.Commands;
 
 namespace RejectsApp2
 {
     public partial class NewReject : Form
     {
-        private readonly Home home;
-        private Bitmap reportBitmap;
+     
         private string[] requiredFields;
-        private Bitmap resizeBitmap;
-        private bool submitFlag;
+        private bool submitFlag = false;
 
-        public NewReject(Home home)
+        public NewReject()
         {
             InitializeComponent();
             TopLevel = true;
-            this.home = home;
         }
 
         private void NewReject_Load(object sender, EventArgs e) //hides main form on load
@@ -37,7 +38,7 @@ namespace RejectsApp2
             //bringing to front
             BringToFront();
             //hiding initial form
-            home.Hide();
+    
         }
 
         //on close of the new reject form verifies that the user wanted to quit and then returns the home page to showing.
@@ -47,12 +48,6 @@ namespace RejectsApp2
             {
                 e.Cancel = MessageBox.Show("Are you sure you want to exit? Exiting will erase all inputs.",
                     "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
-                if (e.Cancel == false)
-                    home.Show();
-            }
-            else
-            {
-                home.Show();
             }
         }
 
@@ -65,9 +60,7 @@ namespace RejectsApp2
             if (newRejectNum != "R")
                 RejectNumberTextBox.Enabled = false;
             else
-            {
                 RejectNumberTextBox.Enabled = true;
-            }
             Cursor.Current = Cursors.Default;
         }
 
@@ -80,6 +73,7 @@ namespace RejectsApp2
                 RejectedByDropDown.Text, PartNumberTextBox.Text, DiscrepancyTextBox.Text, PartDescriptionTextBox.Text
             };
 
+            //a required form is not filled out
             foreach (var field in requiredFields)
                 if (string.IsNullOrEmpty(field))
                 {
@@ -89,26 +83,33 @@ namespace RejectsApp2
                     return;
                 }
 
-          
+
             if (checkRejectSelection() == false) return;
             res = MessageBox.Show("Are you sure you want to submit?",
                 "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
             if (res) return;
 
-            if (!finalRejectNumCheck(rejNum)) //make sure that the reject number is not already taken(unlikely, but would break things).
+            //make sure that the line reject number is not already taken(unlikely, but would break things).
+            if (!finalRejectNumCheck(rejNum) && rejNum.ToString().Substring(0,1) != "R") 
             {
                 rejNum = GenerateRejectNumber(RejectTypeDropDown.SelectedItem.ToString());
                 MessageBox.Show("Reject_Number switched to: " + rejNum);
                 RejectNumberTextBox.Text = rejNum;
             }
+            //do not need to auto generate a reject number of 'R' type, as such we need to simply allow the user to enter a new value
+            else if (!finalRejectNumCheck(rejNum) && rejNum.ToString().Substring(0, 1) == "R")
+            {
+                MessageBox.Show("The reject number " + rejNum + " is already taken.");
+                return;
+            }
 
             NewRejectOperation(this);
-            submitFlag =
-                true; //a submission was made- signal to close without prompting user.
+            //a submission was made- signal to close without prompting user to confirm.
+            submitFlag = true; 
             Close();
         }
 
-     
+
         private void QtyReceivedTextBox_Click(object sender, EventArgs e)
         {
             checkRejectSelection();
@@ -135,37 +136,12 @@ namespace RejectsApp2
             dateDispositionDropDown.Format = DateTimePickerFormat.Short;
         }
 
-   
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            var rejectReport = CreateGraphics();
-            var s = pictureBox2.Size;
-            reportBitmap = new Bitmap(s.Width, s.Height - 35, rejectReport);
-            var memoryGraphics = Graphics.FromImage(reportBitmap);
-            memoryGraphics.CopyFromScreen(Location.X + 10, Location.Y + 37, 0, 0, s);
+            PrintDisplay temDisplay = new PrintDisplay(this);
+            temDisplay.Show();
 
-            resizeBitmap = new Bitmap(1059, 841);
-            var resizeforPrint = Graphics.FromImage(resizeBitmap);
-            resizeforPrint.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            resizeforPrint.DrawImage(reportBitmap, 0, 0, 1059, 841);
-
-            printPreviewDialog1.Document = printDocument1;
-            printDocument1.DefaultPageSettings.Landscape = true;
-            MessageBox.Show(printPreviewDialog1.Document.DefaultPageSettings.PaperSize.ToString());
-            MessageBox.Show(printDocument1.DefaultPageSettings.PaperSize.ToString());
-            printPreviewDialog1.ShowDialog();
-        }
-
-        private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
-        {
-            e.Graphics.DrawImage(resizeBitmap, 0, 0);
-        }
-
-        private void printPreviewDialog1_Load(object sender, EventArgs e)
-        {
-            printPreviewDialog1.Location = Location;
-            printPreviewDialog1.Size = Size;
         }
 
         private void UnitCostTextBox_TextChanged(object sender, EventArgs e)
@@ -202,7 +178,6 @@ namespace RejectsApp2
                 index++;
             }
         }
-
 
 
         #region checkSelection
@@ -295,5 +270,9 @@ namespace RejectsApp2
         }
 
         #endregion checkSelection
+
+ 
+
+    
     }
 }

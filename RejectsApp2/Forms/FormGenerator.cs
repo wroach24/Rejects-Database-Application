@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using RejectsApp2.Properties;
+using System;
 using System.Data;
 using System.Data.SQLite;
 using System.Globalization;
@@ -7,7 +9,6 @@ using System.Transactions;
 using System.Windows.Forms;
 using System.Xml;
 using Microsoft.Reporting.WinForms;
-using RejectsApp2.Properties;
 using static RejectsApp2.Commands;
 using static RejectsApp2.CustomReportGenerator;
 using static RejectsApp2.GenerateDefinedReport;
@@ -62,7 +63,6 @@ namespace RejectsApp2
             var query =
                 "SELECT " + BuildCustomReportQuery(checkedListBox1.CheckedItems) + " FROM rejects ORDER BY " +
                 orderByString + formatOfOrder + " LIMIT 1000 "; //ALTER
-            MessageBox.Show(query);
             var dt = GetValueFromDatabase(query);
             var ds = new DataSet1();
             var rds = new ReportDataSource();
@@ -72,12 +72,11 @@ namespace RejectsApp2
             //changing report to the report path, need to relative path before publishing.
             //reportViewer1.LocalReport.ReportPath =
             //    @"C:\Users\30053901\source\repos\RejectsApp2\RejectsApp2\Report2.rdlc"; //ConnectionSettings.Default.testReportFile;
-            LecturaRDLCXML(dt, @"C:\Users\30053901\source\repos\RejectsApp2\RejectsApp2\Report2.rdlc",
-                @"C:\Users\30053901\source\repos\RejectsApp2\RejectsApp2\Report3.rdlc");
+            LecturaRDLCXML(dt,ConnectionSettings.Default.customReportFile, ConnectionSettings.Default.generatedCustomReport);
 
             reportViewer1.Reset();
             reportViewer1.LocalReport.ReportPath =
-                @"C:\Users\30053901\source\repos\RejectsApp2\RejectsApp2\Report3.rdlc";
+                ConnectionSettings.Default.generatedCustomReport;
             var names = reportViewer1.LocalReport.GetDataSourceNames();
             rds.Name = names[0];
             rds.Value = ds.Tables[1]; //assigning the report datasource to the datatable obtained from query
@@ -128,16 +127,15 @@ namespace RejectsApp2
         {
             reportViewer2.Reset();
             if (!string.IsNullOrEmpty(PartNumTextBox.Text))
-            {
-                
                 GeneratePartNumReport(this);
-            }
             else
                 MessageBox.Show("You cannot generate a part history report without a part number entered.");
-
-
         }
 
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
     public static class GenerateDefinedReport
@@ -152,6 +150,7 @@ namespace RejectsApp2
                 DateTime? dispositionStartDateUserInput = null;
                 DateTime? dispositionEndDateUserInput = null;
                 var dateQuery = "";
+                //checking if one date, no date, or both date boxes are checked and adjusting input accordingly
                 if (fields.dateTimePicker1.Checked)
                     dispositionStartDateUserInput = fields.dateTimePicker1.Value.Date;
                 else
@@ -168,47 +167,50 @@ namespace RejectsApp2
                 whereQuery += dateQuery;
             }
 
+            //if the text field isn't empty append the query for finding WHERE product_line equals value specified by the user
             if (!string.IsNullOrEmpty(fields.comboBox1.Text))
             {
                 if (whereQuery != " WHERE ")
                     whereQuery += "AND ";
-                MessageBox.Show("product line not empty");
+
                 var productQuery = "Product_Line = '" + fields.comboBox1.Text + "' ";
                 whereQuery += productQuery;
             }
 
+            //if the text field isn't empty append the query for finding WHERE responsible equals value specified by the user
             if (!string.IsNullOrEmpty(fields.comboBox2.Text))
             {
                 if (whereQuery != " WHERE ")
                     whereQuery += "AND ";
-                MessageBox.Show("responsible line not empty");
+
                 var responsibleQuery = "Responsible = '" + fields.comboBox2.Text + "' ";
                 whereQuery += responsibleQuery;
             }
 
+            //if the text field isn't empty append the query for finding WHERE vendor equals value specified by the user
             if (!string.IsNullOrEmpty(fields.textBox1.Text))
             {
                 if (whereQuery != " WHERE ")
                     whereQuery += "AND ";
-                MessageBox.Show("vendor id line not empty");
+
                 var vendorQuery = "Vendor_ID = '" + fields.textBox1.Text + "' ";
                 whereQuery += vendorQuery;
             }
 
+            //if the text field isn't empty append the query for finding WHERE partnum equals value specified by the user
             if (!string.IsNullOrEmpty(fields.PartNumTextBox.Text))
             {
                 if (whereQuery != " WHERE ")
                     whereQuery += "AND ";
-                MessageBox.Show("Product Num not empty.");
-                var productQuery = "Part_Number = '" + fields.PartNumTextBox.Text +"' ";
+
+                var productQuery = "Part_Number = '" + fields.PartNumTextBox.Text + "' ";
                 whereQuery += productQuery;
             }
 
-            MessageBox.Show(whereQuery);
+            //if all the forms are empty, replace the initial WHERE to nothing
             if (whereQuery == " WHERE ")
                 return "";
             return whereQuery;
-            //check if string is unchanged
         }
 
         public static void GeneratePartNumReport(FormGenerator fields)
@@ -216,8 +218,9 @@ namespace RejectsApp2
             var path = ConnectionSettings.Default.partNumRepFile;
             var whereQuery = GenerateWhereQuery(fields);
             var finalQuery = AppendQuery(whereQuery, "");
-            GenerateReport(finalQuery,fields,path);
+            GenerateReport(finalQuery, fields, path);
         }
+
         public static void GenerateProductReport(FormGenerator fields)
         {
             var path = ConnectionSettings.Default.productRepFile;
@@ -241,7 +244,7 @@ namespace RejectsApp2
             var path = ConnectionSettings.Default.openRepFile;
             var whereQuery = GenerateWhereQuery(fields);
             var lastPortion = "(Disposition IS NULL OR Disposition == '') ";
-            var finalQuery = AppendQuery(whereQuery, lastPortion);
+            var finalQuery = AppendQuery(whereQuery, lastPortion,"");
             GenerateReport(finalQuery, fields, path);
         }
 
@@ -255,30 +258,56 @@ namespace RejectsApp2
             GenerateReport(finalQuery, fields, path);
         }
 
+        //appends the last portion of queries to form the final query
         private static string AppendQuery(string whereQuery, string lastPortion)
         {
-            if (string.IsNullOrEmpty(lastPortion)) { }//do nothing
+            //check if the lastportion of the query is null, check if the query has a where portion and adjust query accordingly.
+            if (string.IsNullOrEmpty(lastPortion))
+            {
+            } //do nothing
             else if (whereQuery == "")
+            {
                 whereQuery += " WHERE " + lastPortion;
+            }
             else
+            {
                 whereQuery += " AND " + lastPortion;
+            }
 
             return startQuery + whereQuery + "ORDER BY Date_of_Disposition ASC";
         }
+        private static string AppendQuery(string whereQuery, string lastPortion,string openTag)
+        {
+            //check if the lastportion of the query is null, check if the query has a where portion and adjust query accordingly.
+            if (string.IsNullOrEmpty(lastPortion))
+            {
+            } //do nothing
+            else if (whereQuery == "")
+            {
+                whereQuery += " WHERE " + lastPortion;
+            }
+            else
+            {
+                whereQuery += " AND " + lastPortion;
+            }
 
+            return startQuery + whereQuery + "ORDER BY Date_Rejected ASC";
+        }
+
+
+        //generates the report using the finalquery
         private static void GenerateReport(string finalQuery, FormGenerator fields, string path)
         {
             try
             {
-                MessageBox.Show(finalQuery);
                 var reportinfoDataTable = GetValuesForReport(finalQuery);
                 var dataSource = new DataSet1();
                 var reportDataSource = new ReportDataSource();
                 dataSource.Tables.Add(reportinfoDataTable);
 
-                fields.reportViewer2.LocalReport.ReportPath = path; 
+                fields.reportViewer2.LocalReport.ReportPath = path;
 
-                MessageBox.Show(path);
+
                 var names = fields.reportViewer2.LocalReport.GetDataSourceNames();
                 reportDataSource.Name = names[0];
                 reportDataSource.Value = dataSource.Tables[1];
@@ -292,10 +321,9 @@ namespace RejectsApp2
             }
         }
 
+        //sets the report displayer settings and refreshes/displays the generated report
         private static void DisplayReport(FormGenerator fields)
         {
-            //assigning the report datasource to the datatable obtained from query
-
             fields.reportViewer2.PrinterSettings.DefaultPageSettings.Margins.Bottom = 0;
             fields.reportViewer2.PrinterSettings.DefaultPageSettings.Margins.Top = 0;
             fields.reportViewer2.PrinterSettings.DefaultPageSettings.Margins.Left = 0;
@@ -336,7 +364,6 @@ namespace RejectsApp2
             sb.Append("");
             foreach (var item in items)
             {
-                MessageBox.Show(item.ToString());
                 sb.Append(item);
                 if (items[items.Count - 1] != item) sb.Append(",");
             }

@@ -8,12 +8,11 @@ namespace RejectsApp2
         [STAThread]
         private static void Main()
         {
-            Backup backupDatabase = new Backup();
+            var backupDatabase = new Backup();
             backupDatabase.StartBackup();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Home());
-          
         }
     }
 }
