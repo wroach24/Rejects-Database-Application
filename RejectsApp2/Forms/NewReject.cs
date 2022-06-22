@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Printing;
 using System.Windows.Forms;
-using Microsoft.Reporting.WinForms;
 using RejectsApp2.Forms;
 using static RejectsApp2.NewRejectCommands;
-using static RejectsApp2.Commands;
 
 namespace RejectsApp2
 {
     public partial class NewReject : Form
     {
-     
         private string[] requiredFields;
-        private bool submitFlag = false;
+        private bool submitFlag;
 
         public NewReject()
         {
@@ -35,20 +29,15 @@ namespace RejectsApp2
             dateDispositionDropDown.Format = DateTimePickerFormat.Custom;
             //setting the dateRejected time
             DateRejectedDropDown.Value = DateTime.Now;
-            //bringing to front
-            BringToFront();
-            //hiding initial form
-    
+            Location = new Point(Location.X + 5, Location.Y + 10);
         }
 
         //on close of the new reject form verifies that the user wanted to quit and then returns the home page to showing.
         private void NewReject_Closing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing && submitFlag == false)
-            {
                 e.Cancel = MessageBox.Show("Are you sure you want to exit? Exiting will erase all inputs.",
                     "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
-            }
         }
 
         private void RejectTypeDropDown_SelectedIndexChanged(object sender, EventArgs e)
@@ -90,14 +79,14 @@ namespace RejectsApp2
             if (res) return;
 
             //make sure that the line reject number is not already taken(unlikely, but would break things).
-            if (!finalRejectNumCheck(rejNum) && rejNum.ToString().Substring(0,1) != "R") 
+            if (!finalRejectNumCheck(rejNum) && rejNum.Substring(0, 1) != "R")
             {
                 rejNum = GenerateRejectNumber(RejectTypeDropDown.SelectedItem.ToString());
                 MessageBox.Show("Reject_Number switched to: " + rejNum);
                 RejectNumberTextBox.Text = rejNum;
             }
             //do not need to auto generate a reject number of 'R' type, as such we need to simply allow the user to enter a new value
-            else if (!finalRejectNumCheck(rejNum) && rejNum.ToString().Substring(0, 1) == "R")
+            else if (!finalRejectNumCheck(rejNum) && rejNum.Substring(0, 1) == "R")
             {
                 MessageBox.Show("The reject number " + rejNum + " is already taken.");
                 return;
@@ -105,7 +94,7 @@ namespace RejectsApp2
 
             NewRejectOperation(this);
             //a submission was made- signal to close without prompting user to confirm.
-            submitFlag = true; 
+            submitFlag = true;
             Close();
         }
 
@@ -136,28 +125,30 @@ namespace RejectsApp2
             dateDispositionDropDown.Format = DateTimePickerFormat.Short;
         }
 
-
+        //displays the print form
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            PrintDisplay temDisplay = new PrintDisplay(this);
-            temDisplay.Show();
-
+            var temDisplay = new PrintDisplay(this);
+            temDisplay.ShowDialog(this);
         }
 
         private void UnitCostTextBox_TextChanged(object sender, EventArgs e)
         {
             var periodCount = 0;
             var index = 0;
-
+            //prevent invalid inputs for the unit cost text box.
             foreach (var num in UnitCostTextBox.Text)
             {
+                //if the char is a num and the period count is under 0, continue
                 if (char.IsDigit(num) && periodCount <= 1)
                 {
                 }
+                //if the digit is not a num, but is a period instead, increase the period count
                 else if (num == '.')
                 {
                     periodCount++;
                 }
+                //alert the user they don't need to input the dollar sign
                 else if (num == '$')
                 {
                     MessageBox.Show("Do not enter the dollar sign.");
@@ -270,9 +261,5 @@ namespace RejectsApp2
         }
 
         #endregion checkSelection
-
- 
-
-    
     }
 }

@@ -621,7 +621,7 @@ namespace RejectsApp2
             this.MaximizeBox = false;
             this.Name = "EditReject";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "NewReject";
+            this.Text = "Edit Reject";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditReject_Closing);
             this.Load += new System.EventHandler(this.EditReject_Load);
             this.panel1.ResumeLayout(false);

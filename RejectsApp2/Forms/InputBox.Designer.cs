@@ -30,9 +30,10 @@ namespace RejectsApp2
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.numberTextBox = new System.Windows.Forms.TextBox();
             this.SubmitID = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.rejectNumComboBox = new System.Windows.Forms.ComboBox();
+            this.passwordTextbox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -45,15 +46,6 @@ namespace RejectsApp2
             this.label1.TabIndex = 0;
             this.label1.Text = "Enter the Reject Number you wish to edit";
             this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // numberTextBox
-            // 
-            this.numberTextBox.Location = new System.Drawing.Point(47, 43);
-            this.numberTextBox.MaxLength = 30;
-            this.numberTextBox.Name = "numberTextBox";
-            this.numberTextBox.Size = new System.Drawing.Size(148, 20);
-            this.numberTextBox.TabIndex = 1;
-            this.numberTextBox.TextChanged += new System.EventHandler(this.numberTextBox_TextChanged);
             // 
             // SubmitID
             // 
@@ -87,6 +79,29 @@ namespace RejectsApp2
             this.cancelButton.UseVisualStyleBackColor = false;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
+            // rejectNumComboBox
+            // 
+            this.rejectNumComboBox.DropDownHeight = 75;
+            this.rejectNumComboBox.FormattingEnabled = true;
+            this.rejectNumComboBox.IntegralHeight = false;
+            this.rejectNumComboBox.Location = new System.Drawing.Point(61, 39);
+            this.rejectNumComboBox.Name = "rejectNumComboBox";
+            this.rejectNumComboBox.Size = new System.Drawing.Size(121, 21);
+            this.rejectNumComboBox.TabIndex = 4;
+            this.rejectNumComboBox.SelectedIndexChanged += new System.EventHandler(this.rejectNumComboBox_SelectedIndexChanged);
+            this.rejectNumComboBox.TextChanged += new System.EventHandler(this.rejectNumComboBox_TextChanged);
+            // 
+            // passwordTextbox
+            // 
+            this.passwordTextbox.Enabled = false;
+            this.passwordTextbox.Location = new System.Drawing.Point(61, 54);
+            this.passwordTextbox.Name = "passwordTextbox";
+            this.passwordTextbox.PasswordChar = '*';
+            this.passwordTextbox.Size = new System.Drawing.Size(121, 20);
+            this.passwordTextbox.TabIndex = 5;
+            this.passwordTextbox.Visible = false;
+            this.passwordTextbox.TextChanged += new System.EventHandler(this.passwordTextbox_TextChanged);
+            // 
             // InputBox
             // 
             this.AcceptButton = this.SubmitID;
@@ -95,9 +110,10 @@ namespace RejectsApp2
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(250, 115);
             this.ControlBox = false;
+            this.Controls.Add(this.passwordTextbox);
+            this.Controls.Add(this.rejectNumComboBox);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.SubmitID);
-            this.Controls.Add(this.numberTextBox);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.KeyPreview = true;
@@ -109,6 +125,7 @@ namespace RejectsApp2
             this.Text = "Edit Reject";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.InputBox_Load);
+            this.TextChanged += new System.EventHandler(this.InputBox_TextChanged);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -117,8 +134,9 @@ namespace RejectsApp2
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox numberTextBox;
         private System.Windows.Forms.Button SubmitID;
         private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.ComboBox rejectNumComboBox;
+        private System.Windows.Forms.TextBox passwordTextbox;
     }
 }

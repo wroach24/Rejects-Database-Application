@@ -52,6 +52,8 @@ namespace RejectsApp2
                 source.Open();
                 destination.Open();
                 source.BackupDatabase(destination, "main", "main", -1, null, 0);
+                source.Close();
+                destination.Close();
             }
         }
     }

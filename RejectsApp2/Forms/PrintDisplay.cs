@@ -1,57 +1,52 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Reporting.WinForms;
 using RejectsApp2.Properties;
-using static RejectsApp2.Commands;
 
 namespace RejectsApp2.Forms
 {
     public partial class PrintDisplay : Form
     {
+        private readonly EditReject editrejectForm;
         private NewReject newRejectForm;
-        private EditReject editrejectForm;
+
         public PrintDisplay(NewReject newRejectForm)
         {
             InitializeComponent();
             this.newRejectForm = newRejectForm;
             reportViewer3.Reset();
-            this.reportViewer3.Name = "ReportViewer";
-            this.reportViewer3.TabIndex = 0;
-            this.reportViewer3.Visible = true;
-            ReportDataSource rpdSource = GenerateEmptyDataTableForReport();
+            reportViewer3.Name = "ReportViewer";
+            reportViewer3.TabIndex = 0;
+            reportViewer3.Visible = true;
+            var rpdSource = GenerateEmptyDataTableForReport();
             DisplayPrintReport(reportViewer3, rpdSource, this, newRejectForm);
             CenterToScreen();
         }
+
         public PrintDisplay(EditReject editRejectForm)
         {
             InitializeComponent();
-            this.editrejectForm = editRejectForm;
+            editrejectForm = editRejectForm;
             reportViewer3.Reset();
-            this.reportViewer3.Name = "ReportViewer";
-            this.reportViewer3.TabIndex = 0;
-            this.reportViewer3.Visible = true;
-            ReportDataSource rpdSource = GenerateEmptyDataTableForReport();
+            reportViewer3.Name = "ReportViewer";
+            reportViewer3.TabIndex = 0;
+            reportViewer3.Visible = true;
+            var rpdSource = GenerateEmptyDataTableForReport();
             DisplayPrintReport(reportViewer3, rpdSource, this, editrejectForm);
             CenterToScreen();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
-
         }
+
+        //returns a temporary datatable to assign as the report's data, even though it will not be used since report will nto display otherwise
         public static ReportDataSource GenerateEmptyDataTableForReport()
         {
-            DataTable dt = new DataTable();
+            var dt = new DataTable();
             dt.Columns.Add("x");
-            DataRow temp = dt.NewRow();
+            var temp = dt.NewRow();
             temp["x"] = "temp";
             dt.Rows.Add(temp);
             var ds = new DataSet1();
@@ -64,14 +59,13 @@ namespace RejectsApp2.Forms
             return rds;
         }
 
-        public static void DisplayPrintReport(ReportViewer reportViewer1, ReportDataSource rpdSource, PrintDisplay displayForm, NewReject newRejectForm)
+        //displays the print report with the below settings
+        public static void DisplayPrintReport(ReportViewer reportViewer1, ReportDataSource rpdSource,
+            PrintDisplay displayForm, NewReject newRejectForm)
         {
             reportViewer1.LocalReport.ReportPath = ConnectionSettings.Default.PrintReport;
-            var names = reportViewer1.LocalReport.GetDataSourceNames();
             reportViewer1.LocalReport.DataSources.Add(rpdSource);
             SetPrintReportParameters(reportViewer1, newRejectForm);
-
-
             reportViewer1.PrinterSettings.DefaultPageSettings.Margins.Bottom = 0;
             reportViewer1.PrinterSettings.DefaultPageSettings.Margins.Top = 0;
             reportViewer1.PrinterSettings.DefaultPageSettings.Margins.Left = 0;
@@ -81,16 +75,15 @@ namespace RejectsApp2.Forms
             reportViewer1.ZoomMode = ZoomMode.PageWidth;
             reportViewer1.RefreshReport();
             reportViewer1.Show();
-
         }
-        public static void DisplayPrintReport(ReportViewer reportViewer1, ReportDataSource rpdSource, PrintDisplay displayForm, EditReject editRejectForm)
+
+        //displays the print report with the below settings
+        public static void DisplayPrintReport(ReportViewer reportViewer1, ReportDataSource rpdSource,
+            PrintDisplay displayForm, EditReject editRejectForm)
         {
             reportViewer1.LocalReport.ReportPath = ConnectionSettings.Default.PrintReport;
-            var names = reportViewer1.LocalReport.GetDataSourceNames();
             reportViewer1.LocalReport.DataSources.Add(rpdSource);
             SetPrintReportParameters(reportViewer1, editRejectForm);
-
-
             reportViewer1.PrinterSettings.DefaultPageSettings.Margins.Bottom = 0;
             reportViewer1.PrinterSettings.DefaultPageSettings.Margins.Top = 0;
             reportViewer1.PrinterSettings.DefaultPageSettings.Margins.Left = 0;
@@ -100,17 +93,18 @@ namespace RejectsApp2.Forms
             reportViewer1.ZoomMode = ZoomMode.PageWidth;
             reportViewer1.RefreshReport();
             reportViewer1.Show();
-
         }
 
+        //sets the parameters necessary to fill out the print form
         public static void SetPrintReportParameters(ReportViewer reportViewer1, NewReject newRejectForm)
         {
-            ReportParameterCollection reportParams = new ReportParameterCollection();
+            var reportParams = new ReportParameterCollection();
             reportParams.Add(new ReportParameter("RejectTypeParameter", newRejectForm.RejectTypeDropDown.Text));
             reportParams.Add(new ReportParameter("RejectNumber", newRejectForm.RejectNumberTextBox.Text));
             reportParams.Add(new ReportParameter("PartNumber", newRejectForm.PartNumberTextBox.Text));
             reportParams.Add(new ReportParameter("SerialNumber", newRejectForm.SerialNumberTextBox.Text));
-            reportParams.Add(new ReportParameter("DateRejected", newRejectForm.DateRejectedDropDown.Value.Date.ToShortDateString()));
+            reportParams.Add(new ReportParameter("DateRejected",
+                newRejectForm.DateRejectedDropDown.Value.Date.ToShortDateString()));
             reportParams.Add(new ReportParameter("PartDescription", newRejectForm.PartDescriptionTextBox.Text));
             reportParams.Add(new ReportParameter("LotNum", newRejectForm.LotNumberTextBox.Text));
             reportParams.Add(new ReportParameter("PONum", newRejectForm.PONumberTextBox.Text));
@@ -129,14 +123,17 @@ namespace RejectsApp2.Forms
             reportParams.Add(new ReportParameter("DateofDisp", newRejectForm.dateDispositionDropDown.Text));
             reportViewer1.LocalReport.SetParameters(reportParams);
         }
+
+        //sets the parameters necessary to fill out the print form
         public static void SetPrintReportParameters(ReportViewer reportViewer1, EditReject editRejectForm)
         {
-            ReportParameterCollection reportParams = new ReportParameterCollection();
+            var reportParams = new ReportParameterCollection();
             reportParams.Add(new ReportParameter("RejectTypeParameter", editRejectForm.RejectTypeDropDown.Text));
             reportParams.Add(new ReportParameter("RejectNumber", editRejectForm.RejectNumberTextBox.Text));
             reportParams.Add(new ReportParameter("PartNumber", editRejectForm.PartNumberTextBox.Text));
             reportParams.Add(new ReportParameter("SerialNumber", editRejectForm.SerialNumberTextBox.Text));
-            reportParams.Add(new ReportParameter("DateRejected", editRejectForm.DateRejectedDropDown.Value.Date.ToShortDateString()));
+            reportParams.Add(new ReportParameter("DateRejected",
+                editRejectForm.DateRejectedDropDown.Value.Date.ToShortDateString()));
             reportParams.Add(new ReportParameter("PartDescription", editRejectForm.PartDescriptionTextBox.Text));
             reportParams.Add(new ReportParameter("LotNum", editRejectForm.LotNumberTextBox.Text));
             reportParams.Add(new ReportParameter("PONum", editRejectForm.PONumberTextBox.Text));

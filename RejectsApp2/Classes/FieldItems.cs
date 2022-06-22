@@ -13,11 +13,18 @@ public class FieldItems
         dispositionCodesDataTable = GetValuesForForm("SELECT * FROM Disposition_Codes ");
     }
 
+    public FieldItems(char RejectListTag)
+    {
+        RecentRejectDataTable =
+            GetValuesForReport("SELECT Reject_Number FROM Rejects ORDER BY Date_Rejected DESC LIMIT 1000");
+    }
+
     public DataTable rejectTypesDataTable { get; }
     public DataTable productLinesDataTable { get; }
     public DataTable responsibleDataTable { get; }
     public DataTable vendorsDataTable { get; }
     public DataTable dispositionCodesDataTable { get; }
+    public DataTable RecentRejectDataTable { get; }
 
     public void FillMenus(ComboBox reject, ComboBox productLines, ComboBox responsible, ComboBox vendors)
     {
@@ -30,5 +37,10 @@ public class FieldItems
     public void FillDispositionMenu(ComboBox disposition)
     {
         FillOutDropMenu(dispositionCodesDataTable, disposition, 'x');
+    }
+
+    public void FillRecentRejects(ComboBox rejectList)
+    {
+        FillOutDropMenu(RecentRejectDataTable, rejectList);
     }
 }

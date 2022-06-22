@@ -1,6 +1,4 @@
-﻿
-using RejectsApp2.Properties;
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SQLite;
 using System.Globalization;
@@ -9,6 +7,7 @@ using System.Transactions;
 using System.Windows.Forms;
 using System.Xml;
 using Microsoft.Reporting.WinForms;
+using RejectsApp2.Properties;
 using static RejectsApp2.Commands;
 using static RejectsApp2.CustomReportGenerator;
 using static RejectsApp2.GenerateDefinedReport;
@@ -72,7 +71,8 @@ namespace RejectsApp2
             //changing report to the report path, need to relative path before publishing.
             //reportViewer1.LocalReport.ReportPath =
             //    @"C:\Users\30053901\source\repos\RejectsApp2\RejectsApp2\Report2.rdlc"; //ConnectionSettings.Default.testReportFile;
-            LecturaRDLCXML(dt,ConnectionSettings.Default.customReportFile, ConnectionSettings.Default.generatedCustomReport);
+            LecturaRDLCXML(dt, ConnectionSettings.Default.customReportFile,
+                ConnectionSettings.Default.generatedCustomReport);
 
             reportViewer1.Reset();
             reportViewer1.LocalReport.ReportPath =
@@ -97,8 +97,10 @@ namespace RejectsApp2
 
         private void button2_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             reportViewer2.Reset();
             GenerateScrapReport(this);
+            Cursor = Cursors.Default;
         }
 
         private void reportViewer2_Load(object sender, EventArgs e)
@@ -107,34 +109,41 @@ namespace RejectsApp2
 
         private void button3_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             reportViewer2.Reset();
             GenerateReceivingReport(this);
+            Cursor = Cursors.Default;
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             reportViewer2.Reset();
             GenerateOpenItemReport(this);
+            Cursor = Cursors.Default;
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             reportViewer2.Reset();
             GenerateProductReport(this);
+            Cursor = Cursors.Default;
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             reportViewer2.Reset();
             if (!string.IsNullOrEmpty(PartNumTextBox.Text))
                 GeneratePartNumReport(this);
             else
                 MessageBox.Show("You cannot generate a part history report without a part number entered.");
+            Cursor = Cursors.Default;
         }
 
         private void tabPage1_Click(object sender, EventArgs e)
         {
-
         }
     }
 
@@ -244,7 +253,7 @@ namespace RejectsApp2
             var path = ConnectionSettings.Default.openRepFile;
             var whereQuery = GenerateWhereQuery(fields);
             var lastPortion = "(Disposition IS NULL OR Disposition == '') ";
-            var finalQuery = AppendQuery(whereQuery, lastPortion,"");
+            var finalQuery = AppendQuery(whereQuery, lastPortion, "");
             GenerateReport(finalQuery, fields, path);
         }
 
@@ -262,21 +271,19 @@ namespace RejectsApp2
         private static string AppendQuery(string whereQuery, string lastPortion)
         {
             //check if the lastportion of the query is null, check if the query has a where portion and adjust query accordingly.
-            if (string.IsNullOrEmpty(lastPortion))
-            {
-            } //do nothing
+            if (string.IsNullOrEmpty(lastPortion)) ;
+                //do nothing
             else if (whereQuery == "")
-            {
                 whereQuery += " WHERE " + lastPortion;
-            }
+            
             else
-            {
                 whereQuery += " AND " + lastPortion;
-            }
+            
 
             return startQuery + whereQuery + "ORDER BY Date_of_Disposition ASC";
         }
-        private static string AppendQuery(string whereQuery, string lastPortion,string openTag)
+
+        private static string AppendQuery(string whereQuery, string lastPortion, string openTag)
         {
             //check if the lastportion of the query is null, check if the query has a where portion and adjust query accordingly.
             if (string.IsNullOrEmpty(lastPortion))

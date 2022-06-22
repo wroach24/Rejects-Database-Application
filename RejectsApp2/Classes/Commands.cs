@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Windows.Forms;
-using Microsoft.Reporting.WinForms;
-using RejectsApp2.Forms;
 using RejectsApp2.Properties;
 
 namespace RejectsApp2
@@ -173,16 +171,28 @@ namespace RejectsApp2
         {
             var query = q;
             var val = "";
-            var disp = "";
             var args = new Dictionary<string, object>
             {
-                { "@Field1", val },
-                { "@Field2", disp }
+                { "@Field1", val }
             };
 
             var dt = ExecuteRead(query, args);
 
             if (dt == null || dt.Rows.Count == 0) return null;
+
+            return dt;
+        }
+
+        public static int ModifyField(string q)
+        {
+            var query = q;
+            var val = "";
+            var args = new Dictionary<string, object>
+            {
+                { "@Field1", val }
+            };
+
+            var dt = ExecuteWrite(query, args);
 
             return dt;
         }
@@ -208,30 +218,22 @@ namespace RejectsApp2
                 return 0;
             //setup the connection to the database
             var path = ConnectionSettings.Default.connString;
-            try
+            using (var con = new SQLiteConnection(path))
             {
-                using (var con = new SQLiteConnection(path))
+                int numberOfRowsAffected;
+                con.Open();
+
+                //open a new command
+                using (var cmd = new SQLiteCommand(query, con))
                 {
-                    int numberOfRowsAffected;
-                    con.Open();
-
-                    //open a new command
-                    using (var cmd = new SQLiteCommand(query, con))
-                    {
-                        //set the arguments given in the query
-                        foreach (var pair in args) cmd.Parameters.AddWithValue(pair.Key, pair.Value);
-                        //execute the query and get the number of row affected
-                        numberOfRowsAffected = cmd.ExecuteNonQuery();
-                    }
-
-                    con.Close();
-                    return numberOfRowsAffected;
+                    //set the arguments given in the query
+                    foreach (var pair in args) cmd.Parameters.AddWithValue(pair.Key, pair.Value);
+                    //execute the query and get the number of row affected
+                    numberOfRowsAffected = cmd.ExecuteNonQuery();
                 }
-            }
-            catch
-            {
-                MessageBox.Show("Something went wrong executing the following SQL Write operation: " + query);
-                throw;
+
+                con.Close();
+                return numberOfRowsAffected;
             }
         }
 
@@ -290,6 +292,21 @@ namespace RejectsApp2
                     DropDown.Items.Add(dataRow.ItemArray[i] + " : " + dataRow.ItemArray[i + 1]);
             DropDown.SelectedItem = null;
         }
-    }
+        //sets the column depending on the field table specified, needed for query
+        public static string getCorrespondingColumn(string fieldType)
+        {
+            var correspondingColumn = "";
+            if (fieldType == "Product_Lines")
+                correspondingColumn = "Product Line";
 
+            else if (fieldType == "Responsible")
+                correspondingColumn = "Responsible PL";
+
+            else if (fieldType == "Vendors")
+                correspondingColumn = "Field1";
+            else if (fieldType == "Disposition_Codes") correspondingColumn = "Description";
+
+            return correspondingColumn;
+        }
+    }
 }

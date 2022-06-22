@@ -37,7 +37,12 @@ namespace RejectsApp2
             this.EditRejectButton = new System.Windows.Forms.Button();
             this.excelPrintPreview = new System.Windows.Forms.PrintPreviewDialog();
             this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.editFieldsButton = new System.Windows.Forms.Button();
             this.YokogawaLogo = new System.Windows.Forms.PictureBox();
+            this.AdminLogInButton = new System.Windows.Forms.Button();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.YokogawaLogo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -76,7 +81,7 @@ namespace RejectsApp2
             this.Reports.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkBlue;
             this.Reports.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lavender;
             this.Reports.Font = new System.Drawing.Font("SansSerif", 9.749999F);
-            this.Reports.Location = new System.Drawing.Point(318, 277);
+            this.Reports.Location = new System.Drawing.Point(318, 241);
             this.Reports.Name = "Reports";
             this.Reports.Size = new System.Drawing.Size(94, 30);
             this.Reports.TabIndex = 3;
@@ -91,7 +96,7 @@ namespace RejectsApp2
             this.DeleteReject.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkBlue;
             this.DeleteReject.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lavender;
             this.DeleteReject.Font = new System.Drawing.Font("SansSerif", 9.749999F);
-            this.DeleteReject.Location = new System.Drawing.Point(318, 241);
+            this.DeleteReject.Location = new System.Drawing.Point(52, 16);
             this.DeleteReject.Name = "DeleteReject";
             this.DeleteReject.Size = new System.Drawing.Size(94, 30);
             this.DeleteReject.TabIndex = 4;
@@ -128,8 +133,46 @@ namespace RejectsApp2
             // 
             this.reportViewer1.Location = new System.Drawing.Point(0, 0);
             this.reportViewer1.Name = "reportViewer1";
+            this.reportViewer1.ServerReport.BearerToken = null;
             this.reportViewer1.Size = new System.Drawing.Size(396, 246);
             this.reportViewer1.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(316, 285);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(99, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "ADMIN ACCESS";
+            this.label1.Visible = false;
+            // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.editFieldsButton);
+            this.panel1.Controls.Add(this.DeleteReject);
+            this.panel1.Location = new System.Drawing.Point(265, 301);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(200, 151);
+            this.panel1.TabIndex = 8;
+            this.panel1.Visible = false;
+            // 
+            // editFieldsButton
+            // 
+            this.editFieldsButton.BackColor = System.Drawing.Color.GhostWhite;
+            this.editFieldsButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.editFieldsButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkBlue;
+            this.editFieldsButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lavender;
+            this.editFieldsButton.Font = new System.Drawing.Font("SansSerif", 9.749999F);
+            this.editFieldsButton.Location = new System.Drawing.Point(52, 59);
+            this.editFieldsButton.Name = "editFieldsButton";
+            this.editFieldsButton.Size = new System.Drawing.Size(94, 30);
+            this.editFieldsButton.TabIndex = 5;
+            this.editFieldsButton.Text = "Edit Fields";
+            this.editFieldsButton.UseVisualStyleBackColor = false;
+            this.editFieldsButton.Click += new System.EventHandler(this.editFieldsButton_Click);
             // 
             // YokogawaLogo
             // 
@@ -141,6 +184,21 @@ namespace RejectsApp2
             this.YokogawaLogo.TabStop = false;
             this.YokogawaLogo.Click += new System.EventHandler(this.YokogawaLogo_Click);
             // 
+            // AdminLogInButton
+            // 
+            this.AdminLogInButton.BackColor = System.Drawing.Color.GhostWhite;
+            this.AdminLogInButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.AdminLogInButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkBlue;
+            this.AdminLogInButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lavender;
+            this.AdminLogInButton.Font = new System.Drawing.Font("SansSerif", 9.749999F);
+            this.AdminLogInButton.Location = new System.Drawing.Point(591, 412);
+            this.AdminLogInButton.Name = "AdminLogInButton";
+            this.AdminLogInButton.Size = new System.Drawing.Size(101, 26);
+            this.AdminLogInButton.TabIndex = 9;
+            this.AdminLogInButton.Text = "Admin Log In";
+            this.AdminLogInButton.UseVisualStyleBackColor = false;
+            this.AdminLogInButton.Click += new System.EventHandler(this.AdminLogInButton_Click);
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -148,8 +206,10 @@ namespace RejectsApp2
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(75)))), ((int)(((byte)(109)))));
             this.ClientSize = new System.Drawing.Size(704, 450);
+            this.Controls.Add(this.AdminLogInButton);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.EditRejectButton);
-            this.Controls.Add(this.DeleteReject);
             this.Controls.Add(this.Reports);
             this.Controls.Add(this.title);
             this.Controls.Add(this.YokogawaLogo);
@@ -160,6 +220,7 @@ namespace RejectsApp2
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Yokogawa Rejects";
             this.Load += new System.EventHandler(this.Home_Load);
+            this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.YokogawaLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -175,10 +236,14 @@ namespace RejectsApp2
         private System.Windows.Forms.PictureBox YokogawaLogo;
         private System.Windows.Forms.TextBox title;
         private System.Windows.Forms.Button Reports;
-        private System.Windows.Forms.Button DeleteReject;
         private System.Windows.Forms.Button EditRejectButton;
         private System.Windows.Forms.PrintPreviewDialog excelPrintPreview;
         public Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
+        public System.Windows.Forms.Button DeleteReject;
+        public System.Windows.Forms.Label label1;
+        public System.Windows.Forms.Panel panel1;
+        public System.Windows.Forms.Button editFieldsButton;
+        public System.Windows.Forms.Button AdminLogInButton;
     }
 }
 

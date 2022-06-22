@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Printing;
 using System.Windows.Forms;
 using RejectsApp2.Forms;
 using static RejectsApp2.EditRejectCommands;
@@ -10,24 +8,23 @@ namespace RejectsApp2
 {
     public partial class EditReject : Form
     {
-        private readonly Home home;
+        private readonly Rejects rejectNumInput;
         private bool editFlag;
-   
 
-        public EditReject(Home home)
+        public EditReject(Rejects rejectNum)
         {
             InitializeComponent();
-
-            this.home = home;
+            rejectNumInput = rejectNum;
         }
 
         private void EditReject_Load(object sender, EventArgs e) //hides main form on load
         {
             //initializes a field instance which fills out the form, given the dropdowns
+
             var fieldInstance = new FieldItems();
             fieldInstance.FillMenus(RejectTypeDropDown, ProductLineDropDown, ResponsibleDropDown, VendorNameDropDown);
             fieldInstance.FillDispositionMenu(DispositionDropDown);
-            home.Hide();
+
             //check if the disposition is filled out yet
             if (string.IsNullOrEmpty(DispositionDropDown.Text))
             {
@@ -35,7 +32,9 @@ namespace RejectsApp2
                 dateDispositionDropDown.CustomFormat = " ";
                 dateDispositionDropDown.Format = DateTimePickerFormat.Custom;
             }
-           
+
+            FillOutEditForm(rejectNumInput, this);
+            Location = new Point(Location.X + 5, Location.Y + 10);
         }
 
         //on close of the new reject form verifies that the user wanted to quit and then returns the home page to showing.
@@ -43,22 +42,15 @@ namespace RejectsApp2
             FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing && editFlag == false)
-            {
                 e.Cancel = MessageBox.Show("Are you sure you want to exit? Exiting will erase all inputs.",
                     "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
-                if (e.Cancel == false) home.Show();
-            }
-            else
-            {
-                home.Show();
-            }
         }
 
         private void RejectTypeDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
         }
 
-        private void SubmitRejectButton_Click(object sender, EventArgs e) //make it so u cannot submit
+        private void SubmitRejectButton_Click(object sender, EventArgs e)
         {
             var res = MessageBox.Show("Are you sure you want to submit?",
                 "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
@@ -74,11 +66,11 @@ namespace RejectsApp2
             dateDispositionDropDown.Format = DateTimePickerFormat.Short;
         }
 
-        //printing, clean up once receiving confirmation from Gary
+        //printing
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            PrintDisplay temDisplay = new PrintDisplay(this);
-            temDisplay.Show();
+            var temDisplay = new PrintDisplay(this);
+            temDisplay.ShowDialog(this);
         }
 
         private void UnitCostTextBox_TextChanged(object sender, EventArgs e)

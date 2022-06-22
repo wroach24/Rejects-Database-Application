@@ -51,9 +51,9 @@ namespace RejectsApp2
         //Fills out the edit form, utilizes if statements to assign null to traditional non-nullable types, text is just assigned directly.
         public static void FillOutEditForm(Rejects reject, EditReject editReject)
         {
-            if (reject.Reject_Number.Substring(0, 1) == "L")
+            if (reject.Reject_Number.Substring(0, 1) == "L" || reject.Reject_Number.Substring(0, 1) == "l")
                 editReject.RejectTypeDropDown.SelectedIndex = editReject.RejectTypeDropDown.FindStringExact("Line");
-            else if (reject.Reject_Number.Substring(0, 1) == "R")
+            else if (reject.Reject_Number.Substring(0, 1) == "R" || reject.Reject_Number.Substring(0, 1) == "r")
                 editReject.RejectTypeDropDown.SelectedIndex =
                     editReject.RejectTypeDropDown.FindStringExact("Receiving");
 
