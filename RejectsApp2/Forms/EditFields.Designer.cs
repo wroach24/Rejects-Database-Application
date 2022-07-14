@@ -72,7 +72,6 @@ namespace RejectsApp2.Forms
             this.label4.Size = new System.Drawing.Size(75, 13);
             this.label4.TabIndex = 10;
             this.label4.Text = "Revision Type";
-
             // 
             // InputBox
             // 
@@ -92,7 +91,6 @@ namespace RejectsApp2.Forms
             this.revisionTypeBox.Name = "revisionTypeBox";
             this.revisionTypeBox.Size = new System.Drawing.Size(160, 21);
             this.revisionTypeBox.TabIndex = 8;
-
             // 
             // label1
             // 
@@ -156,6 +154,7 @@ namespace RejectsApp2.Forms
             this.Controls.Add(this.OriginalBox);
             this.Name = "EditFields";
             this.Text = "Edit Fields";
+            this.Load += new System.EventHandler(this.EditFields_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

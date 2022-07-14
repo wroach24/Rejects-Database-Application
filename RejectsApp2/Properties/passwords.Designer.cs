@@ -23,12 +23,15 @@ namespace RejectsApp2.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1234")]
         public string adminPassword {
             get {
                 return ((string)(this["adminPassword"]));
+            }
+            set {
+                this["adminPassword"] = value;
             }
         }
     }

@@ -26,7 +26,7 @@ namespace RejectsApp2.Forms
             foreach (DataRow datarow in dt.Rows) OriginalBox.Items.Add(datarow.ItemArray[0].ToString());
         }
 
-        //same thing as above, however is used to refresh after submission instead of after index change.
+        //used to update listbox after submission
         private void FieldTypeBox_Refresh()
         {
             OriginalBox.Items.Clear();
@@ -41,7 +41,7 @@ namespace RejectsApp2.Forms
         {
             //operation being performed
             var operation = revisionTypeBox.Text;
-            //the field table type 
+            //the field table type i.e Product_Lines
             var fieldType = FieldTypeBox.Text;
             //the user input(only used for adding)
             var input = InputBox.Text;
@@ -106,10 +106,15 @@ namespace RejectsApp2.Forms
             {
                 if (ex.ErrorCode == 19)
                     MessageBox.Show(
-                        "This field must be unique but it is already present within the table. Try changing the name, or deleting the currently present field.");
+                        "This field must be unique but it is already present within the table. Try changing the name.");
                 else
                     throw;
             }
+        }
+
+        private void EditFields_Load(object sender, EventArgs e)
+        {
+            CenterToParent();
         }
     }
 }

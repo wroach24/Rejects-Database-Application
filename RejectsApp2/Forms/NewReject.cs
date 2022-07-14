@@ -23,57 +23,68 @@ namespace RejectsApp2
             var fieldInstance = new FieldItems();
             fieldInstance.FillMenus(RejectTypeDropDown, ProductLineDropDown, ResponsibleDropDown, VendorNameDropDown);
             fieldInstance.FillDispositionMenu(DispositionDropDown);
-            //setting the dateDisposition to empty to start as well as setting the date value if enabled
+            //setting the dateDisposition to display as empty, setting inital date to now.
             dateDispositionDropDown.Value = DateTime.Now;
             dateDispositionDropDown.CustomFormat = " ";
             dateDispositionDropDown.Format = DateTimePickerFormat.Custom;
-            //setting the dateRejected time
+            //setting the dateRejected initial time to now
             DateRejectedDropDown.Value = DateTime.Now;
+            // setting new reject form to be offset from parent
             Location = new Point(Location.X + 5, Location.Y + 10);
         }
 
-        //on close of the new reject form verifies that the user wanted to quit and then returns the home page to showing.
+        //on close of the new reject form, verifies that the user wanted to quit.
         private void NewReject_Closing(object sender, FormClosingEventArgs e)
         {
+            //submit flag signals that the program is sending the request to close, userinput is still eval'd as true even when program closes itself for some reasno
             if (e.CloseReason == CloseReason.UserClosing && submitFlag == false)
                 e.Cancel = MessageBox.Show("Are you sure you want to exit? Exiting will erase all inputs.",
                     "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
         }
 
+        //after selecting reject type generating reject number
         private void RejectTypeDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var type = RejectTypeDropDown.SelectedItem.ToString();
             Cursor.Current = Cursors.WaitCursor;
+           
+            var type = RejectTypeDropDown.SelectedItem.ToString(); //determing if R or L 
             var newRejectNum = GenerateRejectNumber(type);
-            RejectNumberTextBox.Text = newRejectNum;
-            if (newRejectNum != "R")
+            RejectNumberTextBox.Text = newRejectNum; //setting user display RejectNumber textbox to the generated number
+            
+            if (newRejectNum != "R") //if L, disable user input, else R so allow
                 RejectNumberTextBox.Enabled = false;
             else
                 RejectNumberTextBox.Enabled = true;
+
             Cursor.Current = Cursors.Default;
         }
 
-        private void SubmitRejectButton_Click(object sender, EventArgs e) //make it so u cannot submit
+        
+        private void SubmitRejectButton_Click(object sender, EventArgs e) 
         {
-            var res = false; //user input rsult
+            //if rejecttype is not selected, return
+            if (checkRejectSelection() == false) return;
+
+            var res = false; //user input result
             var rejNum = RejectNumberTextBox.Text; //getting reject number
-            requiredFields = new[]
+            requiredFields = new[] //required inputs
             {
-                RejectedByDropDown.Text, PartNumberTextBox.Text, DiscrepancyTextBox.Text, PartDescriptionTextBox.Text
+                RejectedByDropDown.Text, PartNumberTextBox.Text, DiscrepancyTextBox.Text, PartDescriptionTextBox.Text, QtyReceivedTextBox.Text
             };
 
-            //a required form is not filled out
+            //checking required forms are filled out
             foreach (var field in requiredFields)
                 if (string.IsNullOrEmpty(field))
                 {
                     MessageBox.Show(
-                        "One of the following required forms is empty: Rejected By, Part Number, Part Description, Discrepancy." +
+                        "One or more of the following required forms are empty: Quantity Received, Rejected By, Part Number, Part Description, Discrepancy." +
                         field);
                     return;
                 }
 
 
-            if (checkRejectSelection() == false) return;
+            
+            //confirming submission
             res = MessageBox.Show("Are you sure you want to submit?",
                 "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
             if (res) return;
@@ -119,6 +130,7 @@ namespace RejectsApp2
             checkRejectSelection();
         }
 
+        //once a disposition has been selected, enable the dispositiondate dropdown
         private void DispositionDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
             dateDispositionDropDown.Enabled = true;

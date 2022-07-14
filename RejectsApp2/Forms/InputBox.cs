@@ -38,6 +38,19 @@ namespace RejectsApp2
                 passwordTextbox.Visible = true;
                 passwordTextbox.Enabled = true;
             }
+            else if (type == "changePW")
+            {
+                label1.Hide();
+                // changing appearance to fit the function
+                newPasswordLabel.Visible = true;
+                currentPasswordlabel.Visible = true;
+                rejectNumComboBox.Visible = false;
+                rejectNumComboBox.Enabled = false;
+                passwordTextbox.Visible = true;
+                passwordTextbox.Enabled = true;
+                newPasswordTextbox.Visible = true;
+                newPasswordTextbox.Enabled = true;
+            }
         }
 
 
@@ -71,6 +84,42 @@ namespace RejectsApp2
                 Cursor.Current = Cursors.Default;
                 return;
             }
+            if (type == "changePW")
+            {
+                Name = "Admin Change PW";
+                var inputPassword = passwordTextbox.Text;
+                var newPassword = newPasswordTextbox.Text;
+                //check the password for correctness(not super secure, doesn't have to be for this app's purposes)
+                if (inputPassword == passwords.Default.adminPassword)
+                {
+                    //perform operations after typecasting the owner back to home in order to access modifiers
+                    var home = (Home)Owner;
+                    home.label1.Visible = true;
+                    home.panel1.Visible = true;
+                    home.AdminLogInButton.Visible = false;
+                    
+
+                    //check 1
+                    var res = MessageBox.Show("Are you sure you want to CHANGE PASSWORD? This action is irreversible, make sure you have typed it correctly.",
+                        "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
+                    if (res) return;
+                    Properties.passwords.Default.adminPassword = newPassword;
+                    //check 2
+                    var res2 = MessageBox.Show("Last confirmation: Are you sure you wish to change the admin password to: "+passwords.Default.adminPassword + " ?",
+                        "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
+                    if (res2) return;
+                    //saves password
+                    Properties.passwords.Default.Save();
+
+                }
+                else
+                {
+                    MessageBox.Show("The current password was incorrect");
+                }
+
+                Cursor.Current = Cursors.Default;
+                return;
+            }
 
             var rejectNum = rejectNumComboBox.Text;
             rejectNum = rejectNum.Replace("l", "L");
@@ -78,7 +127,7 @@ namespace RejectsApp2
             var rejectNumInput = GetRejectByID(rejectNum);
 
             //if type is edit and the input is not empty, perform the edit functions
-            if (!string.IsNullOrEmpty(rejectNumInput.Reject_Number))
+           if (!string.IsNullOrEmpty(rejectNumInput.Reject_Number))
             {
                 if (type == "edit")
                 {

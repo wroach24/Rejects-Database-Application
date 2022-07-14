@@ -32,6 +32,20 @@ namespace RejectsApp2
                 throw;
             }
         }
+        public void StartBackup(char manualFlag)
+        {
+            try
+            {
+                backupThread = new Thread(() => Run_InitiateBackup('m'));
+                backupThread.IsBackground = true;
+                backupThread.Start();
+            }
+            catch
+            {
+                MessageBox.Show("An error has occured backing up the database.");
+                throw;
+            }
+        }
 
         private void Run_InitiateBackup()
         {
@@ -56,5 +70,22 @@ namespace RejectsApp2
                 destination.Close();
             }
         }
+        //signals admin ran a manual backup
+        private void Run_InitiateBackup(char manualFlag)
+        {
+            var sourcePath = ConnectionSettings.Default.connString;
+            var destinationPath = ConnectionSettings.Default.manualBackup;
+
+            using (var source = new SQLiteConnection(sourcePath))
+            using (var destination = new SQLiteConnection(destinationPath))
+            {
+                source.Open();
+                destination.Open();
+                source.BackupDatabase(destination, "main", "main", -1, null, 0);
+                source.Close();
+                destination.Close();
+            }
+        }
     }
+   
 }

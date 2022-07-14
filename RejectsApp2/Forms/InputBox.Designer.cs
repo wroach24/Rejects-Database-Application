@@ -34,13 +34,16 @@ namespace RejectsApp2
             this.cancelButton = new System.Windows.Forms.Button();
             this.rejectNumComboBox = new System.Windows.Forms.ComboBox();
             this.passwordTextbox = new System.Windows.Forms.TextBox();
+            this.newPasswordTextbox = new System.Windows.Forms.TextBox();
+            this.newPasswordLabel = new System.Windows.Forms.Label();
+            this.currentPasswordlabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.75F);
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(12, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(228, 15);
             this.label1.TabIndex = 0;
@@ -55,7 +58,7 @@ namespace RejectsApp2
             this.SubmitID.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkBlue;
             this.SubmitID.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lavender;
             this.SubmitID.Font = new System.Drawing.Font("SansSerif", 9.749999F);
-            this.SubmitID.Location = new System.Drawing.Point(47, 80);
+            this.SubmitID.Location = new System.Drawing.Point(49, 89);
             this.SubmitID.Name = "SubmitID";
             this.SubmitID.Size = new System.Drawing.Size(64, 23);
             this.SubmitID.TabIndex = 2;
@@ -71,7 +74,7 @@ namespace RejectsApp2
             this.cancelButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkBlue;
             this.cancelButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lavender;
             this.cancelButton.Font = new System.Drawing.Font("SansSerif", 9.749999F);
-            this.cancelButton.Location = new System.Drawing.Point(129, 80);
+            this.cancelButton.Location = new System.Drawing.Point(128, 89);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(66, 23);
             this.cancelButton.TabIndex = 3;
@@ -94,13 +97,42 @@ namespace RejectsApp2
             // passwordTextbox
             // 
             this.passwordTextbox.Enabled = false;
-            this.passwordTextbox.Location = new System.Drawing.Point(61, 54);
+            this.passwordTextbox.Location = new System.Drawing.Point(61, 30);
             this.passwordTextbox.Name = "passwordTextbox";
             this.passwordTextbox.PasswordChar = '*';
             this.passwordTextbox.Size = new System.Drawing.Size(121, 20);
             this.passwordTextbox.TabIndex = 5;
             this.passwordTextbox.Visible = false;
             this.passwordTextbox.TextChanged += new System.EventHandler(this.passwordTextbox_TextChanged);
+            // 
+            // newPasswordTextbox
+            // 
+            this.newPasswordTextbox.Enabled = false;
+            this.newPasswordTextbox.Location = new System.Drawing.Point(61, 66);
+            this.newPasswordTextbox.Name = "newPasswordTextbox";
+            this.newPasswordTextbox.Size = new System.Drawing.Size(121, 20);
+            this.newPasswordTextbox.TabIndex = 6;
+            this.newPasswordTextbox.Visible = false;
+            // 
+            // newPasswordLabel
+            // 
+            this.newPasswordLabel.AutoSize = true;
+            this.newPasswordLabel.Location = new System.Drawing.Point(58, 53);
+            this.newPasswordLabel.Name = "newPasswordLabel";
+            this.newPasswordLabel.Size = new System.Drawing.Size(78, 13);
+            this.newPasswordLabel.TabIndex = 7;
+            this.newPasswordLabel.Text = "New Password";
+            this.newPasswordLabel.Visible = false;
+            // 
+            // currentPasswordlabel
+            // 
+            this.currentPasswordlabel.AutoSize = true;
+            this.currentPasswordlabel.Location = new System.Drawing.Point(58, 15);
+            this.currentPasswordlabel.Name = "currentPasswordlabel";
+            this.currentPasswordlabel.Size = new System.Drawing.Size(90, 13);
+            this.currentPasswordlabel.TabIndex = 8;
+            this.currentPasswordlabel.Text = "Current Password";
+            this.currentPasswordlabel.Visible = false;
             // 
             // InputBox
             // 
@@ -110,6 +142,9 @@ namespace RejectsApp2
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(250, 115);
             this.ControlBox = false;
+            this.Controls.Add(this.currentPasswordlabel);
+            this.Controls.Add(this.newPasswordLabel);
+            this.Controls.Add(this.newPasswordTextbox);
             this.Controls.Add(this.passwordTextbox);
             this.Controls.Add(this.rejectNumComboBox);
             this.Controls.Add(this.cancelButton);
@@ -138,5 +173,8 @@ namespace RejectsApp2
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.ComboBox rejectNumComboBox;
         private System.Windows.Forms.TextBox passwordTextbox;
+        private System.Windows.Forms.TextBox newPasswordTextbox;
+        private System.Windows.Forms.Label newPasswordLabel;
+        private System.Windows.Forms.Label currentPasswordlabel;
     }
 }

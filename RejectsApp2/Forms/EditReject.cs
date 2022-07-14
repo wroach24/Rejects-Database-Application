@@ -59,7 +59,7 @@ namespace RejectsApp2
             editFlag = true; //an edit was performed, signal to Edit_Reject_Closing to only check for confirmation of submission, not closing.
             Close();
         }
-
+        //once a disposition has been selected, enable picking the disposition date
         private void DispositionDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
             dateDispositionDropDown.Enabled = true;

@@ -33,6 +33,7 @@ namespace RejectsApp2
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.reportLayoutGroupBox = new System.Windows.Forms.GroupBox();
+            this.DisplayAllButton = new System.Windows.Forms.Button();
             this.PartHistoryButton = new System.Windows.Forms.Button();
             this.OpenItemsButton = new System.Windows.Forms.Button();
             this.ProductLineButton = new System.Windows.Forms.Button();
@@ -53,22 +54,12 @@ namespace RejectsApp2
             this.StartDateLabel = new System.Windows.Forms.Label();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.DateTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.reportLayoutGroupBox.SuspendLayout();
             this.selectionCriteriaGroupBox.SuspendLayout();
             this.dateRangeGroupBox.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -77,7 +68,6 @@ namespace RejectsApp2
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.HotTrack = true;
             this.tabControl1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.tabControl1.ItemSize = new System.Drawing.Size(70, 25);
@@ -100,11 +90,12 @@ namespace RejectsApp2
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(997, 664);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Generic Reports";
+            this.tabPage1.Text = "Reports";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // reportLayoutGroupBox
             // 
+            this.reportLayoutGroupBox.Controls.Add(this.DisplayAllButton);
             this.reportLayoutGroupBox.Controls.Add(this.PartHistoryButton);
             this.reportLayoutGroupBox.Controls.Add(this.OpenItemsButton);
             this.reportLayoutGroupBox.Controls.Add(this.ProductLineButton);
@@ -118,6 +109,17 @@ namespace RejectsApp2
             this.reportLayoutGroupBox.TabIndex = 3;
             this.reportLayoutGroupBox.TabStop = false;
             this.reportLayoutGroupBox.Text = "Report Type";
+            // 
+            // DisplayAllButton
+            // 
+            this.DisplayAllButton.Location = new System.Drawing.Point(248, 27);
+            this.DisplayAllButton.Name = "DisplayAllButton";
+            this.DisplayAllButton.Size = new System.Drawing.Size(112, 27);
+            this.DisplayAllButton.TabIndex = 5;
+            this.DisplayAllButton.Text = "All Info";
+            this.DateTooltip.SetToolTip(this.DisplayAllButton, "Large reports may take a minute to load. ");
+            this.DisplayAllButton.UseVisualStyleBackColor = true;
+            this.DisplayAllButton.Click += new System.EventHandler(this.DisplayAllButton_Click);
             // 
             // PartHistoryButton
             // 
@@ -346,111 +348,6 @@ namespace RejectsApp2
             this.dateTimePicker1.TabIndex = 0;
             this.DateTooltip.SetToolTip(this.dateTimePicker1, "Checking and unchecking the box enables/disables sorting by date.");
             // 
-            // tabPage2
-            // 
-            this.tabPage2.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.tabPage2.Controls.Add(this.reportViewer1);
-            this.tabPage2.Controls.Add(this.label3);
-            this.tabPage2.Controls.Add(this.label2);
-            this.tabPage2.Controls.Add(this.button1);
-            this.tabPage2.Controls.Add(this.comboBox4);
-            this.tabPage2.Controls.Add(this.comboBox3);
-            this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Controls.Add(this.checkedListBox1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 29);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(997, 664);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Custom Reports";
-            // 
-            // reportViewer1
-            // 
-            this.reportViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.reportViewer1.Location = new System.Drawing.Point(161, 19);
-            this.reportViewer1.Name = "reportViewer1";
-            this.reportViewer1.ServerReport.BearerToken = null;
-            this.reportViewer1.Size = new System.Drawing.Size(814, 549);
-            this.reportViewer1.TabIndex = 7;
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(326, 571);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(39, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Format";
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(158, 571);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Sort By";
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(846, 581);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(129, 31);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Generate";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // comboBox4
-            // 
-            this.comboBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Items.AddRange(new object[] {
-            "Asending",
-            "Descending"});
-            this.comboBox4.Location = new System.Drawing.Point(329, 587);
-            this.comboBox4.MaximumSize = new System.Drawing.Size(300, 0);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(300, 21);
-            this.comboBox4.TabIndex = 3;
-            // 
-            // comboBox3
-            // 
-            this.comboBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(161, 587);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(162, 21);
-            this.comboBox3.TabIndex = 2;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(158, 3);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(414, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Select Values to include in report. The order selected is the order they are disp" +
-    "layed in.";
-            // 
-            // checkedListBox1
-            // 
-            this.checkedListBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(3, 3);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(140, 658);
-            this.checkedListBox1.TabIndex = 0;
-            // 
             // FormGenerator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -468,8 +365,6 @@ namespace RejectsApp2
             this.selectionCriteriaGroupBox.PerformLayout();
             this.dateRangeGroupBox.ResumeLayout(false);
             this.dateRangeGroupBox.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -478,16 +373,8 @@ namespace RejectsApp2
 
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.GroupBox selectionCriteriaGroupBox;
         private System.Windows.Forms.GroupBox dateRangeGroupBox;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.GroupBox reportLayoutGroupBox;
         private System.Windows.Forms.Button PartHistoryButton;
         private System.Windows.Forms.Button OpenItemsButton;
@@ -508,6 +395,6 @@ namespace RejectsApp2
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label7;
         public System.Windows.Forms.TextBox PartNumTextBox;
-        private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
+        private System.Windows.Forms.Button DisplayAllButton;
     }
 }

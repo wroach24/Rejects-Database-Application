@@ -42,6 +42,8 @@ namespace RejectsApp2
             this.editFieldsButton = new System.Windows.Forms.Button();
             this.YokogawaLogo = new System.Windows.Forms.PictureBox();
             this.AdminLogInButton = new System.Windows.Forms.Button();
+            this.ManualBackupButton = new System.Windows.Forms.Button();
+            this.ChangePasswordButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.YokogawaLogo)).BeginInit();
             this.SuspendLayout();
@@ -96,7 +98,7 @@ namespace RejectsApp2
             this.DeleteReject.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkBlue;
             this.DeleteReject.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lavender;
             this.DeleteReject.Font = new System.Drawing.Font("SansSerif", 9.749999F);
-            this.DeleteReject.Location = new System.Drawing.Point(52, 16);
+            this.DeleteReject.Location = new System.Drawing.Point(52, 3);
             this.DeleteReject.Name = "DeleteReject";
             this.DeleteReject.Size = new System.Drawing.Size(94, 30);
             this.DeleteReject.TabIndex = 4;
@@ -141,7 +143,7 @@ namespace RejectsApp2
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(316, 285);
+            this.label1.Location = new System.Drawing.Point(315, 274);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(99, 13);
             this.label1.TabIndex = 7;
@@ -151,11 +153,13 @@ namespace RejectsApp2
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.ChangePasswordButton);
+            this.panel1.Controls.Add(this.ManualBackupButton);
             this.panel1.Controls.Add(this.editFieldsButton);
             this.panel1.Controls.Add(this.DeleteReject);
-            this.panel1.Location = new System.Drawing.Point(265, 301);
+            this.panel1.Location = new System.Drawing.Point(265, 290);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 151);
+            this.panel1.Size = new System.Drawing.Size(200, 162);
             this.panel1.TabIndex = 8;
             this.panel1.Visible = false;
             // 
@@ -166,7 +170,7 @@ namespace RejectsApp2
             this.editFieldsButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkBlue;
             this.editFieldsButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lavender;
             this.editFieldsButton.Font = new System.Drawing.Font("SansSerif", 9.749999F);
-            this.editFieldsButton.Location = new System.Drawing.Point(52, 59);
+            this.editFieldsButton.Location = new System.Drawing.Point(52, 39);
             this.editFieldsButton.Name = "editFieldsButton";
             this.editFieldsButton.Size = new System.Drawing.Size(94, 30);
             this.editFieldsButton.TabIndex = 5;
@@ -191,13 +195,43 @@ namespace RejectsApp2
             this.AdminLogInButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkBlue;
             this.AdminLogInButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lavender;
             this.AdminLogInButton.Font = new System.Drawing.Font("SansSerif", 9.749999F);
-            this.AdminLogInButton.Location = new System.Drawing.Point(591, 412);
+            this.AdminLogInButton.Location = new System.Drawing.Point(591, 402);
             this.AdminLogInButton.Name = "AdminLogInButton";
-            this.AdminLogInButton.Size = new System.Drawing.Size(101, 26);
+            this.AdminLogInButton.Size = new System.Drawing.Size(101, 30);
             this.AdminLogInButton.TabIndex = 9;
             this.AdminLogInButton.Text = "Admin Log In";
             this.AdminLogInButton.UseVisualStyleBackColor = false;
             this.AdminLogInButton.Click += new System.EventHandler(this.AdminLogInButton_Click);
+            // 
+            // ManualBackupButton
+            // 
+            this.ManualBackupButton.BackColor = System.Drawing.Color.GhostWhite;
+            this.ManualBackupButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.ManualBackupButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkBlue;
+            this.ManualBackupButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lavender;
+            this.ManualBackupButton.Font = new System.Drawing.Font("SansSerif", 9.749999F);
+            this.ManualBackupButton.Location = new System.Drawing.Point(52, 75);
+            this.ManualBackupButton.Name = "ManualBackupButton";
+            this.ManualBackupButton.Size = new System.Drawing.Size(94, 30);
+            this.ManualBackupButton.TabIndex = 6;
+            this.ManualBackupButton.Text = "Backup DB";
+            this.ManualBackupButton.UseVisualStyleBackColor = false;
+            this.ManualBackupButton.Click += new System.EventHandler(this.ManualBackupButton_Click);
+            // 
+            // ChangePasswordButton
+            // 
+            this.ChangePasswordButton.BackColor = System.Drawing.Color.GhostWhite;
+            this.ChangePasswordButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.ChangePasswordButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkBlue;
+            this.ChangePasswordButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lavender;
+            this.ChangePasswordButton.Font = new System.Drawing.Font("SansSerif", 9.749999F);
+            this.ChangePasswordButton.Location = new System.Drawing.Point(52, 111);
+            this.ChangePasswordButton.Name = "ChangePasswordButton";
+            this.ChangePasswordButton.Size = new System.Drawing.Size(94, 30);
+            this.ChangePasswordButton.TabIndex = 7;
+            this.ChangePasswordButton.Text = "Change PW";
+            this.ChangePasswordButton.UseVisualStyleBackColor = false;
+            this.ChangePasswordButton.Click += new System.EventHandler(this.ChangePasswordButton_Click);
             // 
             // Home
             // 
@@ -244,6 +278,8 @@ namespace RejectsApp2
         public System.Windows.Forms.Panel panel1;
         public System.Windows.Forms.Button editFieldsButton;
         public System.Windows.Forms.Button AdminLogInButton;
+        public System.Windows.Forms.Button ChangePasswordButton;
+        public System.Windows.Forms.Button ManualBackupButton;
     }
 }
 

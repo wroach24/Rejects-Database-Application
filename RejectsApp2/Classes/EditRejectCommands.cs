@@ -51,14 +51,16 @@ namespace RejectsApp2
         //Fills out the edit form, utilizes if statements to assign null to traditional non-nullable types, text is just assigned directly.
         public static void FillOutEditForm(Rejects reject, EditReject editReject)
         {
-            if (reject.Reject_Number.Substring(0, 1) == "L" || reject.Reject_Number.Substring(0, 1) == "l")
+            
+            if (reject.Reject_Number.Substring(0, 1) == "L" )
                 editReject.RejectTypeDropDown.SelectedIndex = editReject.RejectTypeDropDown.FindStringExact("Line");
-            else if (reject.Reject_Number.Substring(0, 1) == "R" || reject.Reject_Number.Substring(0, 1) == "r")
+            else if (reject.Reject_Number.Substring(0, 1) == "R" )
                 editReject.RejectTypeDropDown.SelectedIndex =
                     editReject.RejectTypeDropDown.FindStringExact("Receiving");
 
+            //iterats through the objects in the disposition drop down and matches them to the database entry
             foreach (var x in editReject.DispositionDropDown.Items)
-                if (reject.Disposition == x.ToString().Substring(4).Trim())
+                if (reject.Disposition.Trim() == x.ToString().Substring(4).Trim() || reject.Disposition.Trim() == x.ToString().Substring(5).Trim())
                 {
                     editReject.DispositionDropDown.SelectedIndex =
                         editReject.DispositionDropDown.FindStringExact(x.ToString());

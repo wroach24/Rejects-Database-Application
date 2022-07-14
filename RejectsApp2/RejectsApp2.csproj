@@ -21,7 +21,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>21</ApplicationRevision>
+    <ApplicationRevision>23</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -74,7 +74,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>imageedit_10_9283800874.ico</ApplicationIcon>
+    <ApplicationIcon>Capture.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -96,6 +96,12 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -201,8 +207,8 @@
     <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Net.Http.4.3.0\lib\net46\System.Net.Http.dll</HintPath>
+    <Reference Include="System.Net.Http, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.2\lib\net46\System.Net.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Sockets, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Sockets.4.3.0\lib\net46\System.Net.Sockets.dll</HintPath>
@@ -344,6 +350,7 @@
     <EmbeddedResource Include="ReportTemplates\Report2.rdlc" />
     <EmbeddedResource Include="ReportTemplates\ReceivingMRB.rdlc" />
     <EmbeddedResource Include="ReportTemplates\PartHistoryReport.rdlc" />
+    <EmbeddedResource Include="ReportTemplates\AllReport.rdlc" />
     <EmbeddedResource Include="ReportTemplates\ScrapReport.rdlc" />
     <None Include=".xsc">
       <DependentUpon>RejectReportDataset.xsd</DependentUpon>
@@ -378,13 +385,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="imageedit_10_9283800874.ico" />
-    <Content Include="Properties\R %281%29.png" />
-    <Content Include="Properties\R.png" />
-    <Content Include="Properties\yokogawa-logo-png-transparent %281%29 %281%29 %281%29.png" />
-    <Content Include="Properties\yokogawa-logo-png-transparent %281%29 %281%29.png" />
-    <Content Include="Properties\yokogawa-logo-png-transparent %281%29.png" />
-    <Content Include="Properties\yokogawa-logo-png-transparent.png" />
+    <Content Include="Capture.ico" />
+    <None Include="Resources\Capture.bmp" />
+    <None Include="Resources\Capture.ico" />
+    <None Include="Resources\imageedit_8_3515174954.ico" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

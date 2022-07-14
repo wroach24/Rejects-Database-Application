@@ -14,34 +14,40 @@ namespace RejectsApp2.Forms
         public PrintDisplay(NewReject newRejectForm)
         {
             InitializeComponent();
-            this.newRejectForm = newRejectForm;
             reportViewer3.Reset();
             reportViewer3.Name = "ReportViewer";
             reportViewer3.TabIndex = 0;
             reportViewer3.Visible = true;
+            CenterToScreen();
+
+            this.newRejectForm = newRejectForm;
             var rpdSource = GenerateEmptyDataTableForReport();
             DisplayPrintReport(reportViewer3, rpdSource, this, newRejectForm);
-            CenterToScreen();
+            
+           
         }
 
         public PrintDisplay(EditReject editRejectForm)
         {
             InitializeComponent();
-            editrejectForm = editRejectForm;
             reportViewer3.Reset();
             reportViewer3.Name = "ReportViewer";
             reportViewer3.TabIndex = 0;
             reportViewer3.Visible = true;
+            CenterToScreen();
+
+            this.editrejectForm = editRejectForm;
             var rpdSource = GenerateEmptyDataTableForReport();
             DisplayPrintReport(reportViewer3, rpdSource, this, editrejectForm);
-            CenterToScreen();
+           
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
         }
 
-        //returns a temporary datatable to assign as the report's data, even though it will not be used since report will nto display otherwise
+        //reports are required to have a datasource assigned, even if the parameters are set from elsewhere. This generates a "throw away" not null datasource to assign.
         public static ReportDataSource GenerateEmptyDataTableForReport()
         {
             var dt = new DataTable();
@@ -63,9 +69,12 @@ namespace RejectsApp2.Forms
         public static void DisplayPrintReport(ReportViewer reportViewer1, ReportDataSource rpdSource,
             PrintDisplay displayForm, NewReject newRejectForm)
         {
+            //setting file path, adding datasource and setting parameters necessary for the report
             reportViewer1.LocalReport.ReportPath = ConnectionSettings.Default.PrintReport;
             reportViewer1.LocalReport.DataSources.Add(rpdSource);
             SetPrintReportParameters(reportViewer1, newRejectForm);
+            
+            //various settings being set
             reportViewer1.PrinterSettings.DefaultPageSettings.Margins.Bottom = 0;
             reportViewer1.PrinterSettings.DefaultPageSettings.Margins.Top = 0;
             reportViewer1.PrinterSettings.DefaultPageSettings.Margins.Left = 0;
@@ -73,6 +82,7 @@ namespace RejectsApp2.Forms
             reportViewer1.PrinterSettings.DefaultPageSettings.Landscape = false;
             reportViewer1.SetDisplayMode(DisplayMode.PrintLayout);
             reportViewer1.ZoomMode = ZoomMode.PageWidth;
+            
             reportViewer1.RefreshReport();
             reportViewer1.Show();
         }
