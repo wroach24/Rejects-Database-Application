@@ -23,6 +23,7 @@ namespace RejectsApp2
             var fieldInstance = new FieldItems();
             fieldInstance.FillMenus(RejectTypeDropDown, ProductLineDropDown, ResponsibleDropDown, VendorNameDropDown);
             fieldInstance.FillDispositionMenu(DispositionDropDown);
+           
             //setting the dateDisposition to display as empty, setting inital date to now.
             dateDispositionDropDown.Value = DateTime.Now;
             dateDispositionDropDown.CustomFormat = " ";
@@ -65,7 +66,6 @@ namespace RejectsApp2
             //if rejecttype is not selected, return
             if (checkRejectSelection() == false) return;
 
-            var res = false; //user input result
             var rejNum = RejectNumberTextBox.Text; //getting reject number
             requiredFields = new[] //required inputs
             {
@@ -85,7 +85,7 @@ namespace RejectsApp2
 
             
             //confirming submission
-            res = MessageBox.Show("Are you sure you want to submit?",
+            var res = MessageBox.Show("Are you sure you want to submit?",
                 "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
             if (res) return;
 

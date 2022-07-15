@@ -10,7 +10,7 @@ namespace RejectsApp2
     public static class Commands
     {
         //generates dictionary for reading/writing to database
-        public static Dictionary<string, object> generateArgument(Rejects reject)
+        public static Dictionary<string, object> GenerateArgument(Rejects reject)
         {
             var args = new Dictionary<string, dynamic>
             {
@@ -38,66 +38,47 @@ namespace RejectsApp2
             return args;
         }
 
-        //generates dictionary for reading to specific variables for loading report
-        public static Dictionary<string, object> generateArgument()
+        //generates empty dictionary for reading all information needed in reports to
+        public static Dictionary<string, object> GenerateArgument()
         {
-            var rejNum = "";
-            var rejected = DateTime.Parse("01/10/1000");
-            var PartNum = "";
-            var PartDesc = "";
-            var SerialNum = "";
-            var LotNum = "";
-            var PONum = "";
-            var QtyRec = 0;
-            var QtyIns = 0;
-            var QtyRej = 0;
-            var Disrepancy = "";
-            var Responsible = "";
-            var Product_Line = "";
-            var Rejected_By = "";
-            var VendorID = "";
-            var Vendor_Name = "";
-            var RMA_Number = "";
-            var Disposition = "";
-            DateTime? DateOfDisp = DateTime.Parse("01/10/1000");
-            var UnitCost = "";
+
             var args = new Dictionary<string, object>
             {
-                { "@Reject_Number", rejNum },
-                { "@PartNum", PartNum },
-                { "@Vendor_ID", VendorID },
-                { "@Vendor_Name", Vendor_Name },
-                { "@RMA_Number", RMA_Number },
-                { "@Date_of_Disposition", DateOfDisp },
-                { "@QtyReceived", QtyRec },
-                { "@QtyInspected", QtyIns },
-                { "@QtyRejected", QtyRej },
-                { "@UnitCost", UnitCost },
-                { "@LotNum", LotNum },
-                { "@Responsible", Responsible },
-                { "@Product_Line", Product_Line },
-                { "@RejectedBy", Rejected_By },
-                { "@Disposition", Disposition },
-                { "@PO_Number", PONum },
-                { "@Discrepancy", Disrepancy },
-                { "@DateRejected", rejected },
-                { "@PartDescription", PartDesc },
-                { "@SerialNum", SerialNum }
+                { "@Reject_Number", "" },
+                { "@PartNum", "" },
+                { "@Vendor_ID", "" },
+                { "@Vendor_Name", "" },
+                { "@RMA_Number", "" },
+                { "@Date_of_Disposition", DateTime.MaxValue },
+                { "@QtyReceived", 0 },
+                { "@QtyInspected", 0 },
+                { "@QtyRejected", 0 },
+                { "@UnitCost", "" },
+                { "@LotNum", "" },
+                { "@Responsible", "" },
+                { "@Product_Line", "" },
+                { "@RejectedBy", "" },
+                { "@Disposition", "" },
+                { "@PO_Number", "" },
+                { "@Discrepancy", "" },
+                { "@DateRejected", DateTime.MaxValue },
+                { "@PartDescription", "" },
+                { "@SerialNum", "" }
             };
             return args;
         }
 
 
         //PRE: reject object // POST: updated database, deleted row.
-        public static int deleteReject(Rejects reject)
+        public static int DeleteReject(Rejects reject)
         {
             var query =
                 "DELETE FROM rejects WHERE Reject_Number = @RejectNum";
-            return ExecuteWrite(query, generateArgument(reject));
+            return ExecuteWrite(query, GenerateArgument(reject));
         }
 
         //checks if the text is an integer, else returns null
-        public static int? checkIntText(string input)
+        public static int? CheckIntText(string input)
         {
             var result = 0;
             int.TryParse(input, out result);
@@ -106,8 +87,9 @@ namespace RejectsApp2
             return result;
         }
 
-        //pre: string corresponding to a database Reject_Number post: Rejects object composed of the column values associated with the corresponding row to the Reject_Number id.
+       
         public static Rejects GetRejectByID(string id)
+            //pre: string corresponding to a database Reject_Number post: Rejects object composed of the column values associated with the corresponding row to the Reject_Number id.
         {
             var path = ConnectionSettings.Default.connString;
             var query = "SELECT * FROM rejects WHERE Reject_Number = '" + id + "' LIMIT 1";
@@ -146,9 +128,7 @@ namespace RejectsApp2
 
                         //instantiate new rejects object
                         newReject = new Rejects(rejNum, rejected, PartNum, PartDesc, SerialNum, LotNum, PONum, QtyRec,
-                            QtyIns,
-                            QtyRej, Disrepancy, Responsible, Product_Line, Rejected_By, VendorID, Vendor_Name,
-                            RMA_Number,
+                            QtyIns, QtyRej, Disrepancy, Responsible, Product_Line, Rejected_By, VendorID, Vendor_Name, RMA_Number,
                             Disposition, DateOfDisp, UnitCost);
                     }
 
@@ -167,9 +147,8 @@ namespace RejectsApp2
 
 
         //pre:query post: returns the values from the database that will fill out specific fields such as the differing vendors, etc.
-        public static DataTable GetValuesForForm(string q)
+        public static DataTable GetValuesForForm(string query)
         {
-            var query = q;
             var val = "";
             var args = new Dictionary<string, object>
             {
@@ -183,9 +162,9 @@ namespace RejectsApp2
             return dt;
         }
 
-        public static int ModifyField(string q)
+        //used to modify the single column tables which contain information on vendors,product lines, etc
+        public static int ModifyField(string query)
         {
-            var query = q;
             var val = "";
             var args = new Dictionary<string, object>
             {
@@ -199,10 +178,9 @@ namespace RejectsApp2
 
 
         //pre:query string post:datatable returning query results
-        public static DataTable GetValuesForReport(string q)
+        public static DataTable GetValuesForReport(string query)
         {
-            var query = q;
-            var dt = ExecuteRead(query, generateArgument());
+            var dt = ExecuteRead(query, GenerateArgument());
 
             if (dt == null || dt.Rows.Count == 0) return null;
 
@@ -237,8 +215,9 @@ namespace RejectsApp2
             }
         }
 
-        //PRE: valid query, args supplied by other method POST:returns datatable filled with the results read from the query
+    
         public static DataTable ExecuteRead(string query, Dictionary<string, object> args)
+            //PRE: valid query, args supplied by other method POST:returns datatable filled with the results read from the query
         {
             if (string.IsNullOrEmpty(query.Trim()))
                 return null;
@@ -253,7 +232,8 @@ namespace RejectsApp2
 
                     using (var cmd = new SQLiteCommand(query, con))
                     {
-                        foreach (var entry in args) cmd.Parameters.AddWithValue(entry.Key, entry.Value);
+                        foreach (var entry in args) 
+                            cmd.Parameters.AddWithValue(entry.Key, entry.Value);
 
                         var da = new SQLiteDataAdapter(cmd);
 
@@ -275,8 +255,9 @@ namespace RejectsApp2
         }
 
 
-        //fills out normal drop menus from the databsae, utilizes a datatable filled from a query previously.
+        
         public static void FillOutDropMenu(DataTable dt, ComboBox DropDown)
+            //fills out normal drop menus from the databsae, utilizes a datatable filled from a query previously.
         {
             foreach (DataRow dataRow in dt.Rows)
             foreach (var item in dataRow.ItemArray)
@@ -284,27 +265,37 @@ namespace RejectsApp2
             DropDown.SelectedItem = null;
         }
 
-        //fills out the disposition drop menu from the databsae, utilizes a datatable filled from a query previously.
+
         public static void FillOutDropMenu(DataTable dt, ComboBox DropDown, char dispositionFlag)
+            //fills out the disposition drop menu from the databsae, utilizes a datatable filled from a query previously.
         {
             foreach (DataRow dataRow in dt.Rows)
                 for (var i = 0; i < dataRow.ItemArray.Length; i += 2)
                     DropDown.Items.Add(dataRow.ItemArray[i] + " : " + dataRow.ItemArray[i + 1]);
             DropDown.SelectedItem = null;
         }
-        //sets the column depending on the field table specified, needed for query
+        
         public static string getCorrespondingColumn(string fieldType)
+            //sets the column depending on the field table specified, needed for query
         {
             var correspondingColumn = "";
-            if (fieldType == "Product_Lines")
-                correspondingColumn = "Product Line";
 
-            else if (fieldType == "Responsible")
-                correspondingColumn = "Responsible PL";
-
-            else if (fieldType == "Vendors")
-                correspondingColumn = "Field1";
-            else if (fieldType == "Disposition_Codes") correspondingColumn = "Description";
+            switch (fieldType)
+            {
+                case "Product_Lines":
+                    correspondingColumn = "Product Line";
+                    break;
+                case "Responsible":
+                    correspondingColumn = "Responsible PL";
+                    break;
+                case "Vendors":
+                    correspondingColumn = "Field1";
+                    break;
+                case "Disposition_Codes":
+                    correspondingColumn = "Description";
+                    break;
+                    
+            }
 
             return correspondingColumn;
         }

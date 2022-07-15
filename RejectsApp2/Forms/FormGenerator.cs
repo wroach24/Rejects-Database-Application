@@ -72,6 +72,7 @@ namespace RejectsApp2
         {
             Cursor = Cursors.WaitCursor;
             reportViewer2.Reset();
+
             if (!string.IsNullOrEmpty(PartNumTextBox.Text))
                 GeneratePartNumReport(this);
             else
@@ -101,22 +102,23 @@ namespace RejectsApp2
         private static string GenerateWhereQuery(FormGenerator fields)
         {
             var whereQuery = " WHERE ";
+            var productLineValue = fields.comboBox1.Text;
+            var responsibleLineValue = fields.comboBox2.Text;
+            var vendorIDValue = fields.textBox1.Text;
+            var partNumValue = fields.PartNumTextBox.Text;
+
             if (fields.dateTimePicker1.Checked || fields.dateTimePicker2.Checked)
             {
                 DateTime? dispositionStartDateUserInput = null;
                 DateTime? dispositionEndDateUserInput = null;
                 var dateQuery = "";
                 //checking if one date, no date, or both date boxes are checked and adjusting input accordingly
-                if (fields.dateTimePicker1.Checked)
-                    dispositionStartDateUserInput = fields.dateTimePicker1.Value.Date;
-                else
-                    dispositionStartDateUserInput = DateTime.MinValue;
 
-                if (fields.dateTimePicker2.Checked)
-                    dispositionEndDateUserInput = fields.dateTimePicker2.Value.Date;
-                else
-                    dispositionEndDateUserInput = DateTime.MaxValue;
-               //after figuring out the date range input by user begin building query
+                dispositionStartDateUserInput = fields.dateTimePicker1.Checked ?  fields.dateTimePicker1.Value.Date : DateTime.MinValue;
+               
+                dispositionEndDateUserInput = fields.dateTimePicker2.Checked ?  fields.dateTimePicker2.Value.Date : DateTime.MaxValue;
+
+                //after figuring out the date range input by user begin building query
                 dateQuery = "Date_of_Disposition >= '" + dispositionStartDateUserInput.Value
                                 .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture).Replace("/", "-") +
                             "' AND Date_of_Disposition <= '" + dispositionEndDateUserInput.Value.Date
@@ -125,46 +127,47 @@ namespace RejectsApp2
             }
 
             //if the text field isn't empty append the query for finding WHERE product_line equals value specified by the user
-            if (!string.IsNullOrEmpty(fields.comboBox1.Text))
+
+            if (!string.IsNullOrEmpty(productLineValue))
             {
                 if (whereQuery != " WHERE ")
                     whereQuery += "AND ";
 
-                var productQuery = "Product_Line = '" + fields.comboBox1.Text + "' ";
+                var productQuery = "Product_Line = '" + productLineValue + "' ";
                 whereQuery += productQuery;
             }
 
             //if the text field isn't empty append the query for finding WHERE responsible equals value specified by the user
-            if (!string.IsNullOrEmpty(fields.comboBox2.Text))
+            if (!string.IsNullOrEmpty(responsibleLineValue))
             {
                 if (whereQuery != " WHERE ")
                     whereQuery += "AND ";
 
-                var responsibleQuery = "Responsible = '" + fields.comboBox2.Text + "' ";
+                var responsibleQuery = "Responsible = '" + responsibleLineValue + "' ";
                 whereQuery += responsibleQuery;
             }
 
             //if the text field isn't empty append the query for finding WHERE vendor equals value specified by the user
-            if (!string.IsNullOrEmpty(fields.textBox1.Text))
+            if (!string.IsNullOrEmpty(vendorIDValue))
             {
                 if (whereQuery != " WHERE ")
                     whereQuery += "AND ";
 
-                var vendorQuery = "Vendor_ID = '" + fields.textBox1.Text + "' ";
+                var vendorQuery = "Vendor_ID = '" + vendorIDValue + "' ";
                 whereQuery += vendorQuery;
             }
 
             //if the text field isn't empty append the query for finding WHERE partnum equals value specified by the user
-            if (!string.IsNullOrEmpty(fields.PartNumTextBox.Text))
+            if (!string.IsNullOrEmpty(partNumValue))
             {
                 if (whereQuery != " WHERE ")
                     whereQuery += "AND ";
 
-                var productQuery = "Part_Number = '" + fields.PartNumTextBox.Text + "' OR Part_Number = '"+fields.PartNumTextBox.Text.ToLower()+"' OR Part_Number = '" +fields.PartNumTextBox.Text.ToUpper()+"'";
+                var productQuery = "Part_Number = '" + partNumValue + "' OR Part_Number = '"+partNumValue.ToLower()+"' OR Part_Number = '" +partNumValue.ToUpper()+"'";
                 whereQuery += productQuery;
             }
 
-            //if all the forms are empty, replace the initial WHERE to nothing
+            //if all the forms are empty, return empty
             if (whereQuery == " WHERE ")
                 return "";
             return whereQuery;
@@ -226,35 +229,21 @@ namespace RejectsApp2
         private static string AppendQuery(string whereQuery, string lastPortion)
         {
             //check if the lastportion of the query is null, check if the query has a where portion and adjust query accordingly.
-            if (string.IsNullOrEmpty(lastPortion))
+            if (whereQuery == "")
             {
-                whereQuery += " ";
-            }
-                //do nothing
-            else if (whereQuery == "")
                 whereQuery += " WHERE " + lastPortion;
+                return startQuery + whereQuery + "ORDER BY Date_of_Disposition ASC";
+            }
             
-            else
-                whereQuery += " AND " + lastPortion;
-            
-
+            whereQuery = string.IsNullOrEmpty(lastPortion) ? whereQuery + " " : whereQuery += " AND " + lastPortion;
             return startQuery + whereQuery + "ORDER BY Date_of_Disposition ASC";
         }
 
         private static string AppendQuery(string whereQuery, string lastPortion, string openTag)
         {
             //check if the lastportion of the query is null, check if the query has a where portion and adjust query accordingly.
-            if (string.IsNullOrEmpty(lastPortion))
-            {
-            } //do nothing
-            else if (whereQuery == "")
-            {
-                whereQuery += " WHERE " + lastPortion;
-            }
-            else
-            {
-                whereQuery += " AND " + lastPortion;
-            }
+            
+            whereQuery = whereQuery == "" ? whereQuery += " WHERE " + lastPortion : whereQuery += " AND " + lastPortion;
 
             return startQuery + whereQuery + "ORDER BY Date_Rejected ASC";
         }

@@ -25,7 +25,7 @@ namespace RejectsApp2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1234")]
+        [global::System.Configuration.DefaultSettingValueAttribute("rejectadmin")]
         public string adminPassword {
             get {
                 return ((string)(this["adminPassword"]));

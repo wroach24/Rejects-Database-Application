@@ -10,9 +10,9 @@ namespace RejectsApp2
         public static Rejects EditRejectOperation(EditReject editRejectForm)
         {
             Cursor.Current = Cursors.WaitCursor;
-            var qtyInspNull = checkIntText(editRejectForm.QtyInspectedTextBox.Text);
-            var qtyRejNull = checkIntText(editRejectForm.QtyRejectedTextBox.Text);
-            var qtyRecNull = checkIntText(editRejectForm.QtyReceivedTextBox.Text);
+            var qtyInspNull = CheckIntText(editRejectForm.QtyInspectedTextBox.Text);
+            var qtyRejNull = CheckIntText(editRejectForm.QtyRejectedTextBox.Text);
+            var qtyRecNull = CheckIntText(editRejectForm.QtyReceivedTextBox.Text);
 
             DateTime? dispDate = null;
             string disp = null;
@@ -45,7 +45,7 @@ namespace RejectsApp2
             const string query =
                 "UPDATE rejects SET Unit_cost = @UnitCost, Vendor_ID = @VendorID, Vendor_Name = @VendorName, RMA_Number = @RMAnum, Date_of_Disposition = @Date_of_Disposition, Responsible = @Responsible, Product_Line = @Product_Line, Rejected_By = @RejectedBy, Disposition = @Disposition, Qty_Received = @QtyReceived, Qty_Inspected = @QtyInspected, Qty_Rejected = @QtyRejected, Lot_Number = @LotNum, PO_Number = @PONum, Discrepancy = @Discrepancy,  Part_Number = @PartNum, Serial_Number = @SerialNum, Date_Rejected = @DateRejected, Part_Description = @PartDescription  WHERE  Reject_Number = @RejectNum";
 
-            return ExecuteWrite(query, generateArgument(reject));
+            return ExecuteWrite(query, GenerateArgument(reject));
         }
 
         //Fills out the edit form, utilizes if statements to assign null to traditional non-nullable types, text is just assigned directly.

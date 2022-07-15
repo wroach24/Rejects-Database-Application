@@ -104,6 +104,7 @@ namespace RejectsApp2.Forms
             }
             catch (SQLiteException ex)
             {
+                //already present
                 if (ex.ErrorCode == 19)
                     MessageBox.Show(
                         "This field must be unique but it is already present within the table. Try changing the name.");

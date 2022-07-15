@@ -99,15 +99,19 @@ namespace RejectsApp2
                     home.AdminLogInButton.Visible = false;
                     
 
-                    //check 1
+                    //check 1, confirming passsword change
                     var res = MessageBox.Show("Are you sure you want to CHANGE PASSWORD? This action is irreversible, make sure you have typed it correctly.",
                         "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
                     if (res) return;
+
+                    //setting password, but not yet saving
                     Properties.passwords.Default.adminPassword = newPassword;
-                    //check 2
+                    
+                    //check 2, confirming password change
                     var res2 = MessageBox.Show("Last confirmation: Are you sure you wish to change the admin password to: "+passwords.Default.adminPassword + " ?",
                         "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
                     if (res2) return;
+                   
                     //saves password
                     Properties.passwords.Default.Save();
 
@@ -141,7 +145,7 @@ namespace RejectsApp2
                     var res = MessageBox.Show("Are you sure you want to DELETE? This action is irreversible.",
                         "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
                     if (res) return;
-                    var delReject = deleteReject(rejectNumInput);
+                    DeleteReject(rejectNumInput);
                 }
             }
 

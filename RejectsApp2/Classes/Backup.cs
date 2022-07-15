@@ -70,8 +70,9 @@ namespace RejectsApp2
                 destination.Close();
             }
         }
-        //signals admin ran a manual backup
+        
         private void Run_InitiateBackup(char manualFlag)
+            //signals admin ran a manual backup
         {
             var sourcePath = ConnectionSettings.Default.connString;
             var destinationPath = ConnectionSettings.Default.manualBackup;

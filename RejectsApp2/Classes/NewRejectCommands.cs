@@ -16,9 +16,10 @@ namespace RejectsApp2
                 "VALUES (@RejectNum,@PartNum,@VendorID,@VendorName,@RMAnum,@Date_of_Disposition,@QtyReceived,@QtyInspected,@QtyRejected,@UnitCost,@LotNum,@Responsible,@Product_Line,@Disposition,@PONum,@Discrepancy,@DateRejected,@PartDescription,@SerialNum,@RejectedBy)";
 
 
-            return ExecuteWrite(query, generateArgument(reject));
+            return ExecuteWrite(query, GenerateArgument(reject));
         }
 
+        //generates the new reject number is a line reject, else simply fills in R and allows user to input
         public static string GenerateRejectNumber(string type)
         {
             var query =
@@ -38,7 +39,7 @@ namespace RejectsApp2
                             val = reader["Reject_Number"].ToString().Trim();
                         connection.Close();
                     }
-
+                    //getting the value and excluding the prefix
                     val = val.Substring(1, val.Length - 1);
                     var result = long.Parse(val);
                     result++;
@@ -90,9 +91,9 @@ namespace RejectsApp2
         {
             DateTime? dispDate = null;
             string disp = null;
-            var qtyInspNull = checkIntText(newRejectForm.QtyInspectedTextBox.Text);
-            var qtyRejNull = checkIntText(newRejectForm.QtyRejectedTextBox.Text);
-            var qtyRecNull = checkIntText(newRejectForm.QtyReceivedTextBox.Text);
+            var qtyInspNull = CheckIntText((newRejectForm.QtyInspectedTextBox.Text));
+            var qtyRejNull = CheckIntText(newRejectForm.QtyRejectedTextBox.Text);
+            var qtyRecNull = CheckIntText(newRejectForm.QtyReceivedTextBox.Text);
             //if disposition has been selected, then set date value
             if (newRejectForm.dateDispositionDropDown.Enabled)
                 dispDate = newRejectForm.dateDispositionDropDown.Value.Date;
