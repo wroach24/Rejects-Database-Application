@@ -15,15 +15,7 @@ namespace RejectsApp2.Forms
 
         private void FieldTypeBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //clears original box of items, preparing it to be filled again
-            OriginalBox.Items.Clear();
-            //gets the selected field type
-            var fieldType = FieldTypeBox.SelectedItem.ToString();
-            //sets query to get the contents of the field
-            var q = "SELECT * FROM " + fieldType;
-            var dt = GetValuesForForm(q);
-            //adds the contents to the listbox
-            foreach (DataRow datarow in dt.Rows) OriginalBox.Items.Add(datarow.ItemArray[0].ToString());
+            FieldTypeBox_Refresh();
         }
 
         //used to update listbox after submission
